@@ -1,298 +1,1084 @@
-<!DOCTYPE html><html lang="en"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>KenanAegean</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/magic-grid/dist/magic-grid.min.js"></script>
-    <link rel="stylesheet" href="index.css">
-  <link rel="icon" href="https://avatars.githubusercontent.com/u/61656752?v=4" type="image/png"></head>
+<!DOCTYPE html>
+<html lang="en">
 
-  <body>
-    <div id="loading">
-      <div id="spinner"></div>
-    </div>
-    <div id="profile">
-      <div id="profile_img" style="background: url(https://avatars.githubusercontent.com/u/61656752?v=4) center;"></div>
-      <div id="username"><span style="display:block;">Kenan Ege</span><a href="https://github.com/KenanAegean">@KenanAegean</a></div>
-      <div id="userbio" style="display: none;">undefined</div>
-      <div id="about">
-                <span style="display:none;"><i class="fas fa-users"></i> &nbsp; null</span>
-                <span style="display:none;"><i class="fas fa-envelope"></i> &nbsp; null</span>
-                <span style="display:block;"><i class="fas fa-link"></i> &nbsp; <a href="www.kenanege.com">www.kenanege.com</a></span>
-                <span style="display:block;"><i class="fas fa-map-marker-alt"></i> &nbsp;&nbsp; Turkey and Poland</span>
-                <span style="display:none;"><i class="fas fa-user-tie"></i> &nbsp;&nbsp; Available for hire</span>
-                <div class="socials">
-                <span style="display:none !important;"><a href="https://www.twitter.com/null" target="_blank" class="socials"><i class="fab fa-twitter"></i></a></span>
-                <span style="display:none !important;"><a href="https://www.dribbble.com/null" target="_blank" class="socials"><i class="fab fa-dribbble"></i></a></span>
-                <span style="display:block;"><a href="https://www.linkedin.com/in/kenanege/" target="_blank" class="socials"><i class="fab fa-linkedin-in"></i></a></span>
-                <span style="display:none !important;"><a href="https://www.medium.com/@null/" target="_blank" class="socials"><i class="fab fa-medium-m"></i></a></span>
-                </div>
-                </div>
-    </div>
-    <div id="display">
-      <div id="work">
-        <h1>Work.</h1>
-        <div class="projects" id="work_section">
-                        <a href="https://github.com/KenanAegean/Array-Rotation-Question" target="_blank">
-                        <section>
-                            <div class="section_title">Array-Rotation-Question</div>
-                            <div class="about_section">
-                            <span style="display:block;">A Question for Array Rotation</span>
-                            </div>
-                            <div class="bottom_section">
-                                <span style="display:inline-block;"><i class="fas fa-code"></i>&nbsp; C#</span>
-                                <span><i class="fas fa-star"></i>&nbsp; 0</span>
-                                <span><i class="fas fa-code-branch"></i>&nbsp; 0</span>
-                            </div>
-                        </section>
-                        </a>
-                        <a href="https://github.com/KenanAegean/Auto-Score-App-Androd-Studio" target="_blank">
-                        <section>
-                            <div class="section_title">Auto-Score-App-Androd-Studio</div>
-                            <div class="about_section">
-                            <span style="display:none;">undefined</span>
-                            </div>
-                            <div class="bottom_section">
-                                <span style="display:inline-block;"><i class="fas fa-code"></i>&nbsp; Java</span>
-                                <span><i class="fas fa-star"></i>&nbsp; 0</span>
-                                <span><i class="fas fa-code-branch"></i>&nbsp; 0</span>
-                            </div>
-                        </section>
-                        </a>
-                        <a href="https://github.com/KenanAegean/Average-Score-Calculator-PHP" target="_blank">
-                        <section>
-                            <div class="section_title">Average-Score-Calculator-PHP</div>
-                            <div class="about_section">
-                            <span style="display:block;">Average Point Calculator Website made by me.</span>
-                            </div>
-                            <div class="bottom_section">
-                                <span style="display:inline-block;"><i class="fas fa-code"></i>&nbsp; PHP</span>
-                                <span><i class="fas fa-star"></i>&nbsp; 0</span>
-                                <span><i class="fas fa-code-branch"></i>&nbsp; 0</span>
-                            </div>
-                        </section>
-                        </a>
-                        <a href="https://github.com/KenanAegean/CalculatorApp" target="_blank">
-                        <section>
-                            <div class="section_title">CalculatorApp</div>
-                            <div class="about_section">
-                            <span style="display:none;">undefined</span>
-                            </div>
-                            <div class="bottom_section">
-                                <span style="display:inline-block;"><i class="fas fa-code"></i>&nbsp; C#</span>
-                                <span><i class="fas fa-star"></i>&nbsp; 0</span>
-                                <span><i class="fas fa-code-branch"></i>&nbsp; 0</span>
-                            </div>
-                        </section>
-                        </a>
-                        <a href="https://github.com/KenanAegean/Integer-To-Roman-Number-Convertor" target="_blank">
-                        <section>
-                            <div class="section_title">Integer-To-Roman-Number-Convertor</div>
-                            <div class="about_section">
-                            <span style="display:block;">C++ Code For Roman Numerals To Integer </span>
-                            </div>
-                            <div class="bottom_section">
-                                <span style="display:inline-block;"><i class="fas fa-code"></i>&nbsp; C++</span>
-                                <span><i class="fas fa-star"></i>&nbsp; 0</span>
-                                <span><i class="fas fa-code-branch"></i>&nbsp; 0</span>
-                            </div>
-                        </section>
-                        </a>
-                        <a href="https://github.com/KenanAegean/KenanAegean" target="_blank">
-                        <section>
-                            <div class="section_title">KenanAegean</div>
-                            <div class="about_section">
-                            <span style="display:block;">My personal repository.</span>
-                            </div>
-                            <div class="bottom_section">
-                                <span style="display:none;"><i class="fas fa-code"></i>&nbsp; null</span>
-                                <span><i class="fas fa-star"></i>&nbsp; 0</span>
-                                <span><i class="fas fa-code-branch"></i>&nbsp; 0</span>
-                            </div>
-                        </section>
-                        </a>
-                        <a href="https://github.com/KenanAegean/KenanAegean.github.io" target="_blank">
-                        <section>
-                            <div class="section_title">KenanAegean.github.io</div>
-                            <div class="about_section">
-                            <span style="display:none;">undefined</span>
-                            </div>
-                            <div class="bottom_section">
-                                <span style="display:inline-block;"><i class="fas fa-code"></i>&nbsp; PHP</span>
-                                <span><i class="fas fa-star"></i>&nbsp; 0</span>
-                                <span><i class="fas fa-code-branch"></i>&nbsp; 0</span>
-                            </div>
-                        </section>
-                        </a>
-                        <a href="https://github.com/KenanAegean/Note_Editor_WindowsForm" target="_blank">
-                        <section>
-                            <div class="section_title">Note_Editor_WindowsForm</div>
-                            <div class="about_section">
-                            <span style="display:none;">undefined</span>
-                            </div>
-                            <div class="bottom_section">
-                                <span style="display:inline-block;"><i class="fas fa-code"></i>&nbsp; C#</span>
-                                <span><i class="fas fa-star"></i>&nbsp; 0</span>
-                                <span><i class="fas fa-code-branch"></i>&nbsp; 0</span>
-                            </div>
-                        </section>
-                        </a>
-                        <a href="https://github.com/KenanAegean/Pattern_Search_Algorithms" target="_blank">
-                        <section>
-                            <div class="section_title">Pattern_Search_Algorithms</div>
-                            <div class="about_section">
-                            <span style="display:none;">undefined</span>
-                            </div>
-                            <div class="bottom_section">
-                                <span style="display:inline-block;"><i class="fas fa-code"></i>&nbsp; C++</span>
-                                <span><i class="fas fa-star"></i>&nbsp; 0</span>
-                                <span><i class="fas fa-code-branch"></i>&nbsp; 0</span>
-                            </div>
-                        </section>
-                        </a>
-                        <a href="https://github.com/KenanAegean/PixLock-2D-unity-game" target="_blank">
-                        <section>
-                            <div class="section_title">PixLock-2D-unity-game</div>
-                            <div class="about_section">
-                            <span style="display:block;">PixLock 2D unity game</span>
-                            </div>
-                            <div class="bottom_section">
-                                <span style="display:inline-block;"><i class="fas fa-code"></i>&nbsp; C#</span>
-                                <span><i class="fas fa-star"></i>&nbsp; 0</span>
-                                <span><i class="fas fa-code-branch"></i>&nbsp; 0</span>
-                            </div>
-                        </section>
-                        </a>
-                        <a href="https://github.com/KenanAegean/Quiz-app-DotNet" target="_blank">
-                        <section>
-                            <div class="section_title">Quiz-app-DotNet</div>
-                            <div class="about_section">
-                            <span style="display:none;">undefined</span>
-                            </div>
-                            <div class="bottom_section">
-                                <span style="display:inline-block;"><i class="fas fa-code"></i>&nbsp; C#</span>
-                                <span><i class="fas fa-star"></i>&nbsp; 0</span>
-                                <span><i class="fas fa-code-branch"></i>&nbsp; 0</span>
-                            </div>
-                        </section>
-                        </a>
-                        <a href="https://github.com/KenanAegean/UE5_DEMO_PROJECT" target="_blank">
-                        <section>
-                            <div class="section_title">UE5_DEMO_PROJECT</div>
-                            <div class="about_section">
-                            <span style="display:none;">undefined</span>
-                            </div>
-                            <div class="bottom_section">
-                                <span style="display:none;"><i class="fas fa-code"></i>&nbsp; null</span>
-                                <span><i class="fas fa-star"></i>&nbsp; 0</span>
-                                <span><i class="fas fa-code-branch"></i>&nbsp; 0</span>
-                            </div>
-                        </section>
-                        </a>
-                        <a href="https://github.com/KenanAegean/WayEscape-2D-Unity-Game-Demo" target="_blank">
-                        <section>
-                            <div class="section_title">WayEscape-2D-Unity-Game-Demo</div>
-                            <div class="about_section">
-                            <span style="display:block;">WayEscape - 2D Unity Game Demo</span>
-                            </div>
-                            <div class="bottom_section">
-                                <span style="display:inline-block;"><i class="fas fa-code"></i>&nbsp; C#</span>
-                                <span><i class="fas fa-star"></i>&nbsp; 0</span>
-                                <span><i class="fas fa-code-branch"></i>&nbsp; 0</span>
-                            </div>
-                        </section>
-                        </a>
-                        <a href="https://github.com/KenanAegean/World-Cup-2022-Stadiums-App-Android-Studio" target="_blank">
-                        <section>
-                            <div class="section_title">World-Cup-2022-Stadiums-App-Android-Studio</div>
-                            <div class="about_section">
-                            <span style="display:block;">Euro 2022 Stadiums App Android Studio</span>
-                            </div>
-                            <div class="bottom_section">
-                                <span style="display:inline-block;"><i class="fas fa-code"></i>&nbsp; Java</span>
-                                <span><i class="fas fa-star"></i>&nbsp; 0</span>
-                                <span><i class="fas fa-code-branch"></i>&nbsp; 0</span>
-                            </div>
-                        </section>
-                        </a></div>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kenan EGE</title>
+
+  <!--
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./assets/images/logo.ico" type="image/x-icon">
+
+  <!--
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!--
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!--
+    - #MAIN
+  -->
+
+  <main>
+
+    <!--
+      - #SIDEBAR
+    -->
+
+    <aside class="sidebar" data-sidebar>
+
+      <div class="sidebar-info">
+
+        <figure class="avatar-box">
+          <img src="./assets/images/logo5.png" alt="Kenan Ege" width="80">
+        </figure>
+
+        <div class="info-content">
+          <h1 class="name" title="Kenan Ege">Kenan EGE</h1>
+
+          <p class="title">Game Developer <br> Computer Engineer</p>
+        
+        </div>
+
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Contacts</span>
+
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+
       </div>
-      <div id="forks" style="display:none;">
-        <h1>Forks.</h1>
-        <div class="projects" id="forks_section"></div>
-      </div>
-      <div id="blog_section">
-        <h1>Blog.</h1>
-        <div id="blogs"></div>
-      </div>
-      <div id="footer">
-        <a href="https://kenanege.com" target="_blank">Kenan EGE</a>
-      </div>
-    </div>
-    <script type="text/javascript">
-      setTimeout(function() {
-        document.getElementById("loading").classList.add("animated");
-        document.getElementById("loading").classList.add("fadeOut");
-        setTimeout(function() {
-          document.getElementById("loading").classList.remove("animated");
-          document.getElementById("loading").classList.remove("fadeOut");
-          document.getElementById("loading").style.display = "none";
-        }, 800);
-      }, 1500);
-      $.getJSON("blog.json", function(blog) {
-        blog = blog || [];
-        if (blog.length == 0) {
-          return (document.getElementById("blog_section").style.display =
-            "none");
-        }
-        for (var i = 0; i < blog.length; i++) {
-          $("#blogs").append(`
-            <a href="./blog/${blog[i].url_title}/" target="_blank">
-                <section>
-                    <img src="./blog/${blog[i].url_title}/${blog[i].top_image}">
-                    <div class="blog_container">
-                        <div class="section_title">${blog[i].title}</div>
-                        <div class="about_section">
-                            ${blog[i].sub_title}
-                        </div>
-                    </div>
-                </section>
+
+      <div class="sidebar-info_more">
+
+        <div class="separator"></div>
+
+        <ul class="contacts-list">
+
+          <!-- <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+
+              <a href="mailto:richard@example.com" class="contact-link">richard@example.com</a>
+            </div>
+
+          </li>
+
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="phone-portrait-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Phone</p>
+
+              <a href="tel:+12133522795" class="contact-link">+1 (213) 352-2795</a>
+            </div>
+
+          </li> -->
+
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="calendar-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Nickname</p>
+
+              <time datetime="1982-06-23">Kaegean</time>
+            </div>
+
+          </li>
+          
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="calendar-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Birthday</p>
+
+              <time datetime="1982-06-23">December 7, 1999</time>
+            </div>
+
+          </li>
+
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="location-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Location</p>
+
+              <address>Istanbul, TUR</address>
+            </div>
+
+          </li>
+
+        </ul>
+
+        <div class="separator"></div>
+
+        <ul class="social-list">
+
+          <li class="social-item">
+            <a href="#" class="social-link">
+              <ion-icon name="logo-github"></ion-icon>
             </a>
-            `);
-        }
-      }).fail(function() {
-        return (document.getElementById("blog_section").style.display = "none");
-      });
-    </script>
+          </li>
 
-    <script>
-      const magicProjectsGrid = new MagicGrid({
-        container: "#work_section",
-        animate: false,
-        gutter: 30, // default gutter size
-        static: true,
-        useMin: false,
-        maxColumns: 2,
-        useTransform: true
-      });
+          <li class="social-item">
+            <a href="#" class="social-link">
+              <ion-icon name="logo-linkedin"></ion-icon>
+            </a>
+          </li>
 
-      const magicForksGrid = new MagicGrid({
-        container: "#forks_section",
-        animate: false,
-        gutter: 30, // default gutter size
-        static: true,
-        useMin: false,
-        maxColumns: 2,
-        useTransform: true
-      });
+          <li class="social-item">
+            <a href="#" class="social-link">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+          </li>
 
-      $("document").ready(() => {
-        magicProjectsGrid.listen();
-        magicForksGrid.listen();
-      });
-    </script>
-  
+          <li class="social-item">
+            <a href="#" class="social-link">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+          </li>
 
-</body></html>
+          <li class="social-item">
+            <a href="#" class="social-link">
+              <ion-icon name="logo-spotify"></ion-icon>
+            </a>
+          </li>
+
+          <li class="social-item">
+            <a href="#" class="social-link">
+              <ion-icon name="logo-youtube"></ion-icon>
+            </a>
+          </li>
+
+          <li class="social-item">
+            <a href="#" class="social-link">
+              <ion-icon name="logo-soundcloud"></ion-icon>
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </aside>
+
+
+
+
+
+    <!--
+      - #main-content
+    -->
+
+    <div class="main-content">
+
+      <!--
+        - #NAVBAR
+      -->
+
+      <nav class="navbar">
+
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <button class="navbar-link  active" data-nav-link>About</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Resume</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Portfolio</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Contact</button>
+          </li>
+
+        </ul>
+
+      </nav>
+
+
+
+
+
+      <!--
+        - #ABOUT
+      -->
+
+      <article class="about  active" data-page="about">
+
+        <header>
+          <h2 class="h2 article-title">About me 👾</h2>
+        </header>
+
+        <section class="about-text">
+          <p>
+            Hi 👾, I'm Kenan
+          </p>
+
+          <p>
+            A passionate Computer Engineer from Turkey! <br> I am really into Game Development  <br> I am currently exploring huge openworld, looking for stories that worth to tell and worth to experienced.  <br> 🎮
+          </p>
+        </section>
+
+
+        <!--
+          - service
+        -->
+
+        <section class="service">
+
+          <h3 class="h3 service-title">What i'm doing 🎮</h3>
+
+          <ul class="service-list">
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-design.svg
+                " alt="design icon" width="40">
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Web design</h4>
+
+                <p class="service-item-text">
+                  The most modern and high-quality design made at a professional level.
+                </p>
+              </div>
+
+            </li>
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-dev.svg" alt="Web development icon" width="40">
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Web development</h4>
+
+                <p class="service-item-text">
+                  High-quality development of sites at the professional level.
+                </p>
+              </div>
+
+            </li>
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-app.svg" alt="mobile app icon" width="40">
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Mobile apps</h4>
+
+                <p class="service-item-text">
+                  Professional development of applications for iOS and Android.
+                </p>
+              </div>
+
+            </li>
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-photo.svg" alt="camera icon" width="40">
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Photography</h4>
+
+                <p class="service-item-text">
+                  I make high-quality photos of any category at a professional level.
+                </p>
+              </div>
+
+            </li>
+
+          </ul>
+
+        </section>
+
+
+        
+
+
+        <!--
+          - testimonials modal
+        -->
+
+        <div class="modal-container" data-modal-container>
+
+          <div class="overlay" data-overlay></div>
+
+          <section class="testimonials-modal">
+
+            <button class="modal-close-btn" data-modal-close-btn>
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+
+            <div class="modal-img-wrapper">
+              <figure class="modal-avatar-box">
+                <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="80" data-modal-img>
+              </figure>
+
+              <img src="./assets/images/icon-quote.svg" alt="quote icon">
+            </div>
+
+            <div class="modal-content">
+
+              <h4 class="h3 modal-title" data-modal-title>Daniel lewis</h4>
+
+              <time datetime="2021-06-14">14 June, 2021</time>
+
+              <div data-modal-text>
+                <p>
+                  Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
+                  lot of experience
+                  and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
+                  consectetur adipiscing
+                  elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
+                </p>
+              </div>
+
+            </div>
+
+          </section>
+
+        </div>
+
+
+      </article>
+
+
+
+
+
+      <!--
+        - #RESUME
+      -->
+
+      <article class="resume" data-page="resume">
+
+        <header>
+          <h2 class="h2 article-title">Resume 👾</h2>
+        </header>
+
+        <section class="timeline">
+
+          <div class="title-wrapper">
+            <div class="icon-box">
+              <ion-icon name="book-outline"></ion-icon>
+            </div>
+
+            <h3 class="h3">Education</h3>
+          </div>
+
+          <ol class="timeline-list">
+
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">FutureGames Academy</h4>
+
+              <span>2024 — Present</span>
+
+              <p class="timeline-text">
+                Nemo enims ipsam voluptatem, blanditiis praesentium voluptum delenit atque corrupti, quos dolores et
+                quas molestias
+                exceptur.
+              </p>
+
+            </li>
+
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">University Of Lodz</h4>
+
+              <span>2022 — 2022</span>
+
+              <p class="timeline-text">
+                Ratione voluptatem sequi nesciunt, facere quisquams facere menda ossimus, omnis voluptas assumenda est
+                omnis..
+              </p>
+
+            </li>
+
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">Doğuş University</h4>
+
+              <span>2018 — 2023</span>
+
+              <p class="timeline-text">
+                Duis aute irure dolor in reprehenderit in voluptate, quila voluptas mag odit aut fugit, sed consequuntur
+                magni dolores
+                eos.
+              </p>
+
+            </li>
+
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">Esra Karakaya Anatolian High School</h4>
+
+              <span>2017 — 2018</span>
+
+              <p class="timeline-text">
+                Duis aute irure dolor in reprehenderit in voluptate, quila voluptas mag odit aut fugit, sed consequuntur
+                magni dolores
+                eos.
+              </p>
+
+            </li>
+
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">Ortaklar Science High School</h4>
+
+              <span>2014 — 2017</span>
+
+              <p class="timeline-text">
+                Duis aute irure dolor in reprehenderit in voluptate, quila voluptas mag odit aut fugit, sed consequuntur
+                magni dolores
+                eos.
+              </p>
+
+            </li>
+
+          </ol>
+
+        </section>
+
+        <section class="timeline">
+
+          <div class="title-wrapper">
+            <div class="icon-box">
+              <ion-icon name="book-outline"></ion-icon>
+            </div>
+
+            <h3 class="h3">Experience</h3>
+          </div>
+
+          <ol class="timeline-list">
+
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">Orion Innovation</h4>
+              <h5 class="h5 timeline-item-title">Junior Software QA Engineer</h5>
+
+              <span>March 2023 — September 2024</span>
+
+              <p class="timeline-text">
+                &#x2022; Java Bug Fixing <br>
+                &#x2022; Testing and Debugging <br>
+                &#x2022; Jira Tasks Solving              
+              </p>
+
+              <br>
+              <h5 class="h5 timeline-item-title">Intern</h5>
+
+              <span>August 2022 - October 2022</span>
+
+              <p class="timeline-text">
+                &#x2022; Traffic Test Team <br>
+                &#x2022; Builded Web Application Project With Using Java Spring Boot. In Company Project For
+                Reservating Test-Working Enviromnets
+              </p>
+
+            </li>
+
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">BDH - NETAŞ</h4>
+              <h5 class="h5 timeline-item-title">Intern</h5>
+
+              <span>August 2021 - September 2021</span>
+
+              <p class="timeline-text">
+                &#x2022; Learned How Salesforce Cloud Platform Works.
+              </p>
+
+            </li>
+
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">Didim Yachting and Sailing Club</h4>
+              <h5 class="h5 timeline-item-title">Team Member</h5>
+
+              <span>August 2021 - September 2021</span>
+
+              <p class="timeline-text">
+                &#x2022; Responsible Team Member for Arrangement of Sailing Goods/Parts<br>
+                &#x2022; Assistant Trainer Fot Begginers
+              </p>
+
+            </li>
+
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">Biltek Design and Software A.Ş.</h4>
+              <h5 class="h5 timeline-item-title">Intern</h5>
+
+              <span>September 2018 - November 2019</span>
+
+              <p class="timeline-text">
+                &#x2022; Observing/Learning How The Internal Functioning of The Company Is<br>
+                &#x2022; Learn about creating websites using HTML, CSS, PHP
+              </p>
+
+            </li>
+
+          </ol>
+
+        </section>
+
+        <section class="skill">
+
+          <h3 class="h3 skills-title">My skills</h3>
+
+          <ul class="skills-list content-card">
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">C++</h5>
+                <data value="80"></data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 80%;"></div>
+              </div>
+
+            </li>
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">C#</h5>
+                <data value="80"></data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 80%;"></div>
+              </div>
+
+            </li>
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">Python</h5>
+                <data value="60"></data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 60%;"></div>
+              </div>
+
+            </li>
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">Html</h5>
+                <data value="40"></data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 40%;"></div>
+              </div>
+
+            </li>
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">CSS</h5>
+                <data value="40"></data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 40%;"></div>
+              </div>
+
+            </li>
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">Java Spring</h5>
+                <data value="45"></data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 45%;"></div>
+              </div>
+
+            </li>
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">Java</h5>
+                <data value="65"></data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 65%;"></div>
+              </div>
+
+            </li>
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">Django</h5>
+                <data value="75"></data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 75%;"></div>
+              </div>
+
+            </li>
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">Unity</h5>
+                <data value="75"></data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 75%;"></div>
+              </div>
+
+            </li>
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">Unreal Engine</h5>
+                <data value="25"></data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 25%;"></div>
+              </div>
+
+            </li>
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">Adobe Illustrator</h5>
+                <data value="80"></data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 80%;"></div>
+              </div>
+
+            </li>
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">Adobe Photoshop</h5>
+                <data value="70"></data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 70%;"></div>
+              </div>
+
+            </li>
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">Android Studio</h5>
+                <data value="50"></data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 50%;"></div>
+              </div>
+
+            </li>
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">Salesforce</h5>
+                <data value="50"></data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 50%;"></div>
+              </div>
+
+            </li>
+
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">English - B2 Pearson English Preparatory Programme Certificate</h5>
+                <data value="85"></data>
+              </div>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 85%;"></div>
+              </div>
+
+            </li>
+
+          </ul>
+
+        </section>
+
+      </article>
+
+
+
+
+
+      <!--
+        - #PORTFOLIO
+      -->
+
+      <article class="portfolio" data-page="portfolio">
+
+        <header>
+          <h2 class="h2 article-title">Portfolio 👾</h2>
+        </header>
+
+        <section class="projects">
+
+          <ul class="filter-list">
+
+            <li class="filter-item">
+              <button class="active" data-filter-btn>All</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>Web design</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>Applications</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>Web development</button>
+            </li>
+
+          </ul>
+
+          <div class="filter-select-box">
+
+            <button class="filter-select" data-select>
+
+              <div class="select-value" data-selecct-value>Select category</div>
+
+              <div class="select-icon">
+                <ion-icon name="chevron-down"></ion-icon>
+              </div>
+
+            </button>
+
+            <ul class="select-list">
+
+              <li class="select-item">
+                <button data-select-item>All</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Web design</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Applications</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Web development</button>
+              </li>
+
+            </ul>
+
+          </div>
+
+          <ul class="project-list">
+
+            <li class="project-item  active" data-filter-item data-category="web development">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-1.jpg" alt="finance" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">Finance</h3>
+
+                <p class="project-category">Web development</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="web development">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-2.png" alt="orizon" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">Orizon</h3>
+
+                <p class="project-category">Web development</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="web design">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-3.jpg" alt="fundo" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">Fundo</h3>
+
+                <p class="project-category">Web design</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="applications">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-4.png" alt="brawlhalla" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">Brawlhalla</h3>
+
+                <p class="project-category">Applications</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="web design">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-5.png" alt="dsm." loading="lazy">
+                </figure>
+
+                <h3 class="project-title">DSM.</h3>
+
+                <p class="project-category">Web design</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="web design">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-6.png" alt="metaspark" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">MetaSpark</h3>
+
+                <p class="project-category">Web design</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="web development">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-7.png" alt="summary" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">Summary</h3>
+
+                <p class="project-category">Web development</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="applications">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-8.jpg" alt="task manager" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">Task Manager</h3>
+
+                <p class="project-category">Applications</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="web development">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-9.png" alt="arrival" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">Arrival</h3>
+
+                <p class="project-category">Web development</p>
+
+              </a>
+            </li>
+
+          </ul>
+
+        </section>
+
+      </article>
+
+
+
+
+
+      <!--
+        - #CONTACT
+      -->
+
+      <article class="contact" data-page="contact">
+
+        <header>
+          <h2 class="h2 article-title">Contact 👾</h2>
+        </header>
+
+        <section class="mapbox" data-mapbox>
+          <figure>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d199666.5651251294!2d-121.58334177520186!3d38.56165006739519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x809ac672b28397f9%3A0x921f6aaa74197fdb!2sSacramento%2C%20CA%2C%20USA!5e0!3m2!1sen!2sbd!4v1647608789441!5m2!1sen!2sbd"
+              width="400" height="300" loading="lazy"></iframe>
+          </figure>
+        </section>
+
+        <section class="contact-form">
+
+          <h3 class="h3 form-title">Contact Form</h3>
+
+          <form action="#" class="form" data-form>
+
+            <div class="input-wrapper">
+              <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
+
+              <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
+            </div>
+
+            <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
+
+            <button class="form-btn" type="submit" disabled data-form-btn>
+              <ion-icon name="paper-plane"></ion-icon>
+              <span>Send Message</span>
+            </button>
+
+          </form>
+
+        </section>
+
+      </article>
+
+    </div>
+
+  </main>
+
+
+
+
+
+
+  <!--
+    - custom js link
+  -->
+  <script src="./assets/js/script.js"></script>
+
+  <!--
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
