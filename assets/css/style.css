@@ -1896,4 +1896,12 @@ textarea.form-input::-webkit-resizer { display: none; }
     /* This applies Spotify green as a hover effect */
   }
 
+  /* Adjust icon size for smaller screens */
+  @media (max-width: 768px) {
+    .social-item img.spotify-icon {
+      width: 10px; /* Smaller size for mobile */
+      height: 10px;
+    }
+  }
+
 }
