@@ -1879,4 +1879,21 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .timeline-text { max-width: 700px; }
 
+  
+  /**
+	 * spotify icon
+	 */
+  
+  .social-item img.spotify-icon {
+    width: 16px; /* Adjust to match other icon sizes */
+    height: 16px;
+    filter: invert(1) brightness(60%);; /* Makes the SVG white if it’s originally black */
+    transition: filter 0.3s ease;
+  }
+  
+  .social-item a:hover img.spotify-icon {
+    filter: invert(1);
+    /* This applies Spotify green as a hover effect */
+  }
+
 }
