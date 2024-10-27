@@ -157,3 +157,19 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
   });
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+  const skillsList = document.querySelector('.skills-list');
+  const skillsItems = Array.from(skillsList.querySelectorAll('.skills-item'));
+
+  // Sort skills alphabetically by the skill title
+  skillsItems.sort((a, b) => {
+    const skillA = a.querySelector('h5').innerText.toLowerCase();
+    const skillB = b.querySelector('h5').innerText.toLowerCase();
+    return skillA.localeCompare(skillB);
+  });
+
+  // Clear the skills list and append sorted skills
+  skillsList.innerHTML = '';
+  skillsItems.forEach(skill => skillsList.appendChild(skill));
+});
