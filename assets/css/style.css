@@ -1884,23 +1884,30 @@ textarea.form-input::-webkit-resizer { display: none; }
 	 * spotify icon
 	 */
   
+  /* Default icon styling for desktop */
   .social-item img.spotify-icon {
-    width: 16px; /* Adjust to match other icon sizes */
-    height: 16px;
-    filter: invert(1) brightness(60%);; /* Makes the SVG white if it’s originally black */
+    width: 16px !important;
+    height: 16px !important;
+    filter: grayscale(100%) brightness(70%);
     transition: filter 0.3s ease;
   }
-  
+
+  /* Hover effect to turn the icon white */
   .social-item a:hover img.spotify-icon {
-    filter: invert(1);
-    /* This applies Spotify green as a hover effect */
+    filter: grayscale(0%) brightness(100%);
   }
 
-  /* Adjust icon size for smaller screens */
+  /* Mobile adjustments */
   @media (max-width: 768px) {
     .social-item img.spotify-icon {
-      width: 10px; /* Smaller size for mobile */
-      height: 10px;
+      width: 16px !important;
+      height: 16px !important;
+      filter: grayscale(100%) brightness(70%);
+    }
+
+    /* Mobile hover effect */
+    .social-item a:hover img.spotify-icon {
+      filter: grayscale(0%) brightness(100%);
     }
   }
 
