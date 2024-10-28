@@ -957,6 +957,7 @@ main {
 
 #github {
   width: 100%;
+  height: fit-content;
   border-radius: 0px;
 }
 
