@@ -173,3 +173,65 @@ document.addEventListener("DOMContentLoaded", function() {
   skillsList.innerHTML = '';
   skillsItems.forEach(skill => skillsList.appendChild(skill));
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Select the project list and all project items
+  const projectList = document.querySelector(".project-list");
+  if (!projectList) {
+    console.error("Project list not found!");
+    return;
+  }
+
+  const projectItems = Array.from(projectList.querySelectorAll(".project-item"));
+
+  // Check if there are any items to sort
+  if (projectItems.length === 0) {
+    console.error("No project items found to sort!");
+    return;
+  }
+
+  // Sort items by category, data-value, and alphabetically by title
+  projectItems.sort((a, b) => {
+    const categoryA = a.getAttribute("data-category")?.toLowerCase() || "";
+    const categoryB = b.getAttribute("data-category")?.toLowerCase() || "";
+    const valueA = parseInt(a.getAttribute("data-value"), 10) || 0;
+    const valueB = parseInt(b.getAttribute("data-value"), 10) || 0;
+
+    const titleElementA = a.querySelector(".project-title");
+    const titleElementB = b.querySelector(".project-title");
+    const titleA = titleElementA ? titleElementA.textContent.trim().toLowerCase() : "";
+    const titleB = titleElementB ? titleElementB.textContent.trim().toLowerCase() : "";
+
+    // First, sort by category
+    if (categoryA !== categoryB) {
+      return categoryA.localeCompare(categoryB);
+    }
+    // Then, sort by data-value in descending order
+    if (valueA !== valueB) {
+      return valueB - valueA;
+    }
+    // Finally, sort alphabetically by title if values are identical
+    return titleA.localeCompare(titleB);
+  });
+
+  // Log sorted order of titles to verify sorting
+  console.log("Sorted order of titles:");
+  projectItems.forEach(item => {
+    const titleElement = item.querySelector(".project-title");
+    const title = titleElement ? titleElement.textContent.trim() : "No title found";
+    console.log(title);
+  });
+
+  // Clear the current list and append sorted items
+  projectList.innerHTML = ""; // Clear existing content
+  projectItems.forEach(item => projectList.appendChild(item)); // Append sorted items
+});
+
+
+
+
+
+
+
+
+
