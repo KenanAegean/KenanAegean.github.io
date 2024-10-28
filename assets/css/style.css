@@ -950,6 +950,11 @@ main {
   margin-bottom: 15px;
 }
 
+#steam {
+  height: 100%;
+  border-radius: 0px;
+}
+
 .project-img::before {
   content: "";
   position: absolute;
