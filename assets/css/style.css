@@ -955,6 +955,11 @@ main {
   border-radius: 0px;
 }
 
+#github {
+  width: 100%;
+  border-radius: 0px;
+}
+
 .project-img::before {
   content: "";
   position: absolute;
