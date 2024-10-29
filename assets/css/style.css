@@ -475,6 +475,15 @@ main {
 
 .navbar-link.active { color: var(--orange-yellow-crayola); }
 
+/* Style for active page content */
+.page-content {
+  display: none; /* Hide all content sections by default */
+}
+
+.page-content.active {
+  display: block; /* Show only the active content */
+}
+
 
 
 
