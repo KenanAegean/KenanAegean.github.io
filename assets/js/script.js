@@ -1,237 +1,115 @@
 'use strict';
 
+$(document).ready(function() {
+    // Load head and navbar sections
+    $("#head-placeholder").load("head.html");
+    $("#navbar-placeholder").load("navbar.html");
 
+    // Load sidebar and attach event listener after loading
+    $("#sidebar-placeholder").load("sidebar.html", function() {
+        console.log("sidebar loaded");
+        // Attach toggle event to .info_more-btn after sidebar is loaded
+        $("#sidebar-placeholder").on("click", ".info_more-btn", function() {
+            $(".sidebar").toggleClass("active");
+        });
+    });
 
-// element toggle function
-const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
+    // Load the about section initially
+    $("#about-placeholder").load("about.html").show();
 
+    // Attach click event for navbar links for page navigation
+    $(document).on("click", ".navbar-link", function() {
+        $(".navbar-link").removeClass("active");
+        $(this).addClass("active");
 
+        // Determine which section to load based on clicked link
+        const page = $(this).text().trim().toLowerCase();
 
-// sidebar variables
-const sidebar = document.querySelector("[data-sidebar]");
-const sidebarBtn = document.querySelector("[data-sidebar-btn]");
-
-// sidebar toggle functionality for mobile
-sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
-
-
-
-// testimonials variables
-const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
-const modalContainer = document.querySelector("[data-modal-container]");
-const modalCloseBtn = document.querySelector("[data-modal-close-btn]");
-const overlay = document.querySelector("[data-overlay]");
-
-// modal variable
-const modalImg = document.querySelector("[data-modal-img]");
-const modalTitle = document.querySelector("[data-modal-title]");
-const modalText = document.querySelector("[data-modal-text]");
-
-// modal toggle function
-const testimonialsModalFunc = function () {
-  modalContainer.classList.toggle("active");
-  overlay.classList.toggle("active");
-}
-
-// add click event to all modal items
-for (let i = 0; i < testimonialsItem.length; i++) {
-
-  testimonialsItem[i].addEventListener("click", function () {
-
-    modalImg.src = this.querySelector("[data-testimonials-avatar]").src;
-    modalImg.alt = this.querySelector("[data-testimonials-avatar]").alt;
-    modalTitle.innerHTML = this.querySelector("[data-testimonials-title]").innerHTML;
-    modalText.innerHTML = this.querySelector("[data-testimonials-text]").innerHTML;
-
-    testimonialsModalFunc();
-
-  });
-
-}
-
-// add click event to modal close button
-modalCloseBtn.addEventListener("click", testimonialsModalFunc);
-overlay.addEventListener("click", testimonialsModalFunc);
-
-
-
-// custom select variables
-const select = document.querySelector("[data-select]");
-const selectItems = document.querySelectorAll("[data-select-item]");
-const selectValue = document.querySelector("[data-selecct-value]");
-const filterBtn = document.querySelectorAll("[data-filter-btn]");
-
-select.addEventListener("click", function () { elementToggleFunc(this); });
-
-// add event in all select items
-for (let i = 0; i < selectItems.length; i++) {
-  selectItems[i].addEventListener("click", function () {
-
-    let selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
-    elementToggleFunc(select);
-    filterFunc(selectedValue);
-
-  });
-}
-
-// filter variables
-const filterItems = document.querySelectorAll("[data-filter-item]");
-
-const filterFunc = function (selectedValue) {
-
-  for (let i = 0; i < filterItems.length; i++) {
-
-    if (selectedValue === "all") {
-      filterItems[i].classList.add("active");
-    } else if (selectedValue === filterItems[i].dataset.category) {
-      filterItems[i].classList.add("active");
-    } else {
-      filterItems[i].classList.remove("active");
-    }
-
-  }
-
-}
-
-// add event in all filter button items for large screen
-let lastClickedBtn = filterBtn[0];
-
-for (let i = 0; i < filterBtn.length; i++) {
-
-  filterBtn[i].addEventListener("click", function () {
-
-    let selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
-    filterFunc(selectedValue);
-
-    lastClickedBtn.classList.remove("active");
-    this.classList.add("active");
-    lastClickedBtn = this;
-
-  });
-
-}
-
-
-
-// contact form variables
-const form = document.querySelector("[data-form]");
-const formInputs = document.querySelectorAll("[data-form-input]");
-const formBtn = document.querySelector("[data-form-btn]");
-
-// add event to all form input field
-for (let i = 0; i < formInputs.length; i++) {
-  formInputs[i].addEventListener("input", function () {
-
-    // check form validation
-    if (form.checkValidity()) {
-      formBtn.removeAttribute("disabled");
-    } else {
-      formBtn.setAttribute("disabled", "");
-    }
-
-  });
-}
-
-
-
-// page navigation variables
-const navigationLinks = document.querySelectorAll("[data-nav-link]");
-const pages = document.querySelectorAll("[data-page]");
-
-// add event to all nav link
-for (let i = 0; i < navigationLinks.length; i++) {
-  navigationLinks[i].addEventListener("click", function () {
-
-    for (let i = 0; i < pages.length; i++) {
-      if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
-        pages[i].classList.add("active");
-        navigationLinks[i].classList.add("active");
-        window.scrollTo(0, 0);
-      } else {
-        pages[i].classList.remove("active");
-        navigationLinks[i].classList.remove("active");
-      }
-    }
-
-  });
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-  const skillsList = document.querySelector('.skills-list');
-  const skillsItems = Array.from(skillsList.querySelectorAll('.skills-item'));
-
-  // Sort skills alphabetically by the skill title
-  skillsItems.sort((a, b) => {
-    const skillA = a.querySelector('h5').innerText.toLowerCase();
-    const skillB = b.querySelector('h5').innerText.toLowerCase();
-    return skillA.localeCompare(skillB);
-  });
-
-  // Clear the skills list and append sorted skills
-  skillsList.innerHTML = '';
-  skillsItems.forEach(skill => skillsList.appendChild(skill));
+        // Hide all sections and load the selected one
+        $(".content-section").hide();
+        if (page === "about") {
+            $("#about-placeholder").load("about.html").show();
+        } else if (page === "resume") {
+            $("#resume-placeholder").load("resume.html").show();
+        } else if (page === "portfolio") {
+            $("#portfolio-placeholder").load("portfolio.html").show();
+        } else if (page === "contact") {
+            $("#contact-placeholder").load("contact.html").show();
+        }
+    });
 });
 
+// Additional functions
 document.addEventListener("DOMContentLoaded", function () {
-  // Select the project list and all project items
-  const projectList = document.querySelector(".project-list");
-  if (!projectList) {
-    console.error("Project list not found!");
-    return;
-  }
-
-  const projectItems = Array.from(projectList.querySelectorAll(".project-item"));
-
-  // Check if there are any items to sort
-  if (projectItems.length === 0) {
-    console.error("No project items found to sort!");
-    return;
-  }
-
-  // Sort items by category, data-value, and alphabetically by title
-  projectItems.sort((a, b) => {
-    const categoryA = a.getAttribute("data-category")?.toLowerCase() || "";
-    const categoryB = b.getAttribute("data-category")?.toLowerCase() || "";
-    const valueA = parseInt(a.getAttribute("data-value"), 10) || 0;
-    const valueB = parseInt(b.getAttribute("data-value"), 10) || 0;
-
-    const titleElementA = a.querySelector(".project-title");
-    const titleElementB = b.querySelector(".project-title");
-    const titleA = titleElementA ? titleElementA.textContent.trim().toLowerCase() : "";
-    const titleB = titleElementB ? titleElementB.textContent.trim().toLowerCase() : "";
-
-    // First, sort by category
-    if (categoryA !== categoryB) {
-      return categoryA.localeCompare(categoryB);
+    // Sidebar variables and event listener
+    const sidebar = document.querySelector("[data-sidebar]");
+    const sidebarBtn = document.querySelector("[data-sidebar-btn]");
+    
+    if (sidebarBtn) {
+        sidebarBtn.addEventListener("click", function () {
+            if (sidebar) {
+                sidebar.classList.toggle("active");
+            }
+        });
     }
-    // Then, sort by data-value in descending order
-    if (valueA !== valueB) {
-      return valueB - valueA;
+
+    // Testimonials modal logic
+    const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
+    const modalContainer = document.querySelector("[data-modal-container]");
+    const modalCloseBtn = document.querySelector("[data-modal-close-btn]");
+    const overlay = document.querySelector("[data-overlay]");
+
+    if (modalContainer && overlay && modalCloseBtn) {
+        const testimonialsModalFunc = function () {
+            modalContainer.classList.toggle("active");
+            overlay.classList.toggle("active");
+        };
+
+        testimonialsItem.forEach(item => {
+            item.addEventListener("click", function () {
+                const modalImg = document.querySelector("[data-modal-img]");
+                const modalTitle = document.querySelector("[data-modal-title]");
+                const modalText = document.querySelector("[data-modal-text]");
+
+                if (modalImg && modalTitle && modalText) {
+                    modalImg.src = item.querySelector("[data-testimonials-avatar]").src;
+                    modalImg.alt = item.querySelector("[data-testimonials-avatar]").alt;
+                    modalTitle.innerHTML = item.querySelector("[data-testimonials-title]").innerHTML;
+                    modalText.innerHTML = item.querySelector("[data-testimonials-text]").innerHTML;
+                }
+                testimonialsModalFunc();
+            });
+        });
+
+        modalCloseBtn.addEventListener("click", testimonialsModalFunc);
+        overlay.addEventListener("click", testimonialsModalFunc);
     }
-    // Finally, sort alphabetically by title if values are identical
-    return titleA.localeCompare(titleB);
-  });
 
-  // Log sorted order of titles to verify sorting
-  console.log("Sorted order of titles:");
-  projectItems.forEach(item => {
-    const titleElement = item.querySelector(".project-title");
-    const title = titleElement ? titleElement.textContent.trim() : "No title found";
-    console.log(title);
-  });
+    // Skills sorting
+    const skillsList = document.querySelector('.skills-list');
+    if (skillsList) {
+        const skillsItems = Array.from(skillsList.querySelectorAll('.skills-item'));
+        skillsItems.sort((a, b) => a.querySelector('h5').innerText.localeCompare(b.querySelector('h5').innerText));
+        skillsList.innerHTML = '';
+        skillsItems.forEach(item => skillsList.appendChild(item));
+    }
 
-  // Clear the current list and append sorted items
-  projectList.innerHTML = ""; // Clear existing content
-  projectItems.forEach(item => projectList.appendChild(item)); // Append sorted items
+    // Project sorting logic
+    const projectList = document.querySelector(".project-list");
+    if (projectList) {
+        const projectItems = Array.from(projectList.querySelectorAll(".project-item"));
+        projectItems.sort((a, b) => {
+            const categoryA = a.dataset.category.toLowerCase();
+            const categoryB = b.dataset.category.toLowerCase();
+            const valueA = parseInt(a.dataset.value, 10) || 0;
+            const valueB = parseInt(b.dataset.value, 10) || 0;
+
+            if (categoryA !== categoryB) return categoryA.localeCompare(categoryB);
+            if (valueA !== valueB) return valueB - valueA;
+            return a.querySelector(".project-title").textContent.localeCompare(b.querySelector(".project-title").textContent);
+        });
+
+        projectList.innerHTML = '';
+        projectItems.forEach(item => projectList.appendChild(item));
+    }
 });
-
-
-
-
-
-
-
-
-
