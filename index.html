@@ -11,25 +11,58 @@
         <!-- Main content sections -->
         <div class="main-content">
             <div id="navbar-placeholder"></div>
-            <div id="about-placeholder"></div>
-            <div id="resume-placeholder"></div>
-            <div id="portfolio-placeholder"></div>
-            <div id="contact-placeholder"></div>
+            <div id="about-placeholder" class="content-section"></div>
+            <div id="resume-placeholder" class="content-section"></div>
+            <div id="portfolio-placeholder" class="content-section"></div>
+            <div id="contact-placeholder" class="content-section"></div>
         </div>
     </main>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
+            // Load head and navbar sections
             $("#head-placeholder").load("head.html");
-            $("#sidebar-placeholder").load("sidebar.html");
             $("#navbar-placeholder").load("navbar.html");
-            $("#about-placeholder").load("about.html");
-            $("#resume-placeholder").load("resume.html");
-            $("#portfolio-placeholder").load("portfolio.html");
-            $("#contact-placeholder").load("contact.html");
+    
+            // Load sidebar and attach event listener after loading
+            $("#sidebar-placeholder").load("sidebar.html", function() {
+                // Attach toggle event to .info_more-btn after sidebar is loaded
+                $("#sidebar-placeholder").on("click", ".info_more-btn", function() {
+                    $(".sidebar").toggleClass("active");
+                });
+            });
+    
+            // Load the about section initially
+            $("#about-placeholder").load("about.html").show();
+    
+            // Attach click event for navbar links for page navigation
+            $(document).on("click", ".navbar-link", function() {
+                $(".navbar-link").removeClass("active");
+                $(this).addClass("active");
+    
+                // Determine which section to load based on clicked link
+                const page = $(this).text().trim().toLowerCase();
+    
+                // Hide all sections and load the selected one
+                $(".content-section").hide();
+                if (page === "about") {
+                    $("#about-placeholder").load("about.html").show();
+                } else if (page === "resume") {
+                    $("#resume-placeholder").load("resume.html").show();
+                } else if (page === "portfolio") {
+                    $("#portfolio-placeholder").load("portfolio.html").show();
+                } else if (page === "contact") {
+                    $("#contact-placeholder").load("contact.html").show();
+                }
+            });
         });
     </script>
+    
+    
+    
+    
+    
 
     <script src="./assets/js/script.js"></script>
     <script src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.esm.js" type="module"></script>
