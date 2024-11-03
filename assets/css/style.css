@@ -144,7 +144,13 @@ input, textarea {
 
 html { font-family: var(--ff-pixel); }
 
-body { background: var(--smoky-black); }
+body { 
+  background-image: url('../images/background.png');
+}
+
+.old_body {
+  background: var(--smoky-black);
+}
 
 
 
