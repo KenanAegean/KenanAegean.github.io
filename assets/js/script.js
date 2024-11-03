@@ -113,3 +113,73 @@ document.addEventListener("DOMContentLoaded", function () {
         projectItems.forEach(item => projectList.appendChild(item));
     }
 });
+
+$(document).ready(function() {
+    // Load head and navbar sections
+    $("#head-placeholder").load("head.html");
+    $("#navbar-placeholder").load("navbar.html");
+
+    // Load sidebar and attach event listener after loading
+    $("#sidebar-placeholder").load("sidebar.html", function() {
+        $("#sidebar-placeholder").on("click", ".info_more-btn", function() {
+            $(".sidebar").toggleClass("active");
+        });
+    });
+
+    // Load the about section initially
+    $("#about-placeholder").load("about.html").show();
+
+    // Attach click event for navbar links to navigate between sections
+    $(document).on("click", ".navbar-link", function() {
+        $(".navbar-link").removeClass("active");
+        $(this).addClass("active");
+
+        // Hide all sections and determine which one to show
+        $(".content-section").hide();
+        const page = $(this).text().trim().toLowerCase();
+
+        if (page === "about") {
+            $("#about-placeholder").load("about.html").show();
+        } else if (page === "resume") {
+            $("#resume-placeholder").load("resume.html").show();
+        } else if (page === "portfolio") {
+            $("#portfolio-placeholder").load("portfolio.html", function() {
+                // Reinitialize filter functionality after loading portfolio.html
+                initPortfolioFilters();
+            }).show();
+        } else if (page === "contact") {
+            $("#contact-placeholder").load("contact.html").show();
+        }
+    });
+
+    // Define the filter functionality
+    function initPortfolioFilters() {
+        // Category selection event
+        $(document).on("click", "[data-filter-btn]", function() {
+            const selectedValue = $(this).text().toLowerCase();
+            $("[data-filter-btn]").removeClass("active");
+            $(this).addClass("active");
+            filterFunc(selectedValue);
+        });
+
+        // Dropdown category selection event
+        $(document).on("click", "[data-select-item]", function() {
+            const selectedValue = $(this).text().toLowerCase();
+            $("[data-selecct-value]").text($(this).text());
+            $(".filter-select").toggleClass("active");
+            filterFunc(selectedValue);
+        });
+
+        // Filtering function
+        function filterFunc(selectedValue) {
+            $("[data-filter-item]").each(function() {
+                const category = $(this).data("category").toLowerCase();
+                if (selectedValue === "all" || category === selectedValue) {
+                    $(this).addClass("active");
+                } else {
+                    $(this).removeClass("active");
+                }
+            });
+        }
+    }
+});
