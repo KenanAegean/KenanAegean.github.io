@@ -10,7 +10,7 @@ $(document).ready(function() {
         console.log("sidebar loaded");
         // Attach toggle event to .info_more-btn after sidebar is loaded
         $("#sidebar-placeholder").on("click", ".info_more-btn", function() {
-            $(".sidebar").toggleClass("active");
+            $("this").toggleClass("active");
         });
     });
 
@@ -168,6 +168,14 @@ $(document).ready(function() {
             $("[data-selecct-value]").text($(this).text());
             $(".filter-select").toggleClass("active");
             filterFunc(selectedValue);
+        });
+
+        // Dropdown category selection event
+        $(document).on("click", "[data-select]", function() {
+            const selectedValue = $(this).text().toLowerCase();
+            $("[data-selecct-value]").text($(this).text());
+            $(".filter-select").toggleClass("active");
+            
         });
 
         // Filtering function
