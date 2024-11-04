@@ -1,9 +1,11 @@
 'use strict';
 
 $(document).ready(function() {
+    const version = new Date().getTime();
+    
     // Load head and navbar sections
-    $("#head-placeholder").load("head.html");
-    $("#navbar-placeholder").load("navbar.html");
+    $("#head-placeholder").load("head.html?v=" + version);
+    $("#navbar-placeholder").load("navbar.html?v=" + version);
 
     // Load sidebar and attach event listener after loading
     $("#sidebar-placeholder").load("sidebar.html", function() {
@@ -15,7 +17,7 @@ $(document).ready(function() {
     });
 
     // Load the about section initially
-    $("#about-placeholder").load("about.html").show();
+    $("#about-placeholder").load("about.html?v=" + version).show();
 
     // Attach click event for navbar links for page navigation
     $(document).on("click", ".navbar-link", function() {
@@ -28,13 +30,13 @@ $(document).ready(function() {
         // Hide all sections and load the selected one
         $(".content-section").hide();
         if (page === "about") {
-            $("#about-placeholder").load("about.html").show();
+            $("#about-placeholder").load("about.html?v=" + version).show();
         } else if (page === "resume") {
-            $("#resume-placeholder").load("resume.html").show();
+            $("#resume-placeholder").load("resume.html?v=" + version).show();
         } else if (page === "portfolio") {
-            $("#portfolio-placeholder").load("portfolio.html").show();
+            $("#portfolio-placeholder").load("portfolio.html?v=" + version).show();
         } else if (page === "contact") {
-            $("#contact-placeholder").load("contact.html").show();
+            $("#contact-placeholder").load("contact.html?v=" + version).show();
         }
     });
 });
