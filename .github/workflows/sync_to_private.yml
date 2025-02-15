@@ -45,11 +45,12 @@ jobs:
           echo "✅ Checked out branch: ${{ secrets.PRIVATE_REPO_BRANCH }}"
         
 
-      - name: Copy Updated Files from Public to Private Repo
+      - name: Sync Updated Files from Public to Private Repo
         run: |
-          echo "Copying updated files..."
-          rsync -av --exclude '.git' --exclude '.github' ./ private_repo
-          echo "✅ Files copied successfully!"
+          echo "Updating existing files in private_repo..."
+          rsync -av --delete --exclude '.git' --exclude '.github' ./ private_repo
+          echo "✅ Files updated successfully!"
+        
 
       
       - name: Configure Git User
@@ -62,6 +63,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PRIVATE_REPO_PAT }}
         run: |
+          cd private_repo
           git add .
           if git diff --staged --quiet; then
             echo "✅ No changes to commit."
