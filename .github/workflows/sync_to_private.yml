@@ -92,7 +92,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PRIVATE_REPO_PAT }}
         run: |
           echo "Deleting private_repo folder..."
-          rm -rf private_repo/*
+          rm -rf ./private_repo
           
           cd private_repo
           git add .
