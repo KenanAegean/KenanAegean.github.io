@@ -86,3 +86,9 @@ jobs:
             echo "✅ Changes pushed successfully!"
           fi
 
+      - name: Cleanup Private Repository
+        if: always()
+        run: |
+          echo "Cleaning up private_repo folder..."
+          rm -rf private_repo
+          echo "✅ private_repo deleted successfully!"
