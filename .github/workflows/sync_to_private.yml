@@ -86,9 +86,21 @@ jobs:
             echo "✅ Changes pushed successfully!"
           fi
 
-      - name: Cleanup Private Repository
+      - name: Cleanup Private Repository and Push Changes
         if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.PRIVATE_REPO_PAT }}
         run: |
-          echo "Cleaning up private_repo folder..."
-          rm -rf private_repo
-          echo "✅ private_repo deleted successfully!"
+          echo "Deleting private_repo folder..."
+          rm -rf private_repo/*
+          
+          cd private_repo
+          git add .
+          if git diff --staged --quiet; then
+            echo "✅ No changes to commit."
+          else
+            git commit -m "Cleanup: Removed all files in private_repo"
+            git push origin ${{ secrets.PRIVATE_REPO_BRANCH }}
+            echo "✅ private_repo folder deleted and pushed!"
+          fi
+        
