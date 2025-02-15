@@ -35,12 +35,15 @@ jobs:
       - name: Clone Private Repository
         env:
           GITHUB_TOKEN: ${{ secrets.PRIVATE_REPO_PAT }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PRIVATE_REPO_NAME: ${{ secrets.PRIVATE_REPO_NAME }}
         run: |
           echo "Cloning private repository..."
-          git clone ${{ secrets.PRIVATE_REPO_URL }} private_repo
+          git clone https://${{ secrets.USERNAME }}:${{ secrets.PRIVATE_REPO_PAT }}@github.com/${{ secrets.USERNAME }}/${{ secrets.PRIVATE_REPO_NAME }}.git private_repo
           cd private_repo
           git checkout ${{ secrets.PRIVATE_REPO_BRANCH }}
           echo "✅ Checked out branch: ${{ secrets.PRIVATE_REPO_BRANCH }}"
+        
 
       - name: Copy Updated Files from Public to Private Repo
         run: |
