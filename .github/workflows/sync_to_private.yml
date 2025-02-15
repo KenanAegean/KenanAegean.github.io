@@ -62,21 +62,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PRIVATE_REPO_PAT }}
         run: |
-          cd private_repo
-          git add .
-          if git diff --staged --quiet; then
-            echo "✅ No changes to commit."
-          else
-            git commit -m "Sync from public repo"
-            git push origin ${{ secrets.PRIVATE_REPO_BRANCH }}
-            echo "✅ Changes pushed successfully!"
-          fi
-
-      - name: Commit and Push Changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.PRIVATE_REPO_PAT }}
-        run: |
-          cd private_repo
           git add .
           if git diff --staged --quiet; then
             echo "✅ No changes to commit."
