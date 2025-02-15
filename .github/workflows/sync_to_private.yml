@@ -48,7 +48,7 @@ jobs:
       - name: Copy Updated Files from Public to Private Repo
         run: |
           echo "Copying updated files..."
-          rsync -av --exclude '.git' --exclude '.github' ./ private_repo/
+          rsync -av --exclude '.git' --exclude '.github' ./ private_repo
           echo "✅ Files copied successfully!"
 
       
