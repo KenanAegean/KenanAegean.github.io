@@ -1,0 +1,64 @@
+name: Sync Public Repo to Private Repo
+
+on:
+  push:
+    branches:
+      - '*'  # Runs on all branches, but we filter later, public splitted_backup, private main_backup
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Extract Branch Name
+        run: |
+          echo "Extracting branch name..."
+          echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+          echo "Extracted branch: ${GITHUB_REF#refs/heads/}"
+
+      - name: Check Branch
+        run: |
+          echo "Current branch: $BRANCH_NAME"
+          echo "Expected branch: ${{ secrets.PUBLIC_REPO_BRANCH }}"
+          if [ "$BRANCH_NAME" != "${{ secrets.PUBLIC_REPO_BRANCH }}" ]; then
+            echo "❌ Branch does not match! Exiting."
+            exit 1
+          else
+            echo "✅ Branch matches! Proceeding..."
+          fi
+
+      - name: Checkout Public Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Ensures full history is checked out
+
+      - name: Clone Private Repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.PRIVATE_REPO_PAT }}
+        run: |
+          echo "Cloning private repository..."
+          git clone ${{ secrets.PRIVATE_REPO_URL }} private_repo
+          cd private_repo
+          git checkout ${{ secrets.PRIVATE_REPO_BRANCH }}
+          echo "✅ Checked out branch: ${{ secrets.PRIVATE_REPO_BRANCH }}"
+
+      - name: Copy Updated Files from Public to Private Repo
+        run: |
+          echo "Copying updated files..."
+          rsync -av --exclude '.git' --exclude '.github' ./ private_repo/
+          echo "✅ Files copied successfully!"
+
+      - name: Commit and Push Changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.PRIVATE_REPO_PAT }}
+        run: |
+          cd private_repo
+          git add .
+          if git diff --staged --quiet; then
+            echo "✅ No changes to commit."
+          else
+            git commit -m "Sync from public repo"
+            git push origin ${{ secrets.PRIVATE_REPO_BRANCH }}
+            echo "✅ Changes pushed successfully!"
+          fi
+
