@@ -91,6 +91,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PRIVATE_REPO_PAT }}
         run: |
+          cd ..
           echo "Deleting private_repo folder..."
           rm -rf private_repo  # Removes ONLY the private_repo folder
       
