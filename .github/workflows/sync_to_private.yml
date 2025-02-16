@@ -3,7 +3,7 @@ name: Sync Public Repo to Private Repo
 on:
   push:
     branches:
-      - '*'  # Runs on all branches, but we filter later, public splitted_backup, private main_backup2
+      - '*'  # Runs on all branches, but we filter later, public splitted, private main
 
 jobs:
   sync:
