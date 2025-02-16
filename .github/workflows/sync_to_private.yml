@@ -48,7 +48,7 @@ jobs:
       - name: Copy Updated Files from Public to Private Repo
         run: |
           echo "Syncing updated files..."
-          rsync -av --delete --exclude '.git' --exclude '.github' public_repo/ private_repo/
+          rsync -av --exclude '.git' --exclude '.github' public_repo/ private_repo/
           echo "✅ Files synced successfully!"
 
       - name: Configure Git User
