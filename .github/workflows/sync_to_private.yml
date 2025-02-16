@@ -62,7 +62,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PRIVATE_REPO_PAT }}
         run: |
-          cd private_repo
           git add .
           if git diff --staged --quiet; then
             echo "✅ No changes to commit."
