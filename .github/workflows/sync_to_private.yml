@@ -3,7 +3,7 @@ name: Sync Public Repo to Private Repo
 on:
   push:
     branches:
-      - '*'  # Runs on all branches, but we filter later, public splitted_backup, private main_backup
+      - '*'  # Runs on all branches, but we filter later, public splitted_backup, private main_backup2
 
 jobs:
   sync:
@@ -47,8 +47,9 @@ jobs:
 
       - name: Copy Updated Files from Public to Private Repo
         run: |
+          cd ./
           echo "Copying updated files..."
-          rsync -av --exclude '.git' --exclude '.github' private_repo/ ./
+          rsync -av --exclude '.git' --exclude '.github' ./ private_repo/
           echo "✅ Files copied successfully!"
 
       
@@ -77,7 +78,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PRIVATE_REPO_PAT }}
         run: |
-          cd ..
+          cd private_repo
           echo "Deleting private_repo folder..."
           rm -rf private_repo  # Removes ONLY the private_repo folder
       
