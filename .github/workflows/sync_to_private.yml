@@ -45,12 +45,11 @@ jobs:
           echo "✅ Checked out branch: ${{ secrets.PRIVATE_REPO_BRANCH }}"
         
 
-      - name: Sync Updated Files from Public to Private Repo
+      - name: Copy Updated Files from Public to Private Repo
         run: |
-          echo "Updating existing files in private_repo..."
-          rsync -av --delete --exclude '.git' --exclude '.github' ./ private_repo
-          echo "✅ Files updated successfully!"
-        
+          echo "Copying updated files..."
+          rsync -av --exclude '.git' --exclude '.github' ./ ./private_repo
+          echo "✅ Files copied successfully!"
 
       
       - name: Configure Git User
