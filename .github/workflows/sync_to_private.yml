@@ -30,6 +30,7 @@ jobs:
       - name: Checkout Public Repository
         uses: actions/checkout@v4
         with:
+          path: public_repo
           fetch-depth: 0  # Ensures full history is checked out
 
       - name: Clone Private Repository
@@ -43,22 +44,18 @@ jobs:
           cd private_repo
           git checkout ${{ secrets.PRIVATE_REPO_BRANCH }}
           echo "✅ Checked out branch: ${{ secrets.PRIVATE_REPO_BRANCH }}"
-        
 
       - name: Copy Updated Files from Public to Private Repo
         run: |
-          cd ./
-          echo "Copying updated files..."
-          rsync -av --exclude '.git' --exclude '.github' ./ private_repo/
-          echo "✅ Files copied successfully!"
+          echo "Syncing updated files..."
+          rsync -av --delete --exclude '.git' --exclude '.github' public_repo/ private_repo/
+          echo "✅ Files synced successfully!"
 
-      
       - name: Configure Git User
         run: |
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
-          
-      
+
       - name: Commit and Push Changes
         env:
           GITHUB_TOKEN: ${{ secrets.PRIVATE_REPO_PAT }}
