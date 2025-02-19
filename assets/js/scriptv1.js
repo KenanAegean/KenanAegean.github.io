@@ -36,7 +36,9 @@ $(document).ready(function() {
         } else if (page === "portfolio") {
             $("#portfolio-placeholder").load("portfolio.html?v=" + version).show();
         } else if (page === "contact") {
-            $("#contact-placeholder").load("contact.html?v=" + version).show();
+            $("#contact-placeholder").load("more.html?v=" + version).show();
+        } else if (page === "more") {
+            $("#contact-placeholder").load("more.html?v=" + version).show();
         }
     });
 });
