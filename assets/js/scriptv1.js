@@ -37,6 +37,8 @@ $(document).ready(function() {
             $("#portfolio-placeholder").load("portfolio.html?v=" + version).show();
         } else if (page === "contact") {
             $("#contact-placeholder").load("contact.html?v=" + version).show();
+        } else if (page === "more") {
+            $("#contact-placeholder").load("more.html?v=" + version).show();
         }
     });
 });
@@ -151,6 +153,8 @@ $(document).ready(function() {
             }).show();
         } else if (page === "contact") {
             $("#contact-placeholder").load("contact.html").show();
+        } else if (page === "more") {
+            $("#contact-placeholder").load("more.html").show();
         }
     });
 
