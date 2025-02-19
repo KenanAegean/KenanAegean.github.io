@@ -20,20 +20,23 @@ jobs:
         run: |
           echo "Current branch: $BRANCH_NAME"
           echo "Expected branch: ${{ secrets.PUBLIC_REPO_BRANCH }}"
-          if [ "$BRANCH_NAME" != "${{ secrets.PUBLIC_REPO_BRANCH }}" ]; then
-            echo "❌ Branch does not match! Exiting."
-            exit 1
-          else
+          if [ "$BRANCH_NAME" == "${{ secrets.PUBLIC_REPO_BRANCH }}" ]; then
             echo "✅ Branch matches! Proceeding..."
+            echo "BRANCH_MATCH=true" >> $GITHUB_ENV
+          else
+            echo "❌ Branch does not match! Skipping further steps."
+            echo "BRANCH_MATCH=false" >> $GITHUB_ENV
           fi
 
       - name: Checkout Public Repository
+        if: env.BRANCH_MATCH == 'true'
         uses: actions/checkout@v4
         with:
           path: public_repo
-          fetch-depth: 0  # Ensures full history is checked out
+          fetch-depth: 0
 
       - name: Clone Private Repository
+        if: env.BRANCH_MATCH == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.PRIVATE_REPO_PAT }}
           USERNAME: ${{ secrets.USERNAME }}
@@ -46,17 +49,20 @@ jobs:
           echo "✅ Checked out branch: ${{ secrets.PRIVATE_REPO_BRANCH }}"
 
       - name: Copy Updated Files from Public to Private Repo
+        if: env.BRANCH_MATCH == 'true'
         run: |
           echo "Syncing updated files..."
           rsync -av --exclude '.git' --exclude '.github' public_repo/ private_repo/
           echo "✅ Files synced successfully!"
 
       - name: Configure Git User
+        if: env.BRANCH_MATCH == 'true'
         run: |
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
 
       - name: Commit and Push Changes
+        if: env.BRANCH_MATCH == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.PRIVATE_REPO_PAT }}
         run: |
@@ -68,29 +74,6 @@ jobs:
             git commit -m "Sync from public repo"
             git push origin ${{ secrets.PRIVATE_REPO_BRANCH }}
             echo "✅ Changes pushed successfully!"
-          fi
-
-      - name: Delete private_repo Folder and Push Changes
-        if: always()
-        env:
-          GITHUB_TOKEN: ${{ secrets.PRIVATE_REPO_PAT }}
-        run: |
-          cd private_repo
-          echo "Deleting private_repo folder..."
-          rm -rf private_repo  # Removes ONLY the private_repo folder
-      
-          if [ -d private_repo ]; then
-            cd private_repo
-            git add .
-            if git diff --staged --quiet; then
-              echo "✅ No changes to commit."
-            else
-              git commit -m "Cleanup: Removed private_repo folder"
-              git push origin ${{ secrets.PRIVATE_REPO_BRANCH }}
-              echo "✅ private_repo folder deleted and pushed!"
-            fi
-          else
-            echo "✅ private_repo folder was already removed!"
           fi
         
         
