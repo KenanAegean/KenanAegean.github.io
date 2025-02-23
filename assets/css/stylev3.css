@@ -1652,7 +1652,8 @@ textarea.form-input::-webkit-resizer { display: none; }
     left: 8px;
     background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
     padding: 6px;
-    border-radius: 50%;
+    padding-bottom: 3px;
+    border-radius: 40%;
   }
   
   .corner-icon i {
