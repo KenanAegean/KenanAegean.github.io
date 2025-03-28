@@ -196,4 +196,55 @@ $(document).ready(function() {
             });
         }
     }
+
+    document.addEventListener('DOMContentLoaded', function(){
+        const glitchInterval = 3000;   // Trigger every 3000ms (3 seconds)
+        const glitchDuration = 300;    // Glitch animation lasts 300ms
+        const avatarBox = document.querySelector('.avatar-box');
+        const baseImg = document.querySelector('.avatar-base');
+        const glitchImg = document.querySelector('.avatar-glitch');
+        
+        // Define your two image sources
+        const originalSrc = "./assets/images/avatar.png";
+        const alternateSrc = "./assets/images/avatar2.png";  // Ensure this image exists in your assets folder
+        
+        // Set initial base image source
+        if (baseImg) {
+            baseImg.src = originalSrc;
+        }
+        
+        // This flag will help toggle between the two images
+        let isOriginal = true;
+        
+        // Function to trigger the glitch effect and swap the image
+        function triggerGlitch() {
+          if (avatarBox && baseImg && glitchImg) {
+            const targetSrc = isOriginal ? alternateSrc : originalSrc;
+            // Set the glitch overlay's source to the target image
+            glitchImg.src = targetSrc;
+            
+            // Add the class to trigger the glitch animation on the overlay
+            avatarBox.classList.add('glitch-active');
+            
+            // After the animation duration, update the base image and remove the glitch class
+            setTimeout(() => {
+              baseImg.src = targetSrc;
+              avatarBox.classList.remove('glitch-active');
+              // Toggle state for the next trigger
+              isOriginal = !isOriginal;
+            }, glitchDuration);
+          }
+        }
+        
+        // Trigger the glitch effect at regular intervals
+        setInterval(triggerGlitch, glitchInterval);
+        
+        // Also trigger the glitch effect when the user hovers over the avatar
+        if (avatarBox) {
+          avatarBox.addEventListener('mouseenter', triggerGlitch);
+        }
+      });
+      
+      
+      
 });
