@@ -1962,6 +1962,63 @@ textarea.form-input::-webkit-resizer { display: none; }
     }
   }
 
+
+  /* Position the container and its images */
+.avatar-box {
+  position: relative;
+  display: inline-block;
+  border-radius: 20px;
+}
+
+.avatar-box img.avatar-base {
+  display: block;
+  border-radius: inherit;
+}
+
+.avatar-box img.avatar-glitch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: inherit;
+  opacity: 0; /* hidden by default */
+}
+
+/* When .glitch-active is added to the container, show and animate the overlay */
+.avatar-box.glitch-active img.avatar-glitch {
+  opacity: 1;
+  animation: glitch 0.3s linear;
+}
+
+/* Glitch keyframes for a quick glitch effect */
+@keyframes glitch {
+  0% {
+    clip-path: inset(20% 0 0 0);
+    transform: translate(0);
+  }
+  20% {
+    clip-path: inset(10% 0 20% 0);
+    transform: translate(-5px, 5px);
+  }
+  40% {
+    clip-path: inset(30% 0 10% 0);
+    transform: translate(5px, -5px);
+  }
+  60% {
+    clip-path: inset(15% 0 15% 0);
+    transform: translate(-3px, 3px);
+  }
+  80% {
+    clip-path: inset(25% 0 5% 0);
+    transform: translate(3px, -3px);
+  }
+  100% {
+    clip-path: inset(20% 0 0 0);
+    transform: translate(0);
+  }
+}
+
+
+
   
 
 }
