@@ -1,11 +1,31 @@
 'use strict';
 
+function initTheme() {
+    const toggleBtn = document.getElementById('theme-toggle');
+    const body = document.body;
+    const stored = localStorage.getItem('theme');
+    if (stored === 'light') {
+        body.classList.add('light-theme');
+        if (toggleBtn) {
+            toggleBtn.querySelector('ion-icon').setAttribute('name', 'sunny-outline');
+        }
+    }
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', function () {
+            body.classList.toggle('light-theme');
+            const isLight = body.classList.contains('light-theme');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            toggleBtn.querySelector('ion-icon').setAttribute('name', isLight ? 'sunny-outline' : 'moon-outline');
+        });
+    }
+}
+
 $(document).ready(function() {
     const version = new Date().getTime();
     
     // Load head and navbar sections
     $("#head-placeholder").load("head.html?v=" + version);
-    $("#navbar-placeholder").load("navbar.html?v=" + version);
+    $("#navbar-placeholder").load("navbar.html?v=" + version, initTheme);
 
     // Load sidebar and attach event listener after loading
     $("#sidebar-placeholder").load("sidebar.html", function() {
@@ -121,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
 $(document).ready(function() {
     // Load head and navbar sections
     $("#head-placeholder").load("head.html");
-    $("#navbar-placeholder").load("navbar.html");
+    $("#navbar-placeholder").load("navbar.html", initTheme);
 
     // Load sidebar and attach event listener after loading
     $("#sidebar-placeholder").load("sidebar.html", function() {
