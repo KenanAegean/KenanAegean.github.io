@@ -4,9 +4,9 @@
       <h2 class="h2 article-title">Resume 👾</h2>
     </header>
 
-    <a href="/assets/pdf/KenanEge_GameDev_CV_June2025.pdf" target="_blank" 
-      style="display: inline-block; width: 200px; text-align: center; padding: 10px 15px; 
-              background-color: #6a0dad; color: white; text-decoration: none; 
+    <a id="cv-download-link" href="/assets/pdf/KenanEge_GameDev_CV_July2025_PL.pdf" target="_blank"
+      style="display: inline-block; width: 200px; text-align: center; padding: 10px 15px;
+              background-color: #6a0dad; color: white; text-decoration: none;
               border-radius: 5px; font-weight: bold; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);">
       📄 Curriculum Vitae 
     </a><br>
@@ -408,3 +408,21 @@
     </section>-->
 
 </article>
+<script>
+  (function() {
+    const link = document.getElementById('cv-download-link');
+    if (!link) return;
+
+    function userInTurkey() {
+      const lang = (navigator.language || '').toLowerCase();
+      const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
+      return lang.startsWith('tr') || tz.includes('istanbul');
+    }
+
+    if (userInTurkey()) {
+      link.href = '/assets/pdf/KenanEge_GameDev_CV_July2025_TR.pdf';
+    } else {
+      link.href = '/assets/pdf/KenanEge_GameDev_CV_July2025_PL.pdf';
+    }
+  })();
+</script>
