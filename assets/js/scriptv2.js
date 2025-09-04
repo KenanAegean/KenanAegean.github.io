@@ -16,8 +16,9 @@ $(document).ready(function() {
         });
     });
 
-    // Load the about section initially
-    $("#about-placeholder").load("about.html?v=" + version).show();
+    // Load the selected section initially
+    //$("#about-placeholder").load("about.html?v=" + version).show();
+    $("#portfolio-placeholder").load("portfolio.html?v=" + version).show();
 
     // Attach click event for navbar links for page navigation
     $(document).on("click", ".navbar-link", function() {
@@ -131,7 +132,9 @@ $(document).ready(function() {
     });
 
     // Load the about section initially
-    $("#about-placeholder").load("about.html").show();
+    //$("#about-placeholder").load("about.html").show();
+    $("#portfolio-placeholder").load("portfolio.html?v=" + version).show();
+    $(".navbar-link").removeClass("active");
 
     // Attach click event for navbar links to navigate between sections
     $(document).on("click", ".navbar-link", function() {
