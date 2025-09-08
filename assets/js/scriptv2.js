@@ -13,6 +13,14 @@ $(function () {
     $sections.hide();
   }
 
+  function isMarkedHighlighted($el) {
+    // supports either is-highlighted="yes"/"true"/"" OR data-highlighted="true"
+    const raw = ($el.attr('is-highlighted') ?? $el.data('highlighted'));
+    if (raw === undefined) return false;
+    const v = String(raw).toLowerCase();
+    return v === '' || v === 'yes' || v === 'true' || v === '1';
+  }
+
   function loadSection(page) {
     hideAllSections();
 
@@ -34,17 +42,21 @@ $(function () {
         $('#portfolio-placeholder').load(`portfolio.html?v=${version}`, () => {
           $('#portfolio-placeholder').show();
 
-          // Keep original HTML order: DO NOT SORT.
-          // Initialize filter UI to "All" and reveal everything.
-          setSelectLabel('All');
-          applyFilter('all');
+          const $scope = $('#portfolio-placeholder');
+          const hasHighlighted = $scope.find('[data-filter-item]').filter(function () {
+            return isMarkedHighlighted($(this));
+          }).length > 0;
 
-          // Reflect in the top filter buttons if present
-          const $btns = $('#portfolio-placeholder').find('[data-filter-btn]');
+          const initial = hasHighlighted ? 'Highlighted Projects' : 'All';
+          setSelectLabel(initial);
+          applyFilter(initial);
+
+          // reflect in the top filter buttons if present
+          const $btns = $scope.find('[data-filter-btn]');
           if ($btns.length) {
             $btns.removeClass('active');
             $btns.filter(function () {
-              return $(this).text().trim().toLowerCase() === 'all';
+              return $(this).text().trim().toLowerCase() === initial.toLowerCase();
             }).addClass('active');
           }
         });
@@ -87,11 +99,31 @@ $(function () {
 
   function applyFilter(selected) {
     const val = (selected || 'all').toLowerCase();
+
     $('[data-filter-item]').each(function () {
-      const cat = String($(this).data('category') || '').toLowerCase();
-      $(this).toggleClass('active', val === 'all' || cat === val);
+      const $item = $(this);
+      const cat = String($item.data('category') || '').toLowerCase();
+
+      const show =
+        val === 'all' ||
+        (val === 'highlighted projects' && isMarkedHighlighted($item)) ||
+        cat === val;
+
+      $item.toggleClass('active', show);
     });
   }
+
+  $(document).on('click', '[data-filter-btn]', function () {
+    const chosen = $(this).text().trim();
+    $('[data-filter-btn]').removeClass('active');
+    $(this).addClass('active');
+
+    setSelectLabel(chosen);
+    applyFilter(chosen);
+
+    // close the custom select if it was open
+    $('.filter-select').removeClass('active');
+  });
 
   /** ---------------------------
    *  Static parts load
