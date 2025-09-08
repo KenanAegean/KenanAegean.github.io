@@ -1634,8 +1634,8 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 .corner-icon-new2 {
   position: absolute;
-  top: 68px;
-  left: 8px;
+  bottom: 8px;
+  right: 8px;
   background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
   padding: 6px;
   padding-bottom: 3px;
