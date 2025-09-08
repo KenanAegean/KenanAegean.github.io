@@ -1627,7 +1627,33 @@ textarea.form-input::-webkit-resizer { display: none; }
   z-index: -1;
 }
 
-.corner-icon-new i {
+.corner-icon-new2 i {
+  color: white; /* Unity logo color */
+  font-size: 16px; /* Adjust size */
+}
+
+.corner-icon-new2 {
+  position: absolute;
+  top: 77px;
+  left: 8px;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+  padding: 6px;
+  padding-bottom: 3px;
+  border-radius: 10%;
+  z-index: 2;
+  font-size: 14px;
+}
+
+.corner-icon-new2::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: var(--eerie-black-1);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.corner-icon-new2 i {
   color: white; /* Unity logo color */
   font-size: 16px; /* Adjust size */
 }
