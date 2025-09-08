@@ -13,6 +13,13 @@ $(function () {
     $sections.hide();
   }
 
+    function stripComments(rootEl) {
+        const walker = document.createTreeWalker(rootEl, NodeFilter.SHOW_COMMENT);
+        const garbage = [];
+        while (walker.nextNode()) garbage.push(walker.currentNode);
+        garbage.forEach(n => n.parentNode.removeChild(n));
+    }
+
   function isMarkedHighlighted($el) {
     // supports either is-highlighted="yes"/"true"/"" OR data-highlighted="true"
     const raw = ($el.attr('is-highlighted') ?? $el.data('highlighted'));
@@ -26,21 +33,23 @@ $(function () {
 
     switch (page) {
       case 'about':
-        $('#about-placeholder').load(`about.html?v=${version}`, () => {
-          $('#about-placeholder').show();
+        $('#about-placeholder').load(`about.html?v=${version} article.about`, function () {
+            stripComments(document.getElementById('about-placeholder'));
+            $('#about-placeholder').show();
         });
         break;
 
       case 'resume':
-        $('#resume-placeholder').load(`resume.html?v=${version}`, () => {
-          $('#resume-placeholder').show();
-          sortSkills(); // resume-only tidy, harmless
+        $('#resume-placeholder').load(`resume.html?v=${version}`, function () {
+            stripComments(document.getElementById('resume-placeholder'));
+            $('#resume-placeholder').show();
         });
         break;
 
       case 'portfolio':
-        $('#portfolio-placeholder').load(`portfolio.html?v=${version}`, () => {
-          $('#portfolio-placeholder').show();
+        $('#portfolio-placeholder').load(`portfolio.html?v=${version}`, function () {
+            stripComments(document.getElementById('portfolio-placeholder'));
+            $('#portfolio-placeholder').show();
 
           const $scope = $('#portfolio-placeholder');
           const hasHighlighted = $scope.find('[data-filter-item]').filter(function () {
@@ -63,14 +72,16 @@ $(function () {
         break;
 
       case 'contact':
-        $('#contact-placeholder').load(`contact.html?v=${version}`, () => {
-          $('#contact-placeholder').show();
+        $('#contact-placeholder').load(`contact.html?v=${version}`, function () {
+            stripComments(document.getElementById('contact-placeholder'));
+            $('#contact-placeholder').show();
         });
         break;
 
       case 'more':
-        $('#more-placeholder').load(`more.html?v=${version}`, () => {
-          $('#more-placeholder').show();
+        $('#more-placeholder').load(`more.html?v=${version}`, function () {
+            stripComments(document.getElementById('more-placeholder'));
+            $('#more-placeholder').show();
         });
         break;
 
