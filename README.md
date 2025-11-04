@@ -3,6 +3,7 @@
 Personal portfolio website showcasing game development projects and professional experience.
 
 **Live Site**: [kenanaegean.github.io](https://kenanaegean.github.io)
+
 **Live Site**: [kenanege.com](https://kenanege.com)
 
 ## 🌟 Features Overview
@@ -52,14 +53,6 @@ The repository includes an automated sync workflow (`.github/workflows/sync_to_p
    - `.github` workflows
    - Protected files defined in `PROTECTED_FILE` secret
 6. **Commit & Push** - Automatically commits changes to private repository
-
-**Required Secrets**:
-- `PUBLIC_REPO_BRANCH` - Source branch to monitor
-- `PRIVATE_REPO_BRANCH` - Target branch in private repo
-- `PRIVATE_REPO_PAT` - Personal access token for authentication
-- `USERNAME` - GitHub username
-- `PRIVATE_REPO_NAME` - Private repository name
-- `PROTECTED_FILE` - Files to exclude from sync
 
 ### Private Repo → FTP Deployment
 
