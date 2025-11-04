@@ -54,14 +54,6 @@ The repository includes an automated sync workflow (`.github/workflows/sync_to_p
    - Protected files defined in `PROTECTED_FILE` secret
 6. **Commit & Push** - Automatically commits changes to private repository
 
-**Required Secrets**:
-- `PUBLIC_REPO_BRANCH` - Source branch to monitor
-- `PRIVATE_REPO_BRANCH` - Target branch in private repo
-- `PRIVATE_REPO_PAT` - Personal access token for authentication
-- `USERNAME` - GitHub username
-- `PRIVATE_REPO_NAME` - Private repository name
-- `PROTECTED_FILE` - Files to exclude from sync
-
 ### Private Repo → FTP Deployment
 
 The private repository contains an additional workflow that automatically deploys to a web server via FTP:
