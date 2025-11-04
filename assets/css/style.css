@@ -1,6 +1,48 @@
-/*-----------------------------------*\
-  #style.css
-\*-----------------------------------*/
+/*==============================================================================
+  Portfolio Website - Main Stylesheet
+  
+  Author: Kenan EGE
+  Description: Professional portfolio website styles with dark theme
+  
+  TABLE OF CONTENTS:
+  ------------------
+  1. CSS Variables (Root)
+     - Colors
+     - Typography
+     - Shadows
+     - Transitions
+  
+  2. Reset & Base Styles
+     - Global reset
+     - Base elements
+     - Selection styles
+  
+  3. Reusable Components
+     - Cards
+     - Icons
+     - Separators
+     - Scrollbars
+  
+  4. Layout Components
+     - Main layout
+     - Sidebar
+     - Navbar
+  
+  5. Page Sections
+     - About page
+     - Resume page
+     - Portfolio page
+     - Contact page
+     - More page
+  
+  6. Media Queries
+     - Mobile (< 580px)
+     - Tablet (580px - 768px)
+     - Desktop (> 1024px)
+
+==============================================================================*/
+
+
 
 :root {
 
@@ -331,7 +373,7 @@ main {
   flex-wrap: wrap; 
 }
 
-.sidebar-info .info-content-social {
+.sidebar-info .info-social {
   flex-basis: 100%; 
 }
 
@@ -359,7 +401,7 @@ main {
   border-radius: 8px;
 }
 
-.info_more-btn {
+.info-more-btn {
   position: absolute;
   top: -15px;
   right: -15px;
@@ -373,7 +415,7 @@ main {
   z-index: 1;
 }
 
-.info_more-btn::before {
+.info-more-btn::before {
   content: "";
   position: absolute;
   inset: 1px;
@@ -383,21 +425,21 @@ main {
   z-index: -1;
 }
 
-.info_more-btn:hover,
-.info_more-btn:focus { background: var(--bg-gradient-yellow-1); }
+.info-more-btn:hover,
+.info-more-btn:focus { background: var(--bg-gradient-yellow-1); }
 
-.info_more-btn:hover::before,
-.info_more-btn:focus::before { background: var(--bg-gradient-yellow-2); }
+.info-more-btn:hover::before,
+.info-more-btn:focus::before { background: var(--bg-gradient-yellow-2); }
 
-.info_more-btn span { display: none; }
+.info-more-btn span { display: none; }
 
-.sidebar-info_more {
+.sidebar-info-more {
   opacity: 0;
   visibility: hidden;
   transition: var(--transition-2);
 }
 
-.sidebar.active .sidebar-info_more {
+.sidebar.active .sidebar-info-more {
   opacity: 1;
   visibility: visible;
 }
@@ -1384,18 +1426,18 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .info-content .title { padding: 5px 18px; }
 
-  .info_more-btn {
+  .info-more-btn {
     top: -30px;
     right: -30px;
     padding: 10px 15px;
   }
 
-  .info_more-btn span {
+  .info-more-btn span {
     display: block;
     font-size: var(--fs-8);
   }
 
-  .info_more-btn ion-icon { display: none; }
+  .info-more-btn ion-icon { display: none; }
 
   .separator { margin: 32px 0; }
 
@@ -1589,7 +1631,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   padding-bottom: 3px;
   border-radius: 10%;
   z-index: 2;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .corner-icon::before {
@@ -1608,14 +1650,14 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 .corner-icon-new {
   position: absolute;
-  top: 44px;
+  top: 39px;
   left: 8px;
   background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
   padding: 6px;
   padding-bottom: 3px;
   border-radius: 10%;
   z-index: 2;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .corner-icon-new::before {
@@ -1634,14 +1676,14 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 .corner-icon-new2 {
   position: absolute;
-  top: 77px;
-  left: 8px;
+  bottom: 8px;
+  right: 8px;
   background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
   padding: 6px;
   padding-bottom: 3px;
   border-radius: 10%;
   z-index: 2;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .corner-icon-new2::before {
@@ -1966,9 +2008,9 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .info-content .title { margin: auto; }
 
-  .info_more-btn { display: none; }
+  .info-more-btn { display: none; }
 
-  .sidebar-info_more {
+  .sidebar-info-more {
     opacity: 1;
     visibility: visible;
   }
