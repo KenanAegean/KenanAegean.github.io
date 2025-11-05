@@ -214,7 +214,7 @@
     "category": "game development",
     "highlighted": false,
     "image": "./assets/images/Portfolio/bribr.png",
-    "link": "./bricable_br.html",
+    "link": "./projects/project-detail.html?id=brickable-bridge",
     "tags": ["Unity", "Game Jam"],
     "iconType": "unity",
     "visible": false
@@ -225,7 +225,7 @@
     "category": "web application",
     "highlighted": true,
     "image": "./assets/images/Portfolio/gamerlog.png",
-    "link": "./projects/gamerlog.html",
+    "link": "./projects/project-detail.html?id=gamerlog",
     "tags": ["Django"],
     "iconType": "django",
     "visible": true
