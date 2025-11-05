@@ -20,7 +20,7 @@ class PortfolioApp {
     
     // ⚠️ IMPORTANT: Increment this version number when you update any JSON files
     // This prevents browsers from using cached versions of your data
-    this.dataVersion = '1.0.7';
+    this.dataVersion = '1.0.8';
     
     this.init();
   }

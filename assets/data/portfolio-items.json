@@ -225,7 +225,7 @@
     "category": "web application",
     "highlighted": true,
     "image": "./assets/images/Portfolio/gamerlog.png",
-    "link": "gamerlog.html",
+    "link": "./projects/gamerlog.html",
     "tags": ["Django"],
     "iconType": "django",
     "visible": true
