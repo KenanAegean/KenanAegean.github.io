@@ -2209,3 +2209,17 @@ textarea.form-input::-webkit-resizer { display: none; }
     transition: border-color 0.2s, filter 0.2s;
   }
   
+
+  /* Make Devicon icons purple to match portfolio theme */
+  .project-item-icon-box i[class*="devicon-"] {
+    color: var(--orange-yellow-crayola) !important;
+    font-size: 20px;
+  }
+
+  .project-item-icon-box i[class*="devicon-"].colored {
+    color: var(--orange-yellow-crayola) !important;
+  }
+
+  .project-item-icon-box i[class*="devicon-"] svg path {
+    fill: var(--orange-yellow-crayola) !important;
+  }

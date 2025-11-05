@@ -2,11 +2,12 @@
 
 /**
  * Portfolio Website - Main JavaScript
- * Clean, organized, and efficient
+ * Clean, organized, and efficient with dynamic portfolio loading
  */
 
 class PortfolioApp {
   constructor() {
+    this.portfolioItems = [];
     this.init();
   }
 
@@ -81,7 +82,7 @@ class PortfolioApp {
       'portfolio': {
         container: '#portfolio-section',
         url: './pages/portfolio.html',
-        callback: () => this.initPortfolioFilters()
+        callback: () => this.loadPortfolioItems()
       },
       'contact': {
         container: '#contact-section',
@@ -103,9 +104,124 @@ class PortfolioApp {
   }
 
   /**
+   * Load portfolio items from JSON and render them
+   */
+  async loadPortfolioItems() {
+    try {
+      const response = await fetch('./assets/data/portfolio-items.json');
+      this.portfolioItems = await response.json();
+      this.renderPortfolioItems();
+      this.initPortfolioFilters();
+    } catch (error) {
+      console.error('Error loading portfolio items:', error);
+    }
+  }
+
+  /**
+   * Render portfolio items dynamically
+   */
+  renderPortfolioItems() {
+    const $projectList = $('.project-list');
+    if (!$projectList.length) return;
+
+    $projectList.empty();
+
+    // Filter only visible items
+    const visibleItems = this.portfolioItems.filter(item => item.visible !== false);
+
+    visibleItems.forEach(item => {
+      const $item = this.createPortfolioItem(item);
+      $projectList.append($item);
+    });
+  }
+
+  /**
+   * Create a single portfolio item element
+   */
+  createPortfolioItem(item) {
+    const highlightedAttr = item.highlighted ? 'is-highlighted="yes"' : '';
+    
+    // Get the appropriate hover icon based on iconType
+    const hoverIcon = this.getHoverIcon(item.iconType);
+    
+    // Create tags HTML
+    let tagsHtml = '';
+    if (item.tags && item.tags.length > 0) {
+      item.tags.forEach((tag, index) => {
+        const position = index === 0 ? 'corner-icon' : 
+                        index === 1 ? 'corner-icon-new' : 
+                        'corner-icon-new2';
+        
+        // Check if tag contains Unity or UE
+        const isUnity = tag.toLowerCase().includes('unity');
+        const isUE = tag.toLowerCase().includes('ue');
+        
+        if (isUnity) {
+          tagsHtml += `<div class="${position}"><i class="fab fa-unity"></i></div>`;
+        } else if (isUE) {
+          tagsHtml += `<div class="${position}"><p style="color: white;">${tag}</p></div>`;
+        } else {
+          tagsHtml += `<div class="${position}"><p style="color: white;">${tag}</p></div>`;
+        }
+      });
+    }
+
+    return $(`
+      <li data-value="${item.id}" class="project-item active" 
+          data-filter-item 
+          data-category="${item.category}" 
+          ${highlightedAttr}>
+        <a href="${item.link}" target="_blank">
+          <figure class="project-img">
+            <div class="project-item-icon-box">
+              ${hoverIcon}
+            </div>
+            ${tagsHtml}
+            <img src="${item.image}" alt="${item.title}" loading="lazy">
+          </figure>
+          <h3 class="project-title">${item.title}</h3>
+          <p class="project-category">${this.capitalizeCategory(item.category)}</p>
+        </a>
+      </li>
+    `);
+  }
+
+  /**
+   * Get the appropriate hover icon based on project type
+   */
+  getHoverIcon(iconType) {
+    const iconMap = {
+      'unity': '<i class="fa-brands fa-unity"></i>',
+      'unreal': '<i class="devicon-unrealengine-original colored"></i>',
+      'web': '<ion-icon name="logo-html5"></ion-icon>',
+      'django': '<i class="devicon-django-plain colored"></i>',
+      'python': '<i class="fa-brands fa-python"></i>',
+      'cpp': '<i class="devicon-cplusplus-plain colored"></i>',
+      'csharp': '<i class="devicon-csharp-plain colored"></i>',
+      'design': '<ion-icon name="color-palette-outline"></ion-icon>',
+      'music': '<ion-icon name="musical-notes-outline"></ion-icon>',
+      'default': '<ion-icon name="eye-outline"></ion-icon>'
+    };
+    
+    return iconMap[iconType] || iconMap['default'];
+  }
+
+  /**
+   * Capitalize category text
+   */
+  capitalizeCategory(category) {
+    return category.split(' ').map(word => 
+      word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ');
+  }
+
+  /**
    * Initialize portfolio filters
    */
   initPortfolioFilters() {
+    // Update filter buttons based on visible items
+    this.updateFilterButtons();
+    
     const $items = $('[data-filter-item]');
     const hasHighlighted = $items.filter((_, el) => this.isHighlighted($(el))).length > 0;
     const initialFilter = hasHighlighted ? 'Highlighted Projects' : 'All';
@@ -117,6 +233,76 @@ class PortfolioApp {
     $('[data-filter-btn]').removeClass('active')
       .filter((_, btn) => $(btn).text().trim() === initialFilter)
       .addClass('active');
+  }
+
+  /**
+   * Update filter buttons to show only categories with visible items
+   */
+  updateFilterButtons() {
+    // Get all visible categories
+    const visibleCategories = new Set();
+    const visibleItems = this.portfolioItems.filter(item => item.visible !== false);
+    
+    visibleItems.forEach(item => {
+      if (item.category) {
+        visibleCategories.add(item.category.toLowerCase());
+      }
+    });
+    
+    // Check if any highlighted projects exist
+    const hasHighlighted = visibleItems.some(item => item.highlighted);
+    
+    // Update desktop filter buttons
+    $('[data-filter-btn]').each((_, btn) => {
+      const $btn = $(btn);
+      const filterText = $btn.text().trim().toLowerCase();
+      const $listItem = $btn.closest('.filter-item');
+      
+      if (filterText === 'all') {
+        // Always show "All" button
+        $listItem.show();
+      } else if (filterText === 'highlighted projects') {
+        // Show/hide based on highlighted items
+        if (hasHighlighted) {
+          $listItem.show();
+        } else {
+          $listItem.hide();
+        }
+      } else {
+        // Show/hide based on category
+        if (visibleCategories.has(filterText)) {
+          $listItem.show();
+        } else {
+          $listItem.hide();
+        }
+      }
+    });
+    
+    // Update mobile dropdown items
+    $('[data-select-item]').each((_, item) => {
+      const $item = $(item);
+      const filterText = $item.text().trim().toLowerCase();
+      const $listItem = $item.closest('.select-item');
+      
+      if (filterText === 'all') {
+        // Always show "All" option
+        $listItem.show();
+      } else if (filterText === 'highlighted projects') {
+        // Show/hide based on highlighted items
+        if (hasHighlighted) {
+          $listItem.show();
+        } else {
+          $listItem.hide();
+        }
+      } else {
+        // Show/hide based on category
+        if (visibleCategories.has(filterText)) {
+          $listItem.show();
+        } else {
+          $listItem.hide();
+        }
+      }
+    });
   }
 
   /**
