@@ -3,6 +3,8 @@
 /**
  * Portfolio Website - Main JavaScript
  * Clean, organized, and data-driven with dynamic content loading
+ * 
+ * CACHE-BUSTING: Increment dataVersion when updating JSON files
  */
 
 class PortfolioApp {
@@ -15,6 +17,11 @@ class PortfolioApp {
     this.education = [];
     this.gamesShowcase = null;
     this.instagram = null;
+    
+    // ⚠️ IMPORTANT: Increment this version number when you update any JSON files
+    // This prevents browsers from using cached versions of your data
+    this.dataVersion = '1.0.7';
+    
     this.init();
   }
 
@@ -26,18 +33,25 @@ class PortfolioApp {
   }
 
   /**
-   * Load all JSON data files
+   * Helper method to create cache-busted URL
+   */
+  getCacheBustedUrl(url) {
+    return `${url}?v=${this.dataVersion}`;
+  }
+
+  /**
+   * Load all JSON data files with cache-busting
    */
   async loadAllData() {
     try {
       const [siteConfig, socialLinks, navigation, experience, education, gamesShowcase, instagram] = await Promise.all([
-        fetch('./assets/data/site-config.json').then(r => r.json()),
-        fetch('./assets/data/social-links.json').then(r => r.json()),
-        fetch('./assets/data/navigation.json').then(r => r.json()),
-        fetch('./assets/data/experience.json').then(r => r.json()),
-        fetch('./assets/data/education.json').then(r => r.json()),
-        fetch('./assets/data/games-showcase.json').then(r => r.json()),
-        fetch('./assets/data/instagram.json').then(r => r.json())
+        fetch(this.getCacheBustedUrl('./assets/data/site-config.json')).then(r => r.json()),
+        fetch(this.getCacheBustedUrl('./assets/data/social-links.json')).then(r => r.json()),
+        fetch(this.getCacheBustedUrl('./assets/data/navigation.json')).then(r => r.json()),
+        fetch(this.getCacheBustedUrl('./assets/data/experience.json')).then(r => r.json()),
+        fetch(this.getCacheBustedUrl('./assets/data/education.json')).then(r => r.json()),
+        fetch(this.getCacheBustedUrl('./assets/data/games-showcase.json')).then(r => r.json()),
+        fetch(this.getCacheBustedUrl('./assets/data/instagram.json')).then(r => r.json())
       ]);
 
       this.siteConfig = siteConfig;
@@ -406,11 +420,11 @@ class PortfolioApp {
   }
 
   /**
-   * Load portfolio items from JSON and render them
+   * Load portfolio items from JSON and render them (with cache-busting)
    */
   async loadPortfolioItems() {
     try {
-      const response = await fetch('./assets/data/portfolio-items.json');
+      const response = await fetch(this.getCacheBustedUrl('./assets/data/portfolio-items.json'));
       this.portfolioItems = await response.json();
       this.generateFilterButtons();
       this.renderPortfolioItems();
