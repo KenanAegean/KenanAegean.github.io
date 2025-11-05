@@ -1,0 +1,28 @@
+{
+  "personal": {
+    "name": "Kenan EGE",
+    "nickname": "Kaegean",
+    "avatar": "./assets/images/avatar4.gif",
+    "titles": [
+      "👾 Computer Engineer",
+      "🎮 Game Developer",
+      "🎸 Amateur Musician"
+    ],
+    "birthday": "1999-12-07",
+    "birthdayDisplay": "December 7, 1999",
+    "location": "Warsaw, PL",
+    "about": {
+      "greeting": "Hi 👾, I'm Kenan Ege",
+      "description": "A passionate Computer Engineer / Game Developer from Turkey! <br> I'm deeply into Game Development. Currently exploring vast real-life open world, seeking stories and side missions that are worth telling and experiencing.  <br> 🎮👾"
+    }
+  },
+  "external": {
+    "steamUsername": "ZoneBee",
+    "spotifyArtistId": "2CMjhwFMDeusyTCoKcTNL8",
+    "githubUsername": "KenanAegean"
+  },
+  "cv": {
+    "default": "/assets/pdf/KenanEGE_CV_PL.pdf",
+    "turkey": "/assets/pdf/KenanEGE_CV_TR.pdf"
+  }
+}

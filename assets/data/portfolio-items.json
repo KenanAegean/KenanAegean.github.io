@@ -360,7 +360,7 @@
     "link": "https://github.com/KenanAegean/World-Cup-2022-Stadiums-App-Android-Studio",
     "tags": ["Android Studio"],
     "iconType": "android",
-    "visible": false
+    "visible": true
   },
   {
     "id": 34,
@@ -371,6 +371,6 @@
     "link": "https://github.com/KenanAegean/Auto-Score-App-Androd-Studio",
     "tags": ["Android Studio"],
     "iconType": "android",
-    "visible": false
+    "visible": true
   }
 ]

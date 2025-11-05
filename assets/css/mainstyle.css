@@ -425,11 +425,12 @@ main {
   z-index: -1;
 }
 
-.info-more-btn:hover,
-.info-more-btn:focus { background: var(--bg-gradient-yellow-1); }
+.info-more-btn:hover { 
+  background: var(--orange-yellow-crayola);  /* Solid color! */
+}
 
 .info-more-btn:hover::before,
-.info-more-btn:focus::before { background: var(--bg-gradient-yellow-2); }
+.info-more-btn:focus::before { border-color: var(--orange-yellow-crayola); }
 
 .info-more-btn span { display: none; }
 
@@ -1156,7 +1157,6 @@ main {
 
   .filter-item button:hover { 
     color: var(--white-1);
-    background: var(--border-gradient-onyx);
     border-color: var(--orange-yellow-crayola);
   }
 

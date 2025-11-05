@@ -1,118 +1,67 @@
-<article class="More  active" data-page="More">
+<article class="More active" data-page="More">
 
     <header>
       <h2 class="h2 article-title">More About me 👾</h2>
     </header>
 
-    </section>
-
+    <!-- Add your custom hardcoded sections here -->
+    <!-- Example:
     <section class="service">
+      <h3 class="h3 service-title">My Hobbies 🎨</h3>
+      <p>Custom content about hobbies...</p>
+    </section>
+    -->
 
+    <!-- Spotify Music Section - populated by script -->
+    <section class="service">
       <h3 class="h3 service-title">Listen My Music 🎸</h3>
-
-      <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/2CMjhwFMDeusyTCoKcTNL8?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-    
+      <iframe id="spotify-embed" 
+              style="border-radius:12px" 
+              src="" 
+              width="100%" 
+              height="352" 
+              frameBorder="0" 
+              allowfullscreen="" 
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+              loading="lazy">
+      </iframe>
+      <!-- Populated from site-config.json: external.spotifyArtistId -->
     </section>
 
+    <!-- Instagram Section - populated by script -->
     <section class="service">
       <h3 class="h3 service-title">Me On Social Media 📷</h3>
 
       <div class="insta-card">
         <div class="insta-card__header">
-          <img
+          <img id="insta-avatar"
             class="insta-card__avatar"
-            src="assets/images/insta/profile.jpg"
-            alt="Your profile picture"
+            src=""
+            alt="Instagram profile picture"
           />
-          <a
+          <a id="insta-username"
             class="insta-card__username"
-            href="https://instagram.com/kenanege"
+            href=""
             target="_blank"
-            rel="noopener"
-          >
-            @kenanege
+            rel="noopener">
           </a>
+          <!-- Populated from instagram.json: username, profileUrl, profileImage -->
         </div>
 
-        <div class="insta-card__grid">
-          <a
-            class="insta-card__item"
-            href="https://instagram.com/kenanege"
-            target="_blank"
-            rel="noopener"
-          >
-            <img
-              src="assets/images/insta/p1.png"
-              alt="Post 1"
-            />
-          </a>
-
-          <a
-            class="insta-card__item insta-card__item"
-            href="https://instagram.com/kenanege"
-            target="_blank"
-            rel="noopener"
-          >
-            <img
-              src="assets/images/insta/p2.png"
-              alt="Post 2"
-            />
-          </a>
-
-          <a
-            class="insta-card__item"
-            href="https://instagram.com/kenanege"
-            target="_blank"
-            rel="noopener"
-          >
-            <img
-              src="assets/images/insta/p3.png"
-              alt="Post 3"
-            />
-          </a>
-
-          <a
-            class="insta-card__item"
-            href="https://instagram.com/kenanege"
-            target="_blank"
-            rel="noopener"
-          >
-            <img
-              src="assets/images/insta/p4.png"
-              alt="Post 4"
-            />
-          </a>
+        <div class="insta-card__grid" id="insta-grid">
+          <!-- Populated from instagram.json: posts[] -->
         </div>
       </div>
-
     </section>
     
+    <!-- Steam Stats Section - populated by script -->
     <section class="service">
-
       <h3 class="h3 service-title">What I Play 👾</h3>
 
       <ul class="project-list github-list">
-
-        <img  class="project-img" id="steam" src="https://steam-stat.vercel.app/api?profileName=ZoneBee"/>
-
-        <!--
-        <figure class="project-img" id="steam">
-          <img src="https://steam-stat.vercel.app/api?profileName=ZoneBee"/>
-        </figure>
-        -->
-        
+        <img class="project-img" id="steam" src="" alt="Steam Stats"/>
+        <!-- Populated from site-config.json: external.steamUsername -->
       </ul>
-
-      
-
     </section>
-
-    
-
-    
-
-    
-    
-    
 
 </article>

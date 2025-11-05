@@ -1,165 +1,56 @@
-<article class="about  active" data-page="about">
+<article class="about active" data-page="about">
 
     <header>
       <h2 class="h2 article-title">About me 👾</h2>
     </header>
 
+    <!-- About text section - populated by script -->
     <section class="about-text">
-      <p>
-        Hi 👾, I'm Kenan Ege
+      <p id="about-greeting">
+        <!-- Populated from site-config.json: personal.about.greeting -->
       </p>
 
-      <p>
-        A passionate Computer Engineer / Game Developer from Turkey! <br> I'm deeply into Game Development. Currently exploring vast real-life open world, seeking stories and side missions that are worth telling and experiencing.  <br> 🎮👾
+      <p id="about-description">
+        <!-- Populated from site-config.json: personal.about.description -->
       </p>
     </section>
 
-
-
-    <!--
-      - clients
+    <!-- Add your custom hardcoded sections here -->
+    <!-- Example:
+    <section class="custom-section">
+      <h3 class="h3">Your Custom Section</h3>
+      <p>Your hardcoded content here...</p>
+    </section>
     -->
 
+    <!-- Highlighted Games section - populated by script -->
     <section class="clients">
-
       <h3 class="h3 clients-title">My Highlighted Game Projects 🎮</h3>
-
-      <ul class="clients-list has-scrollbar">
-
-        <!--<li class="clients-item">
-          <a href="https://kenanaegean.github.io/Lord-Of-The-Horde/" target="_blank">
-            <img src="./assets/images/PlayableGames/playable_loth.png" alt="client logo">
-          </a>
-        </li>-->
-
-        <li class="clients-item">
-          <a href="https://kenanege.itch.io/swarmbreaker" target="_blank">
-            <img src="./assets/images/PlayableGames/playable_swoop.png" alt="client logo">
-          </a>
-        </li>
-
-        <li class="clients-item">
-          <a href="https://kenanege.itch.io/killwats-league" target="_blank">
-            <img src="./assets/images/PlayableGames/playable_kw.png" alt="client logo">
-          </a>
-        </li>
-
-        <li class="clients-item">
-          <a href="https://kenanege.itch.io/echoes-of-stella" target="_blank">
-            <img src="./assets/images/PlayableGames/playable_eos4.png" alt="client logo">
-          </a>
-        </li>
-
-        <li class="clients-item">
-          <a href="https://kenanege.itch.io/dark-descent" target="_blank">
-            <img src="./assets/images/PlayableGames/playable_ddph2.png" alt="client logo">
-          </a>
-        </li>
-
-        <li class="clients-item">
-          <a href="https://kenanege.itch.io/in-a-bad-mewd-webgltest" target="_blank">
-            <img src="./assets/images/PlayableGames/playable_mewd.png" alt="client logo">
-          </a>
-        </li>
-
-        <li class="clients-item">
-          <a href="https://kenanaegean.github.io/WayEscape-2D-Unity-Game-Demo/" target="_blank">
-            <img src="./assets/images/PlayableGames/playable_wayescape.png" alt="client logo">
-          </a>
-        </li>
-
-        <li class="clients-item">
-          <a href="https://github.com/KenanAegean/No-Need-For-Speed" target="_blank">
-            <img src="./assets/images/PlayableGames/playable_nnfs.png" alt="client logo">
-          </a>
-        </li>
-
-        <!--
-        <li class="clients-item">
-          <a href="https://kenanaegean.github.io/Ai-PathFinding-Project/" target="_blank">
-            <img src="./assets/images/PlayableGames/playable_kim.png" alt="client logo">
-          </a>
-        </li>
-
-        <li class="clients-item">
-          <a href="https://kenanaegean.github.io/PixLock-2D-unity-game/" target="_blank">
-            <img src="./assets/images/PlayableGames/playable_pixlock.png" alt="client logo">
-          </a>
-        </li>
-
-        <li class="clients-item">
-          <a href="https://kenanaegean.github.io/Unity-2D-IEEE-CS-Space-Wars-Game-Project/" target="_blank">
-            <img src="./assets/images/PlayableGames/playable_ieee.png" alt="client logo">
-          </a>
-        </li>
-
-        <li class="clients-item">
-          <a href="https://kenanaegean.github.io/Guardians-Of-The-Garden/" target="_blank">
-            <img src="./assets/images/PlayableGames/playable_gog.png" alt="client logo">
-          </a>
-        </li>
-        -->
-
+      <ul class="clients-list has-scrollbar" id="highlighted-games-list">
+        <!-- Populated from games-showcase.json: highlighted[] -->
       </ul>
+    </section>
+    <br>
 
-    </section> <br>
-
-    
-    </section> 
-
+    <!-- GitHub Stats section - populated by script -->
     <section class="service">
-
       <h3 class="h3 service-title">My GitHub Stats 📊</h3>
-
       <ul class="project-list github-list">
-
-        <li class="project-item  active">
+        <li class="project-item active">
           <figure class="project-img" id="github">
-            <img src="https://github-readme-stats.vercel.app/api?username=KenanAegean&theme=tokyonight&hide_border=false&include_all_commits=false&count_private=false"/>
+            <img id="github-stats-img" src="" alt="GitHub Stats"/>
+            <!-- Populated from site-config.json: external.githubUsername -->
           </figure>
         </li>
-
-        <!--
-        <li class="project-item  active">
-          <figure class="project-img" id="github">
-            <img src="https://github-readme-streak-stats.herokuapp.com/?user=KenanAegean&theme=tokyonight&hide_border=false"/>
-          </figure>
-        </li>
-        -->
-
-        <!--
-        <li class="project-item  active">
-          <figure class="project-img" id="github">
-            <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=KenanAegean&theme=tokyonight&hide_border=false&include_all_commits=false&count_private=false&layout=compact"/>
-          </figure>
-        </li>
-        -->
-        
-        
       </ul>
-
     </section>
 
+    <!-- In Development section - populated by script -->
     <section class="clients">
-
       <h3 class="h3 clients-title">In Development 🎮</h3>
-
-      <ul class="clients-list has-scrollbar">
-
-        <li class="clients-item">
-          <a href="https://kenanaegean.github.io/Riziko_WebGL/" target="_blank">
-            <img src="./assets/images/PlayableGames/playable_riziko.png" alt="client logo">
-          </a>
-        </li>
-
-        <li class="clients-item">
-          <a href="https://futuregames.itch.io/echoes-of-stella" target="_blank">
-            <img src="./assets/images/PlayableGames/playable_eos4.png" alt="client logo">
-          </a>
-        </li>
+      <ul class="clients-list has-scrollbar" id="indev-games-list">
+        <!-- Populated from games-showcase.json: inDevelopment[] -->
       </ul>
+    </section>
 
-    
-    
-
-</article>  
+</article>
