@@ -110,10 +110,96 @@ class PortfolioApp {
     try {
       const response = await fetch('./assets/data/portfolio-items.json');
       this.portfolioItems = await response.json();
+      this.generateFilterButtons(); // Generate filters first
       this.renderPortfolioItems();
       this.initPortfolioFilters();
     } catch (error) {
       console.error('Error loading portfolio items:', error);
+    }
+  }
+
+  /**
+   * Dynamically generate filter buttons based on available categories
+   */
+  generateFilterButtons() {
+    // Get all unique categories from visible items
+    const visibleItems = this.portfolioItems.filter(item => item.visible !== false);
+    const categories = new Set();
+    
+    visibleItems.forEach(item => {
+      if (item.category) {
+        categories.add(item.category);
+      }
+    });
+    
+    // Convert to array and sort
+    const sortedCategories = Array.from(categories).sort();
+    
+    // Check if we have highlighted projects
+    const hasHighlighted = visibleItems.some(item => item.highlighted);
+    
+    // Generate desktop filter buttons
+    const $filterList = $('.filter-list');
+    if ($filterList.length) {
+      $filterList.empty();
+      
+      // Always add "All" button
+      $filterList.append(`
+        <li class="filter-item">
+          <button class="active" data-filter-btn>All</button>
+        </li>
+      `);
+      
+      // Add "Highlighted Projects" if any exist
+      if (hasHighlighted) {
+        $filterList.append(`
+          <li class="filter-item">
+            <button data-filter-btn>Highlighted Projects</button>
+          </li>
+        `);
+      }
+      
+      // Add category buttons
+      sortedCategories.forEach(category => {
+        const displayName = this.capitalizeCategory(category);
+        $filterList.append(`
+          <li class="filter-item">
+            <button data-filter-btn>${displayName}</button>
+          </li>
+        `);
+      });
+    }
+    
+    // Generate mobile dropdown items
+    const $selectList = $('.select-list');
+    if ($selectList.length) {
+      $selectList.empty();
+      
+      // Always add "All" option
+      $selectList.append(`
+        <li class="select-item">
+          <button data-select-item>All</button>
+        </li>
+      `);
+      
+      // Add "Highlighted Projects" if any exist
+      if (hasHighlighted) {
+        $selectList.append(`
+          <li class="select-item">
+            <button data-select-item>Highlighted Projects</button>
+          </li>
+        `);
+      }
+      
+      // Add category options
+      sortedCategories.forEach(category => {
+        const displayName = this.capitalizeCategory(category);
+        $selectList.append(`
+          <li class="select-item">
+            <button data-select-item>${displayName}</button>
+          </li>
+        `);
+      });
     }
   }
 
@@ -198,6 +284,7 @@ class PortfolioApp {
       'python': '<i class="fa-brands fa-python"></i>',
       'cpp': '<i class="devicon-cplusplus-plain colored"></i>',
       'csharp': '<i class="devicon-csharp-plain colored"></i>',
+      'android': '<i class="devicon-android-plain colored"></i>',
       'design': '<ion-icon name="color-palette-outline"></ion-icon>',
       'music': '<ion-icon name="musical-notes-outline"></ion-icon>',
       'default': '<ion-icon name="eye-outline"></ion-icon>'
@@ -219,9 +306,6 @@ class PortfolioApp {
    * Initialize portfolio filters
    */
   initPortfolioFilters() {
-    // Update filter buttons based on visible items
-    this.updateFilterButtons();
-    
     const $items = $('[data-filter-item]');
     const hasHighlighted = $items.filter((_, el) => this.isHighlighted($(el))).length > 0;
     const initialFilter = hasHighlighted ? 'Highlighted Projects' : 'All';
@@ -233,76 +317,6 @@ class PortfolioApp {
     $('[data-filter-btn]').removeClass('active')
       .filter((_, btn) => $(btn).text().trim() === initialFilter)
       .addClass('active');
-  }
-
-  /**
-   * Update filter buttons to show only categories with visible items
-   */
-  updateFilterButtons() {
-    // Get all visible categories
-    const visibleCategories = new Set();
-    const visibleItems = this.portfolioItems.filter(item => item.visible !== false);
-    
-    visibleItems.forEach(item => {
-      if (item.category) {
-        visibleCategories.add(item.category.toLowerCase());
-      }
-    });
-    
-    // Check if any highlighted projects exist
-    const hasHighlighted = visibleItems.some(item => item.highlighted);
-    
-    // Update desktop filter buttons
-    $('[data-filter-btn]').each((_, btn) => {
-      const $btn = $(btn);
-      const filterText = $btn.text().trim().toLowerCase();
-      const $listItem = $btn.closest('.filter-item');
-      
-      if (filterText === 'all') {
-        // Always show "All" button
-        $listItem.show();
-      } else if (filterText === 'highlighted projects') {
-        // Show/hide based on highlighted items
-        if (hasHighlighted) {
-          $listItem.show();
-        } else {
-          $listItem.hide();
-        }
-      } else {
-        // Show/hide based on category
-        if (visibleCategories.has(filterText)) {
-          $listItem.show();
-        } else {
-          $listItem.hide();
-        }
-      }
-    });
-    
-    // Update mobile dropdown items
-    $('[data-select-item]').each((_, item) => {
-      const $item = $(item);
-      const filterText = $item.text().trim().toLowerCase();
-      const $listItem = $item.closest('.select-item');
-      
-      if (filterText === 'all') {
-        // Always show "All" option
-        $listItem.show();
-      } else if (filterText === 'highlighted projects') {
-        // Show/hide based on highlighted items
-        if (hasHighlighted) {
-          $listItem.show();
-        } else {
-          $listItem.hide();
-        }
-      } else {
-        // Show/hide based on category
-        if (visibleCategories.has(filterText)) {
-          $listItem.show();
-        } else {
-          $listItem.hide();
-        }
-      }
-    });
   }
 
   /**
