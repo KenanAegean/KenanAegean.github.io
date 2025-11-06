@@ -2444,7 +2444,7 @@ textarea.form-input::-webkit-resizer { display: none; }
 }
 
 .footer-social-link:hover::before {
-  background: var(--bg-gradient-yellow-2);
+  background: var(--border-gradient-onyx);
 }
 
 .footer-bottom {
