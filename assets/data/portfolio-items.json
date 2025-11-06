@@ -8,6 +8,7 @@
     "link": "https://github.com/KenanAegean/Echolocation-System",
     "tags": ["UE 5", "Gameplay Mechanic"],
     "iconType": "unreal",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -19,6 +20,7 @@
     "link": "https://kenanege.itch.io/killwats-league",
     "tags": ["UE 5", "Group Project"],
     "iconType": "unreal",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -30,6 +32,7 @@
     "link": "https://kenanege.itch.io/echoes-of-stella",
     "tags": ["UE 5", "Group Project"],
     "iconType": "unreal",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -41,6 +44,7 @@
     "link": "https://kenanege.itch.io/dark-descent",
     "tags": ["Unity", "Group Project", "Play On Browser!"],
     "iconType": "unity",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -52,6 +56,7 @@
     "link": "https://kenanege.itch.io/in-a-bad-mewd-webgltest",
     "tags": ["Unity", "Group Project", "Play On Browser!"],
     "iconType": "unity",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -63,6 +68,7 @@
     "link": "https://github.com/KenanAegean/Lord-Of-The-Horde",
     "tags": ["Unity", "Solo Project"],
     "iconType": "unity",
+    "opennewtab": true,
     "visible": false
   },
   {
@@ -74,6 +80,7 @@
     "link": "https://kenanege.itch.io/swarmbreaker",
     "tags": ["Unity", "Solo Project", "Play On Browser!"],
     "iconType": "unity",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -85,6 +92,7 @@
     "link": "https://github.com/KenanAegean/No-Need-For-Speed",
     "tags": ["Unity", "Solo Project"],
     "iconType": "unity",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -96,6 +104,7 @@
     "link": "https://kenanaegean.github.io/Riziko_WebGL/",
     "tags": ["Unity", "Solo Project", "Play On Browser!"],
     "iconType": "unity",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -107,6 +116,7 @@
     "link": "https://github.com/KenanAegean/Snake-Game-Cpp",
     "tags": ["C++", "Solo Project"],
     "iconType": "cpp",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -118,6 +128,7 @@
     "link": "https://github.com/KenanAegean/Snake-Game-UnrealEngine",
     "tags": ["UE 5", "Solo Project"],
     "iconType": "unreal",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -129,6 +140,7 @@
     "link": "https://github.com/KenanAegean/Ai-PathFinding-Project",
     "tags": ["Unity", "Solo Project", "Test On Browser!"],
     "iconType": "unity",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -140,6 +152,7 @@
     "link": "https://github.com/KenanAegean/WayEscape-2D-Unity-Game-Demo",
     "tags": ["Unity", "Solo Project", "Play On Browser!"],
     "iconType": "unity",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -151,6 +164,7 @@
     "link": "https://github.com/KenanAegean/FG-Shader",
     "tags": ["Unity", "Solo Project"],
     "iconType": "unity",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -162,6 +176,7 @@
     "link": "https://kenanege.itch.io/legacy-runner",
     "tags": ["Unity", "Group Project"],
     "iconType": "unity",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -173,6 +188,7 @@
     "link": "https://github.com/KenanAegean/Unity-2D-IEEE-CS-Space-Wars-Game-Project",
     "tags": ["Unity", "Solo Project"],
     "iconType": "unity",
+    "opennewtab": true,
     "visible": false
   },
   {
@@ -184,6 +200,7 @@
     "link": "https://github.com/KenanAegean/PixLock-2D-unity-game",
     "tags": ["Unity", "Solo Project"],
     "iconType": "unity",
+    "opennewtab": true,
     "visible": false
   },
   {
@@ -195,6 +212,7 @@
     "link": "https://github.com/KenanAegean/Guardians-Of-The-Garden",
     "tags": ["Unity", "Solo Project"],
     "iconType": "unity",
+    "opennewtab": true,
     "visible": false
   },
   {
@@ -206,6 +224,7 @@
     "link": "https://kenanege.itch.io/stajyer-seytan",
     "tags": ["Unity", "Game Jam"],
     "iconType": "unity",
+    "opennewtab": true,
     "visible": false
   },
   {
@@ -217,6 +236,7 @@
     "link": "./projects/project-detail.html?id=brickable-bridge",
     "tags": ["Unity", "Game Jam"],
     "iconType": "unity",
+    "opennewtab": false,
     "visible": false
   },
   {
@@ -228,6 +248,7 @@
     "link": "./projects/project-detail.html?id=gamerlog",
     "tags": ["Django"],
     "iconType": "django",
+    "opennewtab": false,
     "visible": true
   },
   {
@@ -239,6 +260,7 @@
     "link": "https://github.com/KenanAegean/AIST-Hackathon",
     "tags": ["Django"],
     "iconType": "django",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -250,6 +272,7 @@
     "link": "https://github.com/KenanAegean/KenanAegean.github.io",
     "tags": ["Github Actions, HTML, CSS, JS"],
     "iconType": "web",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -261,6 +284,7 @@
     "link": "https://github.com/KenanAegean/MTG-Deck-Helper",
     "tags": ["HTML, CSS, JS"],
     "iconType": "web",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -272,6 +296,7 @@
     "link": "https://github.com/KenanAegean/Bitmapify-Image-Dithering",
     "tags": ["HTML, CSS, JS"],
     "iconType": "web",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -283,6 +308,7 @@
     "link": "https://github.com/KenanAegean/Average-Score-Calculator-PHP",
     "tags": ["PHP, HTML, CSS"],
     "iconType": "web",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -294,6 +320,7 @@
     "link": "https://github.com/KenanAegean/Steam-Screenshot-Tool",
     "tags": ["Python"],
     "iconType": "python",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -305,6 +332,7 @@
     "link": "https://github.com/KenanAegean/PixelArt-Maker",
     "tags": ["Python"],
     "iconType": "python",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -316,6 +344,7 @@
     "link": "https://github.com/KenanAegean/Note-Editor-WindowsForm",
     "tags": ["C#"],
     "iconType": "csharp",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -327,6 +356,7 @@
     "link": "https://github.com/KenanAegean/Calculator-WindowsForm",
     "tags": ["C#"],
     "iconType": "csharp",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -338,6 +368,7 @@
     "link": "https://github.com/KenanAegean/graphic-design-projects",
     "tags": [],
     "iconType": "design",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -349,6 +380,7 @@
     "link": "https://open.spotify.com/intl-tr/artist/2CMjhwFMDeusyTCoKcTNL8?si=1_G7nyGgSj2Qxv_icfhUxA",
     "tags": [],
     "iconType": "music",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -360,6 +392,7 @@
     "link": "https://github.com/KenanAegean/World-Cup-2022-Stadiums-App-Android-Studio",
     "tags": ["Android Studio"],
     "iconType": "android",
+    "opennewtab": true,
     "visible": true
   },
   {
@@ -371,6 +404,7 @@
     "link": "https://github.com/KenanAegean/Auto-Score-App-Androd-Studio",
     "tags": ["Android Studio"],
     "iconType": "android",
+    "opennewtab": true,
     "visible": true
   }
 ]

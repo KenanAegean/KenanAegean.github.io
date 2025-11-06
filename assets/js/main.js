@@ -20,7 +20,7 @@ class PortfolioApp {
     
     // ⚠️ IMPORTANT: Increment this version number when you update any JSON files
     // This prevents browsers from using cached versions of your data
-    this.dataVersion = '1.0.8';
+    this.dataVersion = '1.0.9';
     
     this.init();
   }
@@ -29,6 +29,7 @@ class PortfolioApp {
     await this.loadAllData();
     this.renderSidebar();
     this.renderNavbar();
+    this.renderFooter();
     this.setupEventListeners();
   }
 
@@ -184,6 +185,56 @@ class PortfolioApp {
     if (defaultPage) {
       this.navigateTo(defaultPage.page);
     }
+  }
+
+  /**
+   * Render dynamic footer
+   */
+  renderFooter() {
+    const config = this.siteConfig.personal;
+    const currentYear = new Date().getFullYear();
+    
+    const socialHtml = this.socialLinks.slice(0, 6).map(link => {
+      const iconHtml = link.iconType === 'fontawesome' 
+        ? `<i class="fa-brands ${link.icon}"></i>`
+        : `<ion-icon name="${link.icon}"></ion-icon>`;
+      
+      return `
+        <a href="${link.url}" target="_blank" class="footer-social-link" title="${link.platform}">
+          ${iconHtml}
+        </a>
+      `;
+    }).join('');
+
+    const footerHtml = `
+      <footer class="footer">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3 class="footer-title">${config.name}</h3>
+            <p class="footer-text">Computer Engineer & Game Developer</p>
+            <p class="footer-text">${config.location}</p>
+          </div>
+          
+          <div class="footer-section">
+            <h4 class="footer-subtitle">Connect</h4>
+            <div class="footer-social">
+              ${socialHtml}
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <p class="footer-copyright">
+            © ${currentYear} ${config.name}. All rights reserved.
+          </p>
+          <p class="footer-credits">
+            Built with 💜 using Vanilla JS & jQuery
+          </p>
+        </div>
+      </footer>
+    `;
+
+    $('#footer-container').html(footerHtml);
   }
 
   /**
@@ -526,11 +577,14 @@ class PortfolioApp {
   }
 
   /**
-   * Create a single portfolio item element
+   * Create a single portfolio item element with opennewtab support
    */
   createPortfolioItem(item) {
     const highlightedAttr = item.highlighted ? 'is-highlighted="yes"' : '';
     const hoverIcon = this.getHoverIcon(item.iconType);
+    
+    // Determine target attribute based on opennewtab field (default to true)
+    const targetAttr = (item.opennewtab !== false) ? 'target="_blank" rel="noopener noreferrer"' : '';
     
     let tagsHtml = '';
     if (item.tags && item.tags.length > 0) {
@@ -557,7 +611,7 @@ class PortfolioApp {
           data-filter-item 
           data-category="${item.category}" 
           ${highlightedAttr}>
-        <a href="${item.link}" target="_blank">
+        <a href="${item.link}" ${targetAttr}>
           <figure class="project-img">
             <div class="project-item-icon-box">
               ${hoverIcon}

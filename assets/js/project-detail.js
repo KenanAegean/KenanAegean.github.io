@@ -1,5 +1,5 @@
 /**
- * Project Detail Page - Modern Enhanced Version with Lightbox
+ * Project Detail Page - Modern Enhanced Version with Lightbox and Footer
  * 
  * Supports beautiful, modern project showcase pages with:
  * - Simplified header section
@@ -8,28 +8,33 @@
  * - Screenshot galleries with fullscreen lightbox
  * - Project links/CTAs
  * - Animations
+ * - Footer component
  */
 
 'use strict';
 
 class ProjectDetailPage {
   constructor() {
-    this.dataVersion = '1.0.9';
+    this.dataVersion = '1.2.0';
     this.projectId = null;
     this.projectData = null;
     this.siteConfig = null;
     this.socialLinks = [];
+    this.footerConfig = null;
     this.lightboxImages = [];
     this.currentImageIndex = 0;
     this.init();
   }
 
   async init() {
-    // Load site data for sidebar
+    // Load site data for sidebar and footer
     await this.loadSiteData();
     
     // Render sidebar dynamically
     this.renderSidebar();
+    
+    // Render footer
+    this.renderFooter();
     
     // Get project ID from URL
     this.projectId = this.getProjectIdFromUrl();
@@ -55,17 +60,27 @@ class ProjectDetailPage {
   }
 
   /**
-   * Load site configuration and social links
+   * Load site configuration and footer config
    */
   async loadSiteData() {
     try {
-      const [siteConfig, socialLinks] = await Promise.all([
+      const [siteConfig, footerConfig] = await Promise.all([
         fetch(this.getCacheBustedUrl('../assets/data/site-config.json')).then(r => r.json()),
-        fetch(this.getCacheBustedUrl('../assets/data/social-links.json')).then(r => r.json())
+        fetch(this.getCacheBustedUrl('../assets/data/footer.json')).then(r => r.json()).catch(() => null)
       ]);
 
       this.siteConfig = siteConfig;
-      this.socialLinks = socialLinks.filter(link => link.visible !== false);
+      this.footerConfig = footerConfig;
+      
+      // Load social links from footer config if available
+      if (footerConfig && footerConfig.social && footerConfig.social.links) {
+        this.socialLinks = footerConfig.social.links.filter(link => link.visible !== false);
+      } else {
+        // Fallback to site-config if footer.json doesn't exist
+        const socialLinksResponse = await fetch(this.getCacheBustedUrl('../assets/data/social-links.json'));
+        const socialLinksData = await socialLinksResponse.json();
+        this.socialLinks = socialLinksData.filter(link => link.visible !== false);
+      }
     } catch (error) {
       console.error('Error loading site data:', error);
     }
@@ -164,6 +179,106 @@ class ProjectDetailPage {
 
     $('#sidebar-container').html(sidebarHtml);
     this.setupSidebarToggle();
+  }
+
+  /**
+   * Render dynamic footer with full configuration support
+   */
+  renderFooter() {
+    if (!this.footerConfig || !this.footerConfig.enabled) {
+      return;
+    }
+
+    const currentYear = new Date().getFullYear();
+    let footerHtml = '<footer class="footer"><div class="footer-content">';
+
+    // Profile Section
+    if (this.footerConfig.profile && this.footerConfig.profile.enabled) {
+      const profile = this.footerConfig.profile;
+      footerHtml += '<div class="footer-section">';
+      
+      if (profile.showTitle && profile.title) {
+        footerHtml += `<h3 class="footer-title">${profile.title}</h3>`;
+      }
+      
+      if (profile.showSubtitle && profile.subtitle) {
+        footerHtml += `<p class="footer-text">${profile.subtitle}</p>`;
+      }
+      
+      if (profile.showLocation && profile.location) {
+        footerHtml += `<p class="footer-text">${profile.location}</p>`;
+      }
+      
+      footerHtml += '</div>';
+    }
+
+    // Social Section
+    if (this.footerConfig.social && this.footerConfig.social.enabled) {
+      const social = this.footerConfig.social;
+      const visibleLinks = social.links ? social.links.filter(link => link.visible !== false) : [];
+      const maxIcons = social.maxIcons || 6;
+      const linksToShow = visibleLinks.slice(0, maxIcons);
+
+      if (linksToShow.length > 0) {
+        const socialHtml = linksToShow.map(link => {
+          const iconHtml = link.iconType === 'fontawesome' 
+            ? `<i class="fa-brands ${link.icon}"></i>`
+            : `<ion-icon name="${link.icon}"></ion-icon>`;
+          
+          return `
+            <a href="${link.url}" target="_blank" class="footer-social-link" title="${link.platform}">
+              ${iconHtml}
+            </a>
+          `;
+        }).join('');
+
+        footerHtml += `
+          <div class="footer-section">
+            <h4 class="footer-subtitle">${social.title || 'Connect'}</h4>
+            <div class="footer-social">
+              ${socialHtml}
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    footerHtml += '</div><div class="footer-bottom">';
+
+    // Copyright Section
+    if (this.footerConfig.copyright && this.footerConfig.copyright.enabled) {
+      const copyright = this.footerConfig.copyright;
+      const year = copyright.showYear ? currentYear : '';
+      const name = copyright.name || '';
+      const text = copyright.text || '';
+      
+      footerHtml += `
+        <p class="footer-copyright">
+          ${year ? `© ${year}` : ''} ${name}${name && text ? '.' : ''} ${text}
+        </p>
+      `;
+    }
+
+    // Credits Section
+    if (this.footerConfig.credits && this.footerConfig.credits.enabled) {
+      const creditsText = this.footerConfig.credits.text || '';
+      footerHtml += `<p class="footer-credits">${creditsText}</p>`;
+    }
+
+    // Custom Links Section (optional)
+    if (this.footerConfig.customLinks && this.footerConfig.customLinks.length > 0) {
+      const visibleCustomLinks = this.footerConfig.customLinks.filter(link => link.visible !== false);
+      if (visibleCustomLinks.length > 0) {
+        const customLinksHtml = visibleCustomLinks.map(link => 
+          `<a href="${link.url}" class="footer-custom-link">${link.text}</a>`
+        ).join(' • ');
+        footerHtml += `<p class="footer-custom-links">${customLinksHtml}</p>`;
+      }
+    }
+
+    footerHtml += '</div></footer>';
+
+    $('#footer-container').html(footerHtml);
   }
 
   setupSidebarToggle() {
