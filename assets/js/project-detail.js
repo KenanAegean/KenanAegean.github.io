@@ -15,7 +15,7 @@
 
 class ProjectDetailPage {
   constructor() {
-    this.dataVersion = '1.2.0';
+    this.dataVersion = '1.2.1';
     this.projectId = null;
     this.projectData = null;
     this.siteConfig = null;
