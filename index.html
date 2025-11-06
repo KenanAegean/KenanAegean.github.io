@@ -22,8 +22,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
     
-    <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="./assets/css/style.css?v=1.0.8">
+    <!-- 
+      ⚠️ VERSION MANAGEMENT:
+      All versions are managed in assets/data/site-config.json under "versions"
+      
+      When updating versions:
+      1. Edit site-config.json → versions section
+      2. Update the ?v= parameters below to match
+      3. The JavaScript will automatically validate and warn about mismatches
+      
+    -->
+    <link rel="stylesheet" href="./assets/css/style.css?v=1.2.2">
 </head>
 <body>
     <main>
@@ -51,6 +60,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>
+    <!-- Version matches site-config.json → versions.js -->
     <script src="./assets/js/main.js?v=1.2.1"></script>
 </body>
 </html>

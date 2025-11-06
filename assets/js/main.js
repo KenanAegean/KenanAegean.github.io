@@ -4,7 +4,9 @@
  * Portfolio Website - Main JavaScript
  * Clean, organized, and data-driven with dynamic content loading
  * 
- * CACHE-BUSTING: Increment dataVersion when updating JSON files
+ * VERSION MANAGEMENT:
+ * All versions are now managed in assets/data/site-config.json under "versions"
+ * This eliminates hardcoded version numbers and provides a single source of truth
  */
 
 class PortfolioApp {
@@ -19,10 +21,6 @@ class PortfolioApp {
     this.instagram = null;
     this.footerConfig = null;
     
-    // ⚠️ IMPORTANT: Increment this version number when you update any JSON files
-    // This prevents browsers from using cached versions of your data
-    this.dataVersion = '1.2.1';
-    
     this.init();
   }
 
@@ -32,22 +30,30 @@ class PortfolioApp {
     this.renderNavbar();
     this.renderFooter();
     this.setupEventListeners();
+    this.checkVersions();
   }
 
   /**
    * Helper method to create cache-busted URL
+   * Uses version from site-config.json after it's loaded
    */
   getCacheBustedUrl(url) {
-    return `${url}?v=${this.dataVersion}`;
+    const version = this.siteConfig?.versions?.data || Date.now();
+    return `${url}?v=${version}`;
   }
 
   /**
    * Load all JSON data files with cache-busting
+   * Site config is loaded FIRST to get version numbers
    */
   async loadAllData() {
     try {
-      const [siteConfig, socialLinks, navigation, experience, education, gamesShowcase, instagram, footerConfig] = await Promise.all([
-        fetch(this.getCacheBustedUrl('./assets/data/site-config.json')).then(r => r.json()),
+      // Load site-config FIRST (use timestamp for initial load)
+      const configResponse = await fetch(`./assets/data/site-config.json?v=${Date.now()}`);
+      this.siteConfig = await configResponse.json();
+      
+      // Now load everything else with proper cache-busting from config
+      const [socialLinks, navigation, experience, education, gamesShowcase, instagram, footerConfig] = await Promise.all([
         fetch(this.getCacheBustedUrl('./assets/data/social-links.json')).then(r => r.json()),
         fetch(this.getCacheBustedUrl('./assets/data/navigation.json')).then(r => r.json()),
         fetch(this.getCacheBustedUrl('./assets/data/experience.json')).then(r => r.json()),
@@ -57,7 +63,6 @@ class PortfolioApp {
         fetch(this.getCacheBustedUrl('./assets/data/footer.json')).then(r => r.json()).catch(() => null)
       ]);
 
-      this.siteConfig = siteConfig;
       this.socialLinks = socialLinks.filter(link => link.visible !== false);
       this.navigation = navigation.filter(item => item.visible !== false).sort((a, b) => a.order - b.order);
       this.experience = experience;
@@ -68,6 +73,59 @@ class PortfolioApp {
     } catch (error) {
       console.error('Error loading data:', error);
     }
+  }
+
+  /**
+   * Check if HTML versions match config versions
+   * Logs warnings if versions are mismatched
+   */
+  checkVersions() {
+    if (!this.siteConfig?.versions) {
+      console.warn('⚠️ No version configuration found in site-config.json');
+      return;
+    }
+    
+    const configVersions = this.siteConfig.versions;
+    const htmlJsVersion = this.getHtmlVersion('main.js');
+    const htmlCssVersion = this.getHtmlVersion('style.css');
+    
+    console.log('📦 Current versions from site-config.json:', configVersions);
+    
+    if (htmlJsVersion && htmlJsVersion !== configVersions.js) {
+      console.warn(`⚠️ JS Version mismatch!
+        HTML script version: ${htmlJsVersion}
+        Config JS version: ${configVersions.js}
+        → Update index.html to use v=${configVersions.js}`);
+    }
+    
+    if (htmlCssVersion && htmlCssVersion !== configVersions.css) {
+      console.warn(`⚠️ CSS Version mismatch!
+        HTML stylesheet version: ${htmlCssVersion}
+        Config CSS version: ${configVersions.css}
+        → Update index.html to use v=${configVersions.css}`);
+    }
+    
+    if (htmlJsVersion === configVersions.js && htmlCssVersion === configVersions.css) {
+      console.log('✅ All versions are in sync!');
+    }
+  }
+
+  /**
+   * Extract version from current script/link tag
+   */
+  getHtmlVersion(filename) {
+    let element;
+    if (filename.endsWith('.js')) {
+      element = document.querySelector(`script[src*="${filename}"]`);
+    } else if (filename.endsWith('.css')) {
+      element = document.querySelector(`link[href*="${filename}"]`);
+    }
+    
+    if (!element) return null;
+    
+    const url = filename.endsWith('.js') ? element.src : element.href;
+    const match = url.match(/v=([^&]+)/);
+    return match ? match[1] : null;
   }
 
   /**

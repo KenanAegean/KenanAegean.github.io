@@ -1,4 +1,10 @@
 {
+  "versions": {
+    "css": "1.2.2",
+    "js": "1.2.2",
+    "data": "1.2.2",
+    "projectDetailCss": "1.2.2"
+  },
   "personal": {
     "name": "Kenan EGE",
     "nickname": "Kaegean",

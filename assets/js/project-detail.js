@@ -1,6 +1,10 @@
 /**
  * Project Detail Page - Modern Enhanced Version with Lightbox and Footer
  * 
+ * VERSION MANAGEMENT:
+ * All versions are now managed in assets/data/site-config.json under "versions"
+ * This eliminates hardcoded version numbers and provides a single source of truth
+ * 
  * Supports beautiful, modern project showcase pages with:
  * - Simplified header section
  * - Tech stack badges
@@ -15,7 +19,6 @@
 
 class ProjectDetailPage {
   constructor() {
-    this.dataVersion = '1.2.1';
     this.projectId = null;
     this.projectData = null;
     this.siteConfig = null;
@@ -35,6 +38,9 @@ class ProjectDetailPage {
     
     // Render footer
     this.renderFooter();
+    
+    // Check version consistency
+    this.checkVersions();
     
     // Get project ID from URL
     this.projectId = this.getProjectIdFromUrl();
@@ -56,7 +62,8 @@ class ProjectDetailPage {
   }
 
   getCacheBustedUrl(url) {
-    return `${url}?v=${this.dataVersion}`;
+    const version = this.siteConfig?.versions?.data || Date.now();
+    return `${url}?v=${version}`;
   }
 
   /**
@@ -64,12 +71,15 @@ class ProjectDetailPage {
    */
   async loadSiteData() {
     try {
-      const [siteConfig, footerConfig] = await Promise.all([
-        fetch(this.getCacheBustedUrl('../assets/data/site-config.json')).then(r => r.json()),
-        fetch(this.getCacheBustedUrl('../assets/data/footer.json')).then(r => r.json()).catch(() => null)
-      ]);
+      // Load site-config FIRST (use timestamp for initial load)
+      const configResponse = await fetch(`../assets/data/site-config.json?v=${Date.now()}`);
+      this.siteConfig = await configResponse.json();
+      
+      // Then load footer config with proper cache-busting
+      const footerConfig = await fetch(this.getCacheBustedUrl('../assets/data/footer.json'))
+        .then(r => r.json())
+        .catch(() => null);
 
-      this.siteConfig = siteConfig;
       this.footerConfig = footerConfig;
       
       // Load social links from footer config if available
@@ -84,6 +94,69 @@ class ProjectDetailPage {
     } catch (error) {
       console.error('Error loading site data:', error);
     }
+  }
+
+  /**
+   * Check if HTML versions match config versions
+   * Logs warnings if versions are mismatched
+   */
+  checkVersions() {
+    if (!this.siteConfig?.versions) {
+      console.warn('⚠️ No version configuration found in site-config.json');
+      return;
+    }
+    
+    const configVersions = this.siteConfig.versions;
+    const htmlJsVersion = this.getHtmlVersion('project-detail.js');
+    const htmlCssVersion = this.getHtmlVersion('style.css');
+    const htmlProjectCssVersion = this.getHtmlVersion('project-detail.css');
+    
+    console.log('📦 Current versions from site-config.json:', configVersions);
+    
+    if (htmlJsVersion && htmlJsVersion !== configVersions.js) {
+      console.warn(`⚠️ JS Version mismatch!
+        HTML script version: ${htmlJsVersion}
+        Config JS version: ${configVersions.js}
+        → Update project-detail.html to use v=${configVersions.js}`);
+    }
+    
+    if (htmlCssVersion && htmlCssVersion !== configVersions.css) {
+      console.warn(`⚠️ CSS Version mismatch!
+        HTML stylesheet version: ${htmlCssVersion}
+        Config CSS version: ${configVersions.css}
+        → Update project-detail.html to use v=${configVersions.css}`);
+    }
+    
+    if (htmlProjectCssVersion && htmlProjectCssVersion !== configVersions.projectDetailCss) {
+      console.warn(`⚠️ Project Detail CSS Version mismatch!
+        HTML stylesheet version: ${htmlProjectCssVersion}
+        Config version: ${configVersions.projectDetailCss}
+        → Update project-detail.html to use v=${configVersions.projectDetailCss}`);
+    }
+    
+    if (htmlJsVersion === configVersions.js && 
+        htmlCssVersion === configVersions.css && 
+        htmlProjectCssVersion === configVersions.projectDetailCss) {
+      console.log('✅ All versions are in sync!');
+    }
+  }
+
+  /**
+   * Extract version from current script/link tag
+   */
+  getHtmlVersion(filename) {
+    let element;
+    if (filename.endsWith('.js')) {
+      element = document.querySelector(`script[src*="${filename}"]`);
+    } else if (filename.endsWith('.css')) {
+      element = document.querySelector(`link[href*="${filename}"]`);
+    }
+    
+    if (!element) return null;
+    
+    const url = filename.endsWith('.js') ? element.src : element.href;
+    const match = url.match(/v=([^&]+)/);
+    return match ? match[1] : null;
   }
 
   /**
