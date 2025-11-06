@@ -17,6 +17,7 @@ class PortfolioApp {
     this.education = [];
     this.gamesShowcase = null;
     this.instagram = null;
+    this.footerConfig = null;
     
     // ⚠️ IMPORTANT: Increment this version number when you update any JSON files
     // This prevents browsers from using cached versions of your data
@@ -45,14 +46,15 @@ class PortfolioApp {
    */
   async loadAllData() {
     try {
-      const [siteConfig, socialLinks, navigation, experience, education, gamesShowcase, instagram] = await Promise.all([
+      const [siteConfig, socialLinks, navigation, experience, education, gamesShowcase, instagram, footerConfig] = await Promise.all([
         fetch(this.getCacheBustedUrl('./assets/data/site-config.json')).then(r => r.json()),
         fetch(this.getCacheBustedUrl('./assets/data/social-links.json')).then(r => r.json()),
         fetch(this.getCacheBustedUrl('./assets/data/navigation.json')).then(r => r.json()),
         fetch(this.getCacheBustedUrl('./assets/data/experience.json')).then(r => r.json()),
         fetch(this.getCacheBustedUrl('./assets/data/education.json')).then(r => r.json()),
         fetch(this.getCacheBustedUrl('./assets/data/games-showcase.json')).then(r => r.json()),
-        fetch(this.getCacheBustedUrl('./assets/data/instagram.json')).then(r => r.json())
+        fetch(this.getCacheBustedUrl('./assets/data/instagram.json')).then(r => r.json()),
+        fetch(this.getCacheBustedUrl('./assets/data/footer.json')).then(r => r.json()).catch(() => null)
       ]);
 
       this.siteConfig = siteConfig;
@@ -62,6 +64,7 @@ class PortfolioApp {
       this.education = education;
       this.gamesShowcase = gamesShowcase;
       this.instagram = instagram;
+      this.footerConfig = footerConfig;
     } catch (error) {
       console.error('Error loading data:', error);
     }
@@ -188,51 +191,101 @@ class PortfolioApp {
   }
 
   /**
-   * Render dynamic footer
+   * Render dynamic footer with full configuration support
    */
   renderFooter() {
-    const config = this.siteConfig.personal;
-    const currentYear = new Date().getFullYear();
-    
-    const socialHtml = this.socialLinks.slice(0, 6).map(link => {
-      const iconHtml = link.iconType === 'fontawesome' 
-        ? `<i class="fa-brands ${link.icon}"></i>`
-        : `<ion-icon name="${link.icon}"></ion-icon>`;
-      
-      return `
-        <a href="${link.url}" target="_blank" class="footer-social-link" title="${link.platform}">
-          ${iconHtml}
-        </a>
-      `;
-    }).join('');
+    if (!this.footerConfig || !this.footerConfig.enabled) {
+      return;
+    }
 
-    const footerHtml = `
-      <footer class="footer">
-        <div class="footer-content">
-          <div class="footer-section">
-            <h3 class="footer-title">${config.name}</h3>
-            <p class="footer-text">Computer Engineer & Game Developer</p>
-            <p class="footer-text">${config.location}</p>
-          </div>
+    const currentYear = new Date().getFullYear();
+    let footerHtml = '<footer class="footer"><div class="footer-content">';
+
+    // Profile Section
+    if (this.footerConfig.profile && this.footerConfig.profile.enabled) {
+      const profile = this.footerConfig.profile;
+      footerHtml += '<div class="footer-section">';
+      
+      if (profile.showTitle && profile.title) {
+        footerHtml += `<h3 class="footer-title">${profile.title}</h3>`;
+      }
+      
+      if (profile.showSubtitle && profile.subtitle) {
+        footerHtml += `<p class="footer-text">${profile.subtitle}</p>`;
+      }
+      
+      if (profile.showLocation && profile.location) {
+        footerHtml += `<p class="footer-text">${profile.location}</p>`;
+      }
+      
+      footerHtml += '</div>';
+    }
+
+    // Social Section
+    if (this.footerConfig.social && this.footerConfig.social.enabled) {
+      const social = this.footerConfig.social;
+      const visibleLinks = social.links ? social.links.filter(link => link.visible !== false) : [];
+      const maxIcons = social.maxIcons || 6;
+      const linksToShow = visibleLinks.slice(0, maxIcons);
+
+      if (linksToShow.length > 0) {
+        const socialHtml = linksToShow.map(link => {
+          const iconHtml = link.iconType === 'fontawesome' 
+            ? `<i class="fa-brands ${link.icon}"></i>`
+            : `<ion-icon name="${link.icon}"></ion-icon>`;
           
+          return `
+            <a href="${link.url}" target="_blank" class="footer-social-link" title="${link.platform}">
+              ${iconHtml}
+            </a>
+          `;
+        }).join('');
+
+        footerHtml += `
           <div class="footer-section">
-            <h4 class="footer-subtitle">Connect</h4>
+            <h4 class="footer-subtitle">${social.title || 'Connect'}</h4>
             <div class="footer-social">
               ${socialHtml}
             </div>
           </div>
-        </div>
-        
-        <div class="footer-bottom">
-          <p class="footer-copyright">
-            © ${currentYear} ${config.name}. All rights reserved.
-          </p>
-          <p class="footer-credits">
-            Built with 💜 using Vanilla JS & jQuery
-          </p>
-        </div>
-      </footer>
-    `;
+        `;
+      }
+    }
+
+    footerHtml += '</div><div class="footer-bottom">';
+
+    // Copyright Section
+    if (this.footerConfig.copyright && this.footerConfig.copyright.enabled) {
+      const copyright = this.footerConfig.copyright;
+      const year = copyright.showYear ? currentYear : '';
+      const name = copyright.name || '';
+      const text = copyright.text || '';
+      
+      footerHtml += `
+        <p class="footer-copyright">
+          ${year ? `© ${year}` : ''} ${name}${name && text ? '.' : ''} ${text}
+        </p>
+      `;
+    }
+
+    // Credits Section
+    if (this.footerConfig.credits && this.footerConfig.credits.enabled) {
+      const creditsText = this.footerConfig.credits.text || '';
+      footerHtml += `<p class="footer-credits">${creditsText}</p>`;
+    }
+
+    // Custom Links Section (optional)
+    if (this.footerConfig.customLinks && this.footerConfig.customLinks.length > 0) {
+      const visibleCustomLinks = this.footerConfig.customLinks.filter(link => link.visible !== false);
+      if (visibleCustomLinks.length > 0) {
+        const customLinksHtml = visibleCustomLinks.map(link => 
+          `<a href="${link.url}" class="footer-custom-link">${link.text}</a>`
+        ).join(' • ');
+        footerHtml += `<p class="footer-custom-links">${customLinksHtml}</p>`;
+      }
+    }
+
+    footerHtml += '</div></footer>';
 
     $('#footer-container').html(footerHtml);
   }
