@@ -2432,7 +2432,6 @@ textarea.form-input::-webkit-resizer { display: none; }
   content: "";
   position: absolute;
   inset: 1px;
-  background: var(--bg-gradient-jet);
   border-radius: inherit;
   z-index: -1;
   transition: var(--transition-1);
