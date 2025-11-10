@@ -2424,7 +2424,6 @@ textarea.form-input::-webkit-resizer { display: none; }
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: var(--border-gradient-onyx);
   position: relative;
 }
 
@@ -2443,7 +2442,6 @@ textarea.form-input::-webkit-resizer { display: none; }
 }
 
 .footer-social-link:hover::before {
-  background: var(--border-gradient-onyx);
 }
 
 .footer-bottom {
