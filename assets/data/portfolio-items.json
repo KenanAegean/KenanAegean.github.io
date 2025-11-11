@@ -181,39 +181,39 @@
   },
   {
     "id": 16,
-    "title": "IEEE Computer Society Space Wars",
-    "category": "game development",
-    "highlighted": false,
-    "image": "./assets/images/Portfolio/ieee.png",
-    "link": "https://github.com/KenanAegean/Unity-2D-IEEE-CS-Space-Wars-Game-Project",
-    "tags": ["Unity", "Solo Project"],
-    "iconType": "unity",
-    "opennewtab": true,
-    "visible": false
-  },
-  {
-    "id": 17,
     "title": "PixLock",
     "category": "game development",
     "highlighted": false,
     "image": "./assets/images/Portfolio/pixlock.png",
     "link": "https://github.com/KenanAegean/PixLock-2D-unity-game",
-    "tags": ["Unity", "Solo Project"],
+    "tags": ["Unity", "Solo Project", "Play On Browser!"],
     "iconType": "unity",
     "opennewtab": true,
-    "visible": false
+    "visible": true
   },
   {
-    "id": 18,
+    "id": 17,
     "title": "Guardians Of The Garden",
     "category": "game development",
     "highlighted": false,
     "image": "./assets/images/Portfolio/gog.png",
     "link": "https://github.com/KenanAegean/Guardians-Of-The-Garden",
-    "tags": ["Unity", "Solo Project"],
+    "tags": ["Unity", "Solo Project", "Play On Browser!"],
     "iconType": "unity",
     "opennewtab": true,
-    "visible": false
+    "visible": true
+  },
+  {
+    "id": 18,
+    "title": "IEEE Computer Society Space Wars",
+    "category": "game development",
+    "highlighted": false,
+    "image": "./assets/images/Portfolio/ieee.png",
+    "link": "https://github.com/KenanAegean/Unity-2D-IEEE-CS-Space-Wars-Game-Project",
+    "tags": ["Unity", "Solo Project", "Play On Browser!"],
+    "iconType": "unity",
+    "opennewtab": true,
+    "visible": true
   },
   {
     "id": 19,
