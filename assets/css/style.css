@@ -1178,11 +1178,30 @@ main {
     border-color: var(--orange-yellow-crayola);
   }
 
-  .filter-item button.active { 
-    color: var(--white-1) !important; /* Force white text */
-    background: var(--orange-yellow-crayola) !important; /* Force full purple background */
+  .filter-item button.active {
+    color: var(--white-1) !important;
+    background: linear-gradient(
+      -45deg,
+      var(--orange-yellow-crayola),
+      var(--vegas-gold),
+      hsl(265, 72%, 74%),
+      var(--orange-yellow-crayola)
+    ) !important;
+    background-size: 300% 300% !important;
     border-color: var(--orange-yellow-crayola) !important;
     font-weight: var(--fw-500);
+    
+    /* --- MODIFICATIONS TO MAKE IT MORE NOTICEABLE --- */
+    position: relative; /* Ensure z-index and transform work correctly */
+    z-index: 2; /* Bring it to the front */
+    transform: scale(1.03); /* Make it slightly larger */
+    
+    /* Combine two animations: a faster gradient pan and a pulsing shadow */
+    animation: 
+      gradient-pan-fast 3s ease infinite,  /* Sped up background pan */
+      pulse-btn 2.5s ease-in-out infinite   /* Added pulsing shadow glow */
+    !important;
+    /* --- END MODIFICATIONS --- */
   }
 
   /* 2-column grid for tablets */
