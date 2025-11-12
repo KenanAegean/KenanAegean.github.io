@@ -3,8 +3,7 @@
 /**
  * Portfolio Website - Main JavaScript
  * Clean, organized, and data-driven with dynamic content loading
- * 
- * VERSION MANAGEMENT:
+ * * VERSION MANAGEMENT:
  * All versions are now managed in assets/data/site-config.json under "versions"
  * This eliminates hardcoded version numbers and provides a single source of truth
  */
@@ -471,20 +470,27 @@ class PortfolioApp {
    * Populate Resume page with data from JSON
    */
   populateResumePage() {
-    // Populate experience timeline
+    // --- START: NEW CODE FOR EXPERIENCE ---
     const experienceHtml = this.experience.map(company => {
+      // Loop through each position and wrap it in a div
       const positionsHtml = company.positions.map(position => {
         const responsibilitiesHtml = position.responsibilities.map(r => 
-          `&#x2022; ${r}<br>`
+          `• ${r}<br>`
         ).join('');
 
+        // This new "position-item" div is key
         return `
-          <h5 class="h5 timeline-item-title">${position.title}</h5>
-          <span>${position.startDate} — ${position.endDate}</span>
-          <p class="timeline-text">${responsibilitiesHtml}</p><br>
+          <div class="position-item">
+            <div class="position-header">
+              <h5 class="h5 timeline-item-title">${position.title}</h5>
+              <span>${position.startDate} — ${position.endDate}</span>
+            </div>
+            <p class="timeline-text">${responsibilitiesHtml}</p>
+          </div>
         `;
       }).join('');
 
+      // All positions are placed inside the single timeline-item card
       return `
         <li class="timeline-item">
           <h4 class="h4">${company.company}</h4>
@@ -493,16 +499,24 @@ class PortfolioApp {
       `;
     }).join('');
     $('#experience-timeline-list').html(experienceHtml);
+    // --- END: NEW CODE FOR EXPERIENCE ---
 
-    // Populate education timeline
-    const educationHtml = this.education.map(edu => `
-      <li class="timeline-item">
-        <h4 class="h4">${edu.institution}</h4>
-        <span>${edu.startDate} — ${edu.endDate}</span>
-        <p class="timeline-text">&#x2022; ${edu.degree}</p>
-        ${edu.description ? `<p class="timeline-text">${edu.description}</p>` : ''}
-      </li>
-    `).join('');
+    // Populate education timeline (this part remains the same)
+    const educationHtml = this.education.map(edu => {
+      // Each education entry is its own card, which is correct
+      const descriptionHtml = edu.description ? `<p class="timeline-text">${edu.description}</p>` : '';
+      
+      return `
+        <li class="timeline-item">
+          <div class="position-header">
+            <h4 class="h4">${edu.institution}</h4>
+            <span>${edu.startDate} — ${edu.endDate}</span>
+          </div>
+          <p class="timeline-text">• ${edu.degree}</p>
+          ${descriptionHtml}
+        </li>
+      `;
+    }).join('');
     $('#education-timeline-list').html(educationHtml);
   }
 
@@ -717,6 +731,8 @@ class PortfolioApp {
       });
     }
 
+    // --- UPDATED PART ---
+    // Wrapped title and category in a <div class="project-content">
     return $(`
       <li data-value="${item.id}" class="project-item active" 
           data-filter-item 
@@ -730,11 +746,16 @@ class PortfolioApp {
             ${tagsHtml}
             <img src="${item.image}" alt="${item.title}" loading="lazy">
           </figure>
-          <h3 class="project-title">${item.title}</h3>
-          <p class="project-category">${this.capitalizeCategory(item.category)}</p>
+          
+          <div class="project-content">
+            <h3 class="project-title">${item.title}</h3>
+            <p class="project-category">${this.capitalizeCategory(item.category)}</p>
+          </div>
+
         </a>
       </li>
     `);
+    // --- END OF UPDATE ---
   }
 
   /**
