@@ -160,7 +160,7 @@ class PortfolioApp {
           </div>
           
           <div class="info-content">
-            <a href="./index.html"><h1 class="name" title="${config.name}">${config.name} 👾</h1></a>
+            <a href="./index.html"><h1 class="name" title="${config.name}">${config.name} </h1></a>
             <p class="title">${titlesHtml}</p>
           </div>
 
