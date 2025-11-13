@@ -368,6 +368,20 @@ class PortfolioApp {
         $('.filter-select').removeClass('active');
       }
     });
+
+    $(document).on('click', '.timeline-item-clickable', (e) => this.handleTimelineCardClick(e));
+  }
+
+  handleTimelineCardClick(e) {
+    // Don't trigger if the user clicked an actual link (like the logo) inside the card
+    if ($(e.target).closest('a').length) {
+      return;
+    }
+    
+    const url = $(e.currentTarget).data('url');
+    if (url) {
+      window.open(url, '_blank');
+    }
   }
 
   /**
@@ -470,7 +484,7 @@ class PortfolioApp {
    * Populate Resume page with data from JSON
    */
   populateResumePage() {
-    // --- START: EXPERIENCE SECTION (Unchanged) ---
+    // --- START: EXPERIENCE SECTION ---
     const experienceHtml = this.experience.map(company => {
       // Loop through each position and wrap it in a div
       const positionsHtml = company.positions.map(position => {
@@ -496,10 +510,14 @@ class PortfolioApp {
              <img src="${company.logo}" alt="${company.company} logo" class="timeline-logo">
            </a>`
         : '';
+      
+      // NEW: Add clickable class and data-url if URL exists
+      const clickableClass = company.url ? 'timeline-item-clickable' : '';
+      const dataUrl = company.url ? `data-url="${company.url}"` : '';
 
       // All positions are placed inside the single timeline-item card
       return `
-        <li class="timeline-item">
+        <li class="timeline-item ${clickableClass}" ${dataUrl}>
           <div class="timeline-header">
             ${logoHtml}
             <h4 class="h4">${company.company}</h4>
@@ -536,9 +554,13 @@ class PortfolioApp {
            </a>`
         : '';
 
+      // NEW: Add clickable class and data-url if URL exists
+      const clickableClass = edu.url ? 'timeline-item-clickable' : '';
+      const dataUrl = edu.url ? `data-url="${edu.url}"` : '';
+
       // All degrees are placed inside the single timeline-item card
       return `
-        <li class="timeline-item">
+        <li class="timeline-item ${clickableClass}" ${dataUrl}>
           <div class="timeline-header"> 
             ${logoHtml}
             <h4 class="h4">${edu.institution}</h4>

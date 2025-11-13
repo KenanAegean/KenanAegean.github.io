@@ -3072,3 +3072,8 @@ textarea.form-input::-webkit-resizer { display: none; }
     align-items: flex-start; /* Align left when stacked */
   }
 }
+
+/* Make clickable resume cards interactive */
+.timeline-item-clickable {
+  cursor: pointer;
+}
