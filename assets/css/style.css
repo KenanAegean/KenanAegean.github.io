@@ -2998,3 +2998,77 @@ textarea.form-input::-webkit-resizer { display: none; }
   transform: translateY(-3px);
   box-shadow: 0 10px 20px hsla(265, 69%, 53%, 0.3);
 }
+
+/* --- 8. UPDATED: Resume Logo Styles (More Responsive) --- */
+
+.timeline-header {
+  display: flex;
+  align-items: center; /* Center items vertically */
+  gap: 15px; /* Default gap for mobile */
+  margin-bottom: 20px;
+}
+
+.timeline-logo-link {
+  flex-shrink: 0;
+}
+
+.timeline-logo {
+  /* Mobile-first size */
+  width: 60px;
+  height: 60px;
+  border-radius: 12px; /* Smaller radius for smaller logo */
+  object-fit: contain;
+  background: #ffffff; /* White background for transparent logos */
+  border: 1px solid var(--jet);
+  transition: var(--transition-1);
+}
+
+.timeline-logo-link:hover .timeline-logo {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px hsla(265, 69%, 53%, 0.6);
+}
+
+.timeline-title-date-wrapper {
+  flex-grow: 1;
+}
+
+/* Adjust h4 margin when inside the new header */
+.timeline-header .h4 {
+  margin-bottom: 0;
+}
+
+/* Specific for education card where date is in the header */
+.timeline-title-date-wrapper .h4 {
+  margin-bottom: 8px; /* Tighter spacing */
+}
+
+/* Tablet size (580px+) */
+@media (min-width: 580px) {
+  .timeline-header {
+      gap: 20px; /* Increase gap for tablet */
+  }
+  .timeline-logo {
+    /* Scale up for tablet */
+    width: 70px;
+    height: 70px;
+    border-radius: 14px;
+  }
+}
+
+/* Desktop size (768px+) */
+@media (min-width: 768px) {
+  .timeline-logo {
+    /* Scale up for desktop */
+    width: 80px;
+    height: 80px;
+    border-radius: 16px;
+  }
+}
+
+/* Stack layout ONLY on very small mobile screens (under 450px) */
+@media (max-width: 450px) {
+    .timeline-header {
+    flex-direction: column;
+    align-items: flex-start; /* Align left when stacked */
+  }
+}

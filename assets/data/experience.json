@@ -2,6 +2,8 @@
   {
     "id": 1,
     "company": "Orion Innovation",
+    "logo": "./assets/images/logos/orion.png",
+    "url": "https://www.orioninc.com/",
     "positions": [
       {
         "title": "Software Engineer",
@@ -31,6 +33,8 @@
   {
     "id": 2,
     "company": "BDH - NETAŞ",
+    "logo": "./assets/images/logos/bdh.png",
+    "url": "https://www.bdh.com.tr/",
     "positions": [
       {
         "title": "Software Engineer - Intern",
@@ -48,6 +52,8 @@
   {
     "id": 3,
     "company": "Biltek Design and Software A.Ş.",
+    "logo": "./assets/images/logos/biltek.png",
+    "url": "https://www.biltek.com.tr/",
     "positions": [
       {
         "title": "Software Engineer - Intern",
@@ -56,7 +62,7 @@
         "responsibilities": [
           "<strong>Gained insight into the internal operations of a software company</strong>, observing workflows, project management, and client interactions.",
           "<strong>Learned and practiced web development</strong>, building responsive websites using HTML, CSS, and PHP.",
-          "<strong>Developed authentication features for a web application</strong>, implementing sign-in, sign-out, and user session management using PHP and MySQL.",
+          "<strong>Developed an authentication features for a web application</strong>, implementing sign-in, sign-out, and user session management using PHP and MySQL.",
           "<strong>Assisted in front-end and back-end development</strong>, gaining hands-on experience in creating dynamic web pages and database interactions.",
           "<strong>Explored software development best practices</strong>, including debugging, version control, and UI/UX principles."
         ]

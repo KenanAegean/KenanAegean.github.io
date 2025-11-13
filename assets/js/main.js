@@ -470,7 +470,7 @@ class PortfolioApp {
    * Populate Resume page with data from JSON
    */
   populateResumePage() {
-    // --- START: NEW CODE FOR EXPERIENCE ---
+    // --- START: EXPERIENCE SECTION (Unchanged) ---
     const experienceHtml = this.experience.map(company => {
       // Loop through each position and wrap it in a div
       const positionsHtml = company.positions.map(position => {
@@ -478,7 +478,7 @@ class PortfolioApp {
           `• ${r}<br>`
         ).join('');
 
-        // This new "position-item" div is key
+        // This "position-item" div is key
         return `
           <div class="position-item">
             <div class="position-header">
@@ -490,34 +490,65 @@ class PortfolioApp {
         `;
       }).join('');
 
+      // Logo HTML
+      const logoHtml = (company.logo && company.url)
+        ? `<a href="${company.url}" target="_blank" class="timeline-logo-link">
+             <img src="${company.logo}" alt="${company.company} logo" class="timeline-logo">
+           </a>`
+        : '';
+
       // All positions are placed inside the single timeline-item card
       return `
         <li class="timeline-item">
-          <h4 class="h4">${company.company}</h4>
+          <div class="timeline-header">
+            ${logoHtml}
+            <h4 class="h4">${company.company}</h4>
+          </div>
           ${positionsHtml}
         </li>
       `;
     }).join('');
     $('#experience-timeline-list').html(experienceHtml);
-    // --- END: NEW CODE FOR EXPERIENCE ---
+    // --- END: EXPERIENCE SECTION ---
 
-    // Populate education timeline (this part remains the same)
+    // --- START: UPDATED EDUCATION SECTION ---
     const educationHtml = this.education.map(edu => {
-      // Each education entry is its own card, which is correct
-      const descriptionHtml = edu.description ? `<p class="timeline-text">${edu.description}</p>` : '';
       
+      // NEW: Loop through each degree and create a "position-item" for it
+      const degreesHtml = edu.degrees.map(degree => {
+        const descriptionHtml = degree.description ? `<p class="timeline-text">${degree.description}</p>` : '';
+        // We reuse the ".position-item" and ".position-header" classes from the CSS
+        return `
+          <div class="position-item">
+            <div class="position-header">
+              <h5 class="h5 timeline-item-title">${degree.title}</h5>
+              <span>${degree.startDate} — ${degree.endDate}</span>
+            </div>
+            ${descriptionHtml}
+          </div>
+        `;
+      }).join('');
+
+      // Logo HTML
+      const logoHtml = (edu.logo && edu.url)
+        ? `<a href="${edu.url}" target="_blank" class="timeline-logo-link">
+             <img src="${edu.logo}" alt="${edu.institution} logo" class="timeline-logo">
+           </a>`
+        : '';
+
+      // All degrees are placed inside the single timeline-item card
       return `
         <li class="timeline-item">
-          <div class="position-header">
+          <div class="timeline-header"> 
+            ${logoHtml}
             <h4 class="h4">${edu.institution}</h4>
-            <span>${edu.startDate} — ${edu.endDate}</span>
           </div>
-          <p class="timeline-text">• ${edu.degree}</p>
-          ${descriptionHtml}
+          ${degreesHtml}
         </li>
       `;
     }).join('');
     $('#education-timeline-list').html(educationHtml);
+    // --- END: UPDATED EDUCATION SECTION ---
   }
 
   /**
