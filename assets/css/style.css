@@ -3018,8 +3018,9 @@ textarea.form-input::-webkit-resizer { display: none; }
   height: 60px;
   border-radius: 12px; /* Smaller radius for smaller logo */
   object-fit: contain;
-  background: #ffffff; /* White background for transparent logos */
-  border: 1px solid var(--jet);
+  background: linear-gradient(to bottom right, #141414, #100020, #141414);
+  background-size: 200% 200%;
+  animation: gradient-pan-slow 3s ease infinite;
   transition: var(--transition-1);
 }
 
