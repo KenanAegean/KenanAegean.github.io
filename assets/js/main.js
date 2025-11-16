@@ -676,7 +676,17 @@ class PortfolioApp {
       }
     });
     
-    const sortedCategories = Array.from(categories).sort();
+    // Define custom order
+    const categoryOrder = [
+      'game development',
+      'web application',
+      'windows application',
+      'mobile application',
+      'other projects'
+    ];
+
+    // Filter the categories from the Set to match your defined order
+    const sortedCategories = categoryOrder.filter(category => categories.has(category));
     const hasHighlighted = visibleItems.some(item => item.highlighted);
     
     // Generate desktop filter buttons
