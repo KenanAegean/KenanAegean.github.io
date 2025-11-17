@@ -796,6 +796,7 @@ class PortfolioApp {
 
     // --- UPDATED PART ---
     // Wrapped title and category in a <div class="project-content">
+    // Added description paragraph
     return $(`
       <li data-value="${item.id}" class="project-item active" 
           data-filter-item 
@@ -813,6 +814,7 @@ class PortfolioApp {
           <div class="project-content">
             <h3 class="project-title">${item.title}</h3>
             <p class="project-category">${this.capitalizeCategory(item.category)}</p>
+            ${item.description ? `<p class="project-description">${item.description}</p>` : ''}
           </div>
 
         </a>

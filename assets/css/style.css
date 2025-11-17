@@ -1121,7 +1121,7 @@ main {
 }
 
 .project-title {
-  color: var(--white-2);
+  color: var(--orange-yellow-crayola); /* Updated to purple */
   font-size: var(--fs-5);
   font-weight: var(--fw-400);
   text-transform: capitalize;
@@ -1132,6 +1132,26 @@ main {
   color: var(--light-gray-70);
   font-size: var(--fs-6);
   font-weight: var(--fw-300);
+  font-size: 13px;
+}
+
+/* Update or Add this rule for project-description */
+.project-description {
+  color: var(--light-gray);
+  font-size: 11px; /* Reduced font size */
+  font-weight: var(--fw-300);
+  line-height: 1.3; /* Tighter line height */
+  margin-top: 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.3s ease;
+}
+
+/* Optional: Lighten the text slightly on hover to match title effect */
+.project-item > a:hover .project-description {
+  color: var(--white-2);
 }
 
 /**

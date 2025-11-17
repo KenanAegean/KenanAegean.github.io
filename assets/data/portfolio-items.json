@@ -3,22 +3,14 @@
     "id": 1,
     "title": "Echolocation Mechanic Detailed Showcase",
     "category": "game development",
+    "description": "UE5 visual echolocation system with custom shader effects for navigation.",
     "highlighted": true,
     "image": "./assets/images/Portfolio/gifs/echo.gif",
     "link": "https://github.com/KenanAegean/Echolocation-System",
-    "tags": ["UE 5", "Gameplay Mechanic"],
-    "iconType": "unreal",
-    "opennewtab": true,
-    "visible": true
-  },
-  {
-    "id": 2,
-    "title": "Killwats League",
-    "category": "game development",
-    "highlighted": true,
-    "image": "./assets/images/Portfolio/gifs/kw.gif",
-    "link": "https://kenanege.itch.io/killwats-league",
-    "tags": ["UE 5", "Group Project"],
+    "tags": [
+      "UE 5",
+      "Gameplay Mechanic"
+    ],
     "iconType": "unreal",
     "opennewtab": true,
     "visible": true
@@ -27,10 +19,30 @@
     "id": 3,
     "title": "Echoes Of Stella",
     "category": "game development",
+    "description": "Narrative horror game exploring isolation and memory through echolocation mechanics.",
     "highlighted": true,
     "image": "./assets/images/Portfolio/gifs/eos.gif",
     "link": "https://kenanege.itch.io/echoes-of-stella",
-    "tags": ["UE 5", "Group Project"],
+    "tags": [
+      "UE 5",
+      "Group Project"
+    ],
+    "iconType": "unreal",
+    "opennewtab": true,
+    "visible": true
+  },
+  {
+    "id": 2,
+    "title": "Killwats League",
+    "category": "game development",
+    "description": "Fast-paced 1v1 sports game with dynamic cameras and arcade ball physics.",
+    "highlighted": true,
+    "image": "./assets/images/Portfolio/gifs/kw.gif",
+    "link": "https://kenanege.itch.io/killwats-league",
+    "tags": [
+      "UE 5",
+      "Group Project"
+    ],
     "iconType": "unreal",
     "opennewtab": true,
     "visible": true
@@ -39,10 +51,15 @@
     "id": 4,
     "title": "Dark Descent",
     "category": "game development",
+    "description": "Action-roguelite with spell-based combat, minibosses, and procedural generation.",
     "highlighted": true,
     "image": "./assets/images/Portfolio/gifs/dd.gif",
     "link": "https://kenanege.itch.io/dark-descent",
-    "tags": ["Unity", "Group Project", "Play On Browser!"],
+    "tags": [
+      "Unity",
+      "Group Project",
+      "Play On Browser!"
+    ],
     "iconType": "unity",
     "opennewtab": true,
     "visible": true
@@ -51,10 +68,15 @@
     "id": 5,
     "title": "In A Bad Mewd",
     "category": "game development",
+    "description": "Chaotic destruction platformer where you play as a mischievous cat.",
     "highlighted": true,
     "image": "./assets/images/Portfolio/gifs/mewd.gif",
     "link": "https://kenanege.itch.io/in-a-bad-mewd-webgltest",
-    "tags": ["Unity", "Group Project", "Play On Browser!"],
+    "tags": [
+      "Unity",
+      "Group Project",
+      "Play On Browser!"
+    ],
     "iconType": "unity",
     "opennewtab": true,
     "visible": true
@@ -63,10 +85,14 @@
     "id": 6,
     "title": "Lord Of The Horde",
     "category": "game development",
+    "description": "Reverse bullet-hell where you command hordes against lone survivors.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/loth.png",
     "link": "https://github.com/KenanAegean/Lord-Of-The-Horde",
-    "tags": ["Unity", "Solo Project"],
+    "tags": [
+      "Unity",
+      "Solo Project"
+    ],
     "iconType": "unity",
     "opennewtab": true,
     "visible": false
@@ -75,10 +101,15 @@
     "id": 7,
     "title": "Swarmbreaker: Orbit of Power",
     "category": "game development",
+    "description": "Arcade survivor game with orbital combat and endless enemy waves.",
     "highlighted": true,
     "image": "./assets/images/Portfolio/gifs/sboop2.gif",
     "link": "https://kenanege.itch.io/swarmbreaker",
-    "tags": ["Unity", "Solo Project", "Play On Browser!"],
+    "tags": [
+      "Unity",
+      "Solo Project",
+      "Play On Browser!"
+    ],
     "iconType": "unity",
     "opennewtab": true,
     "visible": true
@@ -87,10 +118,14 @@
     "id": 8,
     "title": "No Need For Speed",
     "category": "game development",
+    "description": "Low-poly racing game to test Unity's local multiplayer features.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/gifs/nnfs.gif",
     "link": "https://github.com/KenanAegean/No-Need-For-Speed",
-    "tags": ["Unity", "Solo Project"],
+    "tags": [
+      "Unity",
+      "Solo Project"
+    ],
     "iconType": "unity",
     "opennewtab": true,
     "visible": true
@@ -99,10 +134,15 @@
     "id": 9,
     "title": "Riziko - IN DEVELOPMENT",
     "category": "game development",
+    "description": "Digital board/card game adaptation with roguelike mechanics.",
     "highlighted": true,
     "image": "./assets/images/Portfolio/gifs/riziko.gif",
     "link": "https://kenanaegean.github.io/Riziko_WebGL/",
-    "tags": ["Unity", "Solo Project", "Play On Browser!"],
+    "tags": [
+      "Unity",
+      "Solo Project",
+      "Play On Browser!"
+    ],
     "iconType": "unity",
     "opennewtab": true,
     "visible": true
@@ -111,10 +151,14 @@
     "id": 10,
     "title": "Snake: C++ Edition",
     "category": "game development",
+    "description": "Classic Snake game built from scratch using pure C++.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/gifs/sccp.gif",
     "link": "https://github.com/KenanAegean/Snake-Game-Cpp",
-    "tags": ["C++", "Solo Project"],
+    "tags": [
+      "C++",
+      "Solo Project"
+    ],
     "iconType": "cpp",
     "opennewtab": true,
     "visible": true
@@ -123,10 +167,14 @@
     "id": 11,
     "title": "Snake: Unreal Engine 5 Edition",
     "category": "game development",
+    "description": "3D Snake game showcasing UE5 Blueprint and C++ integration.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/gifs/sue.gif",
     "link": "https://github.com/KenanAegean/Snake-Game-UnrealEngine",
-    "tags": ["UE 5", "Solo Project"],
+    "tags": [
+      "UE 5",
+      "Solo Project"
+    ],
     "iconType": "unreal",
     "opennewtab": true,
     "visible": true
@@ -135,10 +183,15 @@
     "id": 12,
     "title": "Ai Pathfinding Project",
     "category": "game development",
+    "description": "Grid-based pathfinding demonstration using A* algorithm implementation.",
     "highlighted": true,
     "image": "./assets/images/Portfolio/gifs/pathFind.gif",
     "link": "https://github.com/KenanAegean/Ai-PathFinding-Project",
-    "tags": ["Unity", "Solo Project", "Test On Browser!"],
+    "tags": [
+      "Unity",
+      "Solo Project",
+      "Test On Browser!"
+    ],
     "iconType": "unity",
     "opennewtab": true,
     "visible": true
@@ -147,10 +200,15 @@
     "id": 13,
     "title": "Way Escape",
     "category": "game development",
+    "description": "2D platformer with precision jumping and puzzle mechanics.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/gifs/waye.gif",
     "link": "https://github.com/KenanAegean/WayEscape-2D-Unity-Game-Demo",
-    "tags": ["Unity", "Solo Project", "Play On Browser!"],
+    "tags": [
+      "Unity",
+      "Solo Project",
+      "Play On Browser!"
+    ],
     "iconType": "unity",
     "opennewtab": true,
     "visible": true
@@ -159,10 +217,14 @@
     "id": 14,
     "title": "CRT TV Shader Project",
     "category": "game development",
+    "description": "Custom shader recreating authentic retro CRT monitor visual effects.",
     "highlighted": true,
     "image": "./assets/images/Portfolio/gifs/shader1.gif",
     "link": "https://github.com/KenanAegean/FG-Shader",
-    "tags": ["Unity", "Solo Project"],
+    "tags": [
+      "Unity",
+      "Solo Project"
+    ],
     "iconType": "unity",
     "opennewtab": true,
     "visible": true
@@ -171,10 +233,14 @@
     "id": 15,
     "title": "Legacy Runner",
     "category": "game development",
+    "description": "Mobile endless runner with procedural obstacle generation and power-ups.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/gifs/lr.gif",
     "link": "https://kenanege.itch.io/legacy-runner",
-    "tags": ["Unity", "Group Project"],
+    "tags": [
+      "Unity",
+      "Group Project"
+    ],
     "iconType": "unity",
     "opennewtab": true,
     "visible": true
@@ -183,10 +249,15 @@
     "id": 16,
     "title": "PixLock",
     "category": "game development",
+    "description": "Hybrid Arkanoid-Pong game with pixel art aesthetics.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/pixlock.png",
     "link": "https://github.com/KenanAegean/PixLock-2D-unity-game",
-    "tags": ["Unity", "Solo Project", "Play On Browser!"],
+    "tags": [
+      "Unity",
+      "Solo Project",
+      "Play On Browser!"
+    ],
     "iconType": "unity",
     "opennewtab": true,
     "visible": true
@@ -195,10 +266,15 @@
     "id": 17,
     "title": "Guardians Of The Garden",
     "category": "game development",
+    "description": "Tower defense game where you protect gardens from pest invasions.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/gog.png",
     "link": "https://github.com/KenanAegean/Guardians-Of-The-Garden",
-    "tags": ["Unity", "Solo Project", "Play On Browser!"],
+    "tags": [
+      "Unity",
+      "Solo Project",
+      "Play On Browser!"
+    ],
     "iconType": "unity",
     "opennewtab": true,
     "visible": true
@@ -207,10 +283,15 @@
     "id": 18,
     "title": "IEEE Computer Society Space Wars",
     "category": "game development",
+    "description": "Space shooter arcade game created for IEEE student event.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/ieee.png",
     "link": "https://github.com/KenanAegean/Unity-2D-IEEE-CS-Space-Wars-Game-Project",
-    "tags": ["Unity", "Solo Project", "Play On Browser!"],
+    "tags": [
+      "Unity",
+      "Solo Project",
+      "Play On Browser!"
+    ],
     "iconType": "unity",
     "opennewtab": true,
     "visible": true
@@ -219,10 +300,14 @@
     "id": 19,
     "title": "Stajyer Bir Şeytan",
     "category": "game development",
+    "description": "Game jam entry where you sort souls as an intern devil.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/staj.png",
     "link": "https://kenanege.itch.io/stajyer-seytan",
-    "tags": ["Unity", "Game Jam"],
+    "tags": [
+      "Unity",
+      "Game Jam"
+    ],
     "iconType": "unity",
     "opennewtab": true,
     "visible": false
@@ -231,10 +316,14 @@
     "id": 20,
     "title": "Brickable Bridge",
     "category": "game development",
+    "description": "Hyper-casual physics puzzle about building bridges under time pressure.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/bribr.png",
     "link": "./projects/project-detail.html?id=brickable-bridge",
-    "tags": ["Unity", "Game Jam"],
+    "tags": [
+      "Unity",
+      "Game Jam"
+    ],
     "iconType": "unity",
     "opennewtab": false,
     "visible": false
@@ -243,10 +332,13 @@
     "id": 21,
     "title": "GamerLog – Graduation Project",
     "category": "web application",
+    "description": "Django platform for tracking game collections with AI-powered recommendations.",
     "highlighted": true,
     "image": "./assets/images/Portfolio/gamerlog.png",
     "link": "./projects/project-detail.html?id=gamerlog",
-    "tags": ["Django"],
+    "tags": [
+      "Django"
+    ],
     "iconType": "django",
     "opennewtab": false,
     "visible": true
@@ -255,10 +347,13 @@
     "id": 22,
     "title": "A.I.S.T. - Orion Innovation Hackathon",
     "category": "web application",
+    "description": "Machine learning model predicting NBA match outcomes with Django integration.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/aist.png",
     "link": "https://github.com/KenanAegean/AIST-Hackathon",
-    "tags": ["Django"],
+    "tags": [
+      "Django"
+    ],
     "iconType": "django",
     "opennewtab": true,
     "visible": true
@@ -267,10 +362,13 @@
     "id": 23,
     "title": "Personal Website",
     "category": "web application",
+    "description": "JSON-driven portfolio site with automated GitHub Actions deployment pipeline.",
     "highlighted": true,
     "image": "./assets/images/Portfolio/website.png",
     "link": "https://github.com/KenanAegean/KenanAegean.github.io",
-    "tags": ["Github Actions, HTML, CSS, JS"],
+    "tags": [
+      "Github Actions, HTML, CSS, JS"
+    ],
     "iconType": "web",
     "opennewtab": true,
     "visible": true
@@ -279,10 +377,13 @@
     "id": 24,
     "title": "MTG - Deck Helper",
     "category": "web application",
+    "description": "Web tool calculating draw probabilities and simulating Magic: The Gathering hands.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/mtg.png",
     "link": "https://github.com/KenanAegean/MTG-Deck-Helper",
-    "tags": ["HTML, CSS, JS"],
+    "tags": [
+      "HTML, CSS, JS"
+    ],
     "iconType": "web",
     "opennewtab": true,
     "visible": true
@@ -291,10 +392,13 @@
     "id": 25,
     "title": "Bitmapify - Image Dithering",
     "category": "web application",
+    "description": "Browser tool applying retro dithering effects to images in real-time.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/bitmapify.png",
     "link": "https://github.com/KenanAegean/Bitmapify-Image-Dithering",
-    "tags": ["HTML, CSS, JS"],
+    "tags": [
+      "HTML, CSS, JS"
+    ],
     "iconType": "web",
     "opennewtab": true,
     "visible": true
@@ -303,10 +407,13 @@
     "id": 26,
     "title": "Score/GPA Calculator",
     "category": "web application",
+    "description": "Web-based calculator for academic grade and GPA calculations.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/score.png",
     "link": "https://github.com/KenanAegean/Average-Score-Calculator-PHP",
-    "tags": ["PHP, HTML, CSS"],
+    "tags": [
+      "PHP, HTML, CSS"
+    ],
     "iconType": "web",
     "opennewtab": true,
     "visible": true
@@ -315,10 +422,13 @@
     "id": 27,
     "title": "Steam Screenshot Tool",
     "category": "windows application",
+    "description": "Python automation for organizing and backing up Steam screenshots.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/steam.png",
     "link": "https://github.com/KenanAegean/Steam-Screenshot-Tool",
-    "tags": ["Python"],
+    "tags": [
+      "Python"
+    ],
     "iconType": "python",
     "opennewtab": true,
     "visible": true
@@ -327,10 +437,13 @@
     "id": 28,
     "title": "Pixel Art Generator",
     "category": "windows application",
+    "description": "Desktop tool converting images into pixel art using custom algorithms.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/pixelart.png",
     "link": "https://github.com/KenanAegean/PixelArt-Maker",
-    "tags": ["Python"],
+    "tags": [
+      "Python"
+    ],
     "iconType": "python",
     "opennewtab": true,
     "visible": true
@@ -339,10 +452,13 @@
     "id": 29,
     "title": "Note Editor",
     "category": "windows application",
+    "description": "Lightweight text editor built with Windows Forms in C#.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/note.png",
     "link": "https://github.com/KenanAegean/Note-Editor-WindowsForm",
-    "tags": ["C#"],
+    "tags": [
+      "C#"
+    ],
     "iconType": "csharp",
     "opennewtab": true,
     "visible": true
@@ -351,10 +467,13 @@
     "id": 30,
     "title": "Scientific Calculator",
     "category": "windows application",
+    "description": "Functional scientific calculator desktop application in C#.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/calc.png",
     "link": "https://github.com/KenanAegean/Calculator-WindowsForm",
-    "tags": ["C#"],
+    "tags": [
+      "C#"
+    ],
     "iconType": "csharp",
     "opennewtab": true,
     "visible": true
@@ -363,6 +482,7 @@
     "id": 31,
     "title": "Graphic Designs",
     "category": "other projects",
+    "description": "Logo designs, event posters, and UI mockups for various projects.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/design.png",
     "link": "https://github.com/KenanAegean/graphic-design-projects",
@@ -375,6 +495,7 @@
     "id": 32,
     "title": "Musics",
     "category": "other projects",
+    "description": "Original music tracks and compositions available on Spotify.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/musics.png",
     "link": "https://open.spotify.com/intl-tr/artist/2CMjhwFMDeusyTCoKcTNL8?si=1_G7nyGgSj2Qxv_icfhUxA",
@@ -387,10 +508,13 @@
     "id": 33,
     "title": "Euro 2022 Stadiums",
     "category": "mobile application",
+    "description": "Android app with stadium guides and locations for Euro 2022.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/stadium.png",
     "link": "https://github.com/KenanAegean/World-Cup-2022-Stadiums-App-Android-Studio",
-    "tags": ["Android Studio"],
+    "tags": [
+      "Android Studio"
+    ],
     "iconType": "android",
     "opennewtab": true,
     "visible": true
@@ -399,10 +523,13 @@
     "id": 34,
     "title": "Football League Scores",
     "category": "mobile application",
+    "description": "Mobile app tracking live football scores with local database.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/league.png",
     "link": "https://github.com/KenanAegean/Auto-Score-App-Androd-Studio",
-    "tags": ["Android Studio"],
+    "tags": [
+      "Android Studio"
+    ],
     "iconType": "android",
     "opennewtab": true,
     "visible": true
