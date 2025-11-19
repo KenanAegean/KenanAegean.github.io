@@ -1,4 +1,4 @@
-# 👾 Kenan EGE - Portfolio Website
+# 👾 Kenan Ege - Portfolio Website
 
 <div align="center">
 
