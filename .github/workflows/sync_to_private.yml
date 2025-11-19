@@ -52,7 +52,12 @@ jobs:
         if: env.BRANCH_MATCH == 'true'
         run: |
           echo "Syncing updated files..."
-          rsync -av --delete --exclude '.git' --exclude '.github' --exclude '${{ secrets.PROTECTED_FILE }}' public_repo/ private_repo/
+          rsync -av --delete \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude '${{ secrets.PROTECTED_FILE }}' \
+            --exclude '${{ secrets.PROTECTED_FILE_2 }}' \
+            public_repo/ private_repo/
           echo "✅ Files synced successfully!"
 
       - name: Configure Git User
