@@ -1,0 +1,797 @@
+/**
+ * Project Detail Page - Modern Styles with Lightbox
+ * 
+ * Beautiful, well-organized, modern design for project showcase pages
+ */
+
+/* ==========================================================================
+   SIMPLIFIED PROJECT HEADER SECTION
+   ========================================================================== */
+
+.project-header {
+    background: var(--eerie-black-2);
+    border: 1px solid var(--jet);
+    border-radius: 20px;
+    padding: 40px 30px;
+    margin-bottom: 40px;
+    box-shadow: var(--shadow-2);
+}
+
+.project-main-title {
+    font-size: 35px;
+    font-weight: var(--fw-600);
+    color: var(--white-2);
+    margin-bottom: 15px;
+    line-height: 1.3;
+}
+
+.project-subtitle {
+    font-size: var(--fs-5);
+    color: var(--light-gray);
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.project-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--jet);
+}
+
+.project-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--light-gray-70);
+    font-size: var(--fs-6);
+}
+
+.project-meta-item ion-icon {
+    font-size: 20px;
+    color: var(--orange-yellow-crayola);
+}
+
+/* ==========================================================================
+   TECH STACK BADGES
+   ========================================================================== */
+
+.tech-stack {
+    margin-top: 0;
+}
+
+.tech-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tech-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--border-gradient-onyx);
+    border-radius: 12px;
+    font-size: var(--fs-7);
+    color: var(--white-2);
+    font-weight: var(--fw-400);
+    transition: var(--transition-1);
+    position: relative;
+    overflow: hidden;
+}
+
+.tech-badge::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    background: var(--bg-gradient-jet);
+    border-radius: inherit;
+    z-index: -1;
+}
+
+.tech-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px hsla(265, 69%, 53%, 0.3);
+}
+
+.tech-badge ion-icon,
+.tech-badge i {
+    font-size: 18px;
+    color: var(--orange-yellow-crayola);
+}
+
+/* ==========================================================================
+   PROJECT LOGO SECTION
+   ========================================================================== */
+
+.project-logo-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 30px;
+    background: linear-gradient(to bottom,
+            var(--eerie-black-2) 0%,
+            var(--eerie-black-1) 100%);
+    border-radius: 20px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.project-logo-section::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle,
+            hsla(265, 69%, 53%, 0.1) 0%,
+            transparent 70%);
+    z-index: 0;
+}
+
+.project-logo-wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 500px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.project-logo-wrapper img {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5));
+}
+
+/* ==========================================================================
+   CONTENT SECTIONS
+   ========================================================================== */
+
+.project-section {
+    background: var(--eerie-black-2);
+    border: 1px solid var(--jet);
+    border-radius: 20px;
+    padding: 35px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow-2);
+    transition: var(--transition-1);
+}
+
+.project-section:hover {
+    box-shadow: var(--shadow-3);
+    transform: translateY(-2px);
+}
+
+.project-section-title {
+    font-size: var(--fs-2);
+    color: var(--white-2);
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--orange-yellow-crayola);
+    position: relative;
+    display: inline-block;
+}
+
+.project-section-title::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 50%;
+    height: 2px;
+    background: linear-gradient(to right,
+            var(--orange-yellow-crayola),
+            transparent);
+}
+
+.project-text {
+    color: var(--light-gray);
+    font-size: var(--fs-6);
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.project-text:last-child {
+    margin-bottom: 0;
+}
+
+.project-text strong {
+    color: var(--white-2);
+    font-weight: var(--fw-500);
+}
+
+/* ==========================================================================
+   FEATURE LIST
+   ========================================================================== */
+
+.feature-list {
+    display: grid;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 20px;
+    background: var(--bg-gradient-jet);
+    border-radius: 12px;
+    border: 1px solid hsla(0, 0%, 100%, 0.05);
+    transition: var(--transition-1);
+}
+
+.feature-item:hover {
+    border-color: var(--orange-yellow-crayola);
+    transform: translateX(5px);
+}
+
+.feature-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--border-gradient-onyx);
+    border-radius: 10px;
+    position: relative;
+}
+
+.feature-icon::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    background: var(--eerie-black-1);
+    border-radius: inherit;
+    z-index: -1;
+}
+
+.feature-icon ion-icon {
+    font-size: 22px;
+    color: var(--orange-yellow-crayola);
+}
+
+.feature-content {
+    flex: 1;
+}
+
+.feature-text {
+    color: var(--light-gray);
+    font-size: var(--fs-6);
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   SCREENSHOT GALLERY WITH LIGHTBOX
+   ========================================================================== */
+
+.screenshot-gallery {
+    margin-top: 40px;
+}
+
+.gallery-title {
+    font-size: var(--fs-2);
+    color: var(--white-2);
+    margin-bottom: 30px;
+    text-align: center;
+    position: relative;
+}
+
+.gallery-title::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--text-gradient-yellow);
+    border-radius: 3px;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: var(--shadow-2);
+    transition: var(--transition-1);
+    background: var(--eerie-black-1);
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-4);
+}
+
+.gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+            transparent 0%,
+            rgba(0, 0, 0, 0.7) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: var(--transition-1);
+    z-index: 2;
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-expand-icon {
+    font-size: 48px;
+    color: var(--white-2);
+    transform: scale(0.8);
+    transition: var(--transition-1);
+}
+
+.gallery-item:hover .gallery-expand-icon {
+    transform: scale(1);
+}
+
+.gallery-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: var(--transition-2);
+}
+
+.gallery-item:hover .gallery-image {
+    transform: scale(1.05);
+}
+
+.gallery-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px 20px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    color: var(--white-2);
+    font-size: var(--fs-7);
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: var(--transition-1);
+}
+
+.gallery-item:hover .gallery-caption {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   FULLSCREEN LIGHTBOX
+   ========================================================================== */
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.lightbox.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: lightboxZoom 0.3s ease;
+}
+
+@keyframes lightboxZoom {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+#lightbox-image {
+    max-width: 100%;
+    max-height: calc(90vh - 100px);
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+}
+
+.lightbox-caption {
+    margin-top: 20px;
+    color: var(--white-2);
+    font-size: var(--fs-6);
+    text-align: center;
+    padding: 0 20px;
+    max-width: 800px;
+}
+
+.lightbox-counter {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    color: var(--light-gray);
+    font-size: var(--fs-7);
+    font-weight: var(--fw-500);
+}
+
+.lightbox-close {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-1);
+    z-index: 10001;
+}
+
+.lightbox-close:hover {
+    background: var(--orange-yellow-crayola);
+    border-color: var(--orange-yellow-crayola);
+    transform: rotate(90deg);
+}
+
+.lightbox-close ion-icon {
+    font-size: 28px;
+    color: var(--white-2);
+}
+
+.lightbox-nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-1);
+    z-index: 10001;
+}
+
+.lightbox-nav:hover {
+    background: var(--orange-yellow-crayola);
+    border-color: var(--orange-yellow-crayola);
+}
+
+.lightbox-prev {
+    left: 30px;
+}
+
+.lightbox-next {
+    right: 30px;
+}
+
+.lightbox-nav ion-icon {
+    font-size: 28px;
+    color: var(--white-2);
+}
+
+/* ==========================================================================
+   PROJECT LINKS / CTAs
+   ========================================================================== */
+
+.project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid var(--jet);
+}
+
+.project-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background: var(--border-gradient-onyx);
+    color: var(--orange-yellow-crayola);
+    font-size: var(--fs-6);
+    font-weight: var(--fw-500);
+    border-radius: 12px;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition-1);
+    z-index: 1;
+}
+
+.project-link-btn::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    background: var(--bg-gradient-jet);
+    border-radius: inherit;
+    z-index: -1;
+    transition: var(--transition-1);
+}
+
+.project-link-btn:hover {
+    background: var(--bg-gradient-yellow-1);
+    color: var(--smoky-black);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px hsla(265, 69%, 53%, 0.4);
+}
+
+.project-link-btn:hover::before {
+    background: var(--bg-gradient-yellow-2);
+}
+
+.project-link-btn ion-icon {
+    font-size: 20px;
+}
+
+.project-link-btn.secondary {
+    background: transparent;
+    border: 2px solid var(--jet);
+    color: var(--light-gray);
+}
+
+.project-link-btn.secondary:hover {
+    border-color: var(--orange-yellow-crayola);
+    color: var(--white-2);
+    background: transparent;
+}
+
+/* ==========================================================================
+   BACK BUTTON
+   ========================================================================== */
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--orange-yellow-crayola);
+    font-size: var(--fs-6);
+    font-weight: var(--fw-500);
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: hsla(265, 69%, 53%, 0.1);
+    border: 1px solid hsla(265, 69%, 53%, 0.3);
+    transition: var(--transition-1);
+    margin-bottom: 25px;
+}
+
+.back-button:hover {
+    background: hsla(265, 69%, 53%, 0.2);
+    transform: translateX(-5px);
+}
+
+.back-button ion-icon {
+    font-size: 20px;
+}
+
+/* ==========================================================================
+   INFO CARDS
+   ========================================================================== */
+
+.info-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.info-card {
+    background: var(--bg-gradient-jet);
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid hsla(0, 0%, 100%, 0.05);
+    text-align: center;
+    transition: var(--transition-1);
+}
+
+.info-card:hover {
+    border-color: var(--orange-yellow-crayola);
+    transform: translateY(-5px);
+}
+
+.info-card-icon {
+    font-size: 36px;
+    color: var(--orange-yellow-crayola);
+    margin-bottom: 15px;
+}
+
+.info-card-title {
+    font-size: var(--fs-6);
+    color: var(--light-gray-70);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.info-card-value {
+    font-size: var(--fs-3);
+    color: var(--white-2);
+    font-weight: var(--fw-600);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .project-main-title {
+        font-size: 32px;
+    }
+
+    .project-header {
+        padding: 30px 20px;
+    }
+
+    .project-section {
+        padding: 25px 20px;
+    }
+
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-image {
+        height: 250px;
+    }
+
+    .project-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .tech-badges {
+        justify-content: flex-start;
+    }
+
+    .lightbox-close,
+    .lightbox-nav {
+        width: 40px;
+        height: 40px;
+    }
+
+    .lightbox-close {
+        top: 15px;
+        right: 15px;
+    }
+
+    .lightbox-prev {
+        left: 15px;
+    }
+
+    .lightbox-next {
+        right: 15px;
+    }
+
+    .lightbox-close ion-icon,
+    .lightbox-nav ion-icon {
+        font-size: 22px;
+    }
+
+    #lightbox-image {
+        max-height: calc(90vh - 80px);
+    }
+
+    .lightbox-counter {
+        top: -30px;
+        font-size: var(--fs-8);
+    }
+}
+
+@media (min-width: 768px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .feature-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .project-main-title {
+        font-size: 40px;
+    }
+
+    .gallery-grid.has-many {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .project-header {
+        padding: 45px 40px;
+    }
+
+    .project-section {
+        padding: 40px;
+    }
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-in {
+    animation: fadeInUp 0.6s ease backwards;
+}
+
+.animate-in-delay-1 {
+    animation: fadeInUp 0.6s ease backwards;
+    animation-delay: 0.1s;
+}
+
+.animate-in-delay-2 {
+    animation: fadeInUp 0.6s ease backwards;
+    animation-delay: 0.2s;
+}
+
+.animate-in-delay-3 {
+    animation: fadeInUp 0.6s ease backwards;
+    animation-delay: 0.3s;
+}

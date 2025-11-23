@@ -1,0 +1,147 @@
+/*-----------------------------------*\
+  #ANIMATION KEYFRAMES
+\*-----------------------------------*/
+
+@keyframes fade {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  0% { transform: scale(0.5); }
+  100% { transform: scale(1); }
+}
+
+@keyframes gradient-pan-slow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes gradient-pan-fast {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse-btn {
+  0% { box-shadow: var(--shadow-2), 0 0 5px hsla(265, 69%, 53%, 0.2); }
+  50% { box-shadow: var(--shadow-2), 0 0 15px hsla(265, 69%, 53%, 0.6); }
+  100% { box-shadow: var(--shadow-2), 0 0 5px hsla(265, 69%, 53%, 0.2); }
+}
+
+@keyframes pulse-glow {
+  0% { text-shadow: 0 0 4px hsla(265, 69%, 53%, 0.3); }
+  50% { text-shadow: 0 0 12px hsla(265, 69%, 53%, 0.8); }
+  100% { text-shadow: 0 0 4px hsla(265, 69%, 53%, 0.3); }
+}
+
+/* Glitch Animation for Avatar */
+@keyframes glitch {
+  0% { 
+    clip-path: inset(20% 0 0 0); 
+    transform: translate(0); 
+  }
+  20% { 
+    clip-path: inset(10% 0 20% 0); 
+    transform: translate(-5px, 5px); 
+  }
+  40% { 
+    clip-path: inset(30% 0 10% 0); 
+    transform: translate(5px, -5px); 
+  }
+  60% { 
+    clip-path: inset(15% 0 15% 0); 
+    transform: translate(-3px, 3px); 
+  }
+  80% { 
+    clip-path: inset(25% 0 5% 0); 
+    transform: translate(3px, -3px); 
+  }
+  100% { 
+    clip-path: inset(20% 0 0 0); 
+    transform: translate(0); 
+  }
+}
+
+/*-----------------------------------*\
+  #ANIMATION APPLICATIONS
+\*-----------------------------------*/
+
+/* Idle: Article Title Underline */
+.article-title::after {
+  background: linear-gradient(90deg,
+      var(--orange-yellow-crayola),
+      var(--vegas-gold),
+      hsl(265, 69%, 65%),
+      var(--orange-yellow-crayola));
+  background-size: 300% 300%;
+  animation: gradient-pan-slow 5s ease infinite;
+}
+
+/* Idle: Sidebar Name */
+.info-content .name {
+  background-image: linear-gradient(90deg,
+      hsl(265, 69%, 75%),
+      var(--orange-yellow-crayola),
+      hsl(265, 69%, 65%),
+      var(--orange-yellow-crayola),
+      hsl(265, 69%, 75%)
+    );
+  background-size: 300% 300%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-pan-slow 8s ease infinite;
+}
+
+/* Idle: Buttons & Links */
+.info-more-btn { animation: pulse-btn 4s ease-in-out infinite; }
+.navbar-link.active { animation: pulse-glow 4s ease-in-out infinite; }
+
+/* Idle: Project Page Title */
+.project-main-title {
+  background-image: linear-gradient(90deg,
+      hsl(265, 69%, 75%),
+      var(--orange-yellow-crayola),
+      hsl(265, 69%, 65%),
+      var(--orange-yellow-crayola),
+      hsl(265, 69%, 75%)
+    );
+  background-size: 300% 300%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-pan-slow 8s ease infinite;
+}
+
+/* Idle: Footer Title */
+.footer-title {
+  background-image: linear-gradient(90deg,
+      var(--orange-yellow-crayola),
+      var(--vegas-gold),
+      hsl(265, 69%, 65%),
+      var(--orange-yellow-crayola));
+  background-size: 300% 300%;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: gradient-pan-slow 8s ease infinite;
+}
+
+/* CV Download Button */
+#cv-download-link {
+  background: linear-gradient(-45deg,
+      var(--orange-yellow-crayola),
+      var(--vegas-gold),
+      hsl(265, 69%, 65%),
+      var(--orange-yellow-crayola));
+  background-size: 300% 300%;
+  animation: gradient-pan-slow 5s ease infinite;
+  border: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+#cv-download-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px hsla(265, 69%, 53%, 0.3);
+}
