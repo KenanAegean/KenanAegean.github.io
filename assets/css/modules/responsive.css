@@ -1,0 +1,1077 @@
+﻿/*==============================================================================
+  Responsive Styles & Media Queries
+  All responsive breakpoints and media-specific styles
+==============================================================================*/
+
+/*-----------------------------------*\
+  #RESPONSIVE
+\*-----------------------------------*/
+
+/**
+ * responsive larger than 450px screen
+ */
+
+@media (min-width: 450px) {
+
+
+
+
+  /**
+   * #PORTFOLIO, BLOG 
+   */
+
+  .project-img,
+  .blog-banner-box {
+    height: auto;
+  }
+
+
+}
+
+
+@media (min-width: 100px) {
+
+  .avatar-box {
+    border-radius: 30px;
+  }
+
+  .avatar-box img {
+    width: 105px;
+  }
+
+  .social-item .social-link {
+    font-size: 15px;
+  }
+}
+
+
+
+/**
+ * responsive larger than 580px screen
+ */
+
+@media (min-width: 580px) {
+
+  /**
+   * CUSTOM PROPERTY
+   */
+
+  :root {
+
+    /**
+     * typography
+     */
+
+    --fs-1: 32px;
+    --fs-2: 24px;
+    --fs-3: 26px;
+    --fs-4: 18px;
+    --fs-6: 15px;
+    --fs-7: 15px;
+    --fs-8: 12px;
+
+  }
+
+  .social-item .social-link {
+    font-size: 18px;
+  }
+
+  /**
+   * #REUSED STYLE
+   */
+
+  .sidebar,
+  article {
+    width: 520px;
+    margin-inline: auto;
+    padding: 30px;
+  }
+
+  .article-title {
+    font-weight: var(--fw-600);
+    padding-bottom: 15px;
+  }
+
+  .article-title::after {
+    width: 40px;
+    height: 5px;
+  }
+
+  .icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    font-size: 18px;
+  }
+
+
+
+  /**
+   * #MAIN
+   */
+
+  main {
+    margin-top: 60px;
+    margin-bottom: 100px;
+  }
+
+
+
+  /**
+   * #SIDEBAR
+   */
+
+  .sidebar {
+    max-height: 250px;
+    margin-bottom: 30px;
+  }
+
+  .sidebar.active {
+    max-height: 584px;
+  }
+
+  .sidebar-info {
+    gap: 20px;
+  }
+
+  .avatar-box {
+    border-radius: 30px;
+  }
+
+  .avatar-box img {
+    width: 150px;
+  }
+
+  .info-content .name {
+    margin-bottom: 15px;
+  }
+
+  .info-content .title {
+    padding: 5px 18px;
+  }
+
+  .info-more-btn {
+    top: -30px;
+    right: -30px;
+    padding: 10px 15px;
+  }
+
+  .info-more-btn span {
+    display: block;
+    font-size: var(--fs-8);
+  }
+
+  .info-more-btn ion-icon {
+    display: none;
+  }
+
+  .separator {
+    margin: 32px 0;
+  }
+
+  .contacts-list {
+    gap: 20px;
+  }
+
+  .contact-info {
+    max-width: calc(100% - 64px);
+    width: calc(100% - 64px);
+  }
+
+
+
+  /**
+   * #NAVBAR
+   */
+
+  .navbar {
+    border-radius: 20px 20px 0 0;
+  }
+
+  .navbar-list {
+    gap: 20px;
+  }
+
+  .navbar-link {
+    --fs-8: 14px;
+  }
+
+
+
+  /**
+   * #ABOUT
+   */
+
+  .about .article-title {
+    margin-bottom: 20px;
+  }
+
+  .about-text {
+    margin-bottom: 40px;
+  }
+
+  /* service */
+
+  .service-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 30px;
+  }
+
+  .service-icon-box {
+    margin-bottom: 0;
+    margin-top: 5px;
+  }
+
+  .service-content-box {
+    text-align: left;
+  }
+
+  /* testimonials */
+
+  .testimonials-title {
+    margin-bottom: 25px;
+  }
+
+  .testimonials-list {
+    gap: 30px;
+    margin: 0 -30px;
+    padding: 30px;
+    padding-bottom: 35px;
+  }
+
+  .content-card {
+    padding: 30px;
+    padding-top: 25px;
+  }
+
+  .testimonials-avatar-box {
+    transform: translate(30px, -30px);
+    border-radius: 20px;
+  }
+
+  .testimonials-avatar-box img {
+    width: 80px;
+  }
+
+  .testimonials-item-title {
+    margin-bottom: 10px;
+    margin-left: 95px;
+  }
+
+  .testimonials-text {
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+  }
+
+  /* testimonials modal */
+
+  .modal-container {
+    padding: 20px;
+  }
+
+  .testimonials-modal {
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 25px;
+    padding: 30px;
+    border-radius: 20px;
+  }
+
+  .modal-img-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .modal-avatar-box {
+    border-radius: 18px;
+    margin-bottom: 0;
+  }
+
+  .modal-avatar-box img {
+    width: 65px;
+  }
+
+  .modal-img-wrapper>img {
+    display: block;
+    flex-grow: 1;
+    width: 35px;
+  }
+
+  /* clients */
+  .clients-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+
+  .clients-item a {
+    height: 100px;
+    /* Taller on tablet */
+  }
+
+
+
+  /**
+   * #RESUME
+   */
+
+  .timeline-list {
+    margin-left: 65px;
+  }
+
+  .timeline-item:not(:last-child)::before {
+    left: -40px;
+  }
+
+  .timeline-item::after {
+    height: 8px;
+    width: 8px;
+    left: -43px;
+  }
+
+  .skills-item:not(:last-child) {
+    margin-bottom: 25px;
+  }
+
+
+
+  /**
+   * #PORTFOLIO, BLOG
+   */
+
+  .project-img,
+  .blog-banner-box {
+    border-radius: 16px;
+  }
+
+  .blog-posts-list {
+    gap: 30px;
+  }
+
+  .blog-content {
+    padding: 25px;
+  }
+
+
+
+  /**
+   * #CONTACT
+   */
+
+  .mapbox {
+    height: 380px;
+    border-radius: 18px;
+  }
+
+  .input-wrapper {
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+
+  .form-input {
+    padding: 15px 20px;
+  }
+
+  textarea.form-input {
+    margin-bottom: 30px;
+  }
+
+  .form-btn {
+    --fs-6: 16px;
+    padding: 16px 20px;
+  }
+
+  .form-btn ion-icon {
+    font-size: 18px;
+  }
+
+}
+
+.corner-icon {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: rgba(0, 0, 0, 0.6);
+  /* Semi-transparent black background */
+  padding: 6px;
+  padding-bottom: 3px;
+  border-radius: 10%;
+  z-index: 2;
+  font-size: 14px;
+}
+
+.corner-icon::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: var(--eerie-black-1);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.corner-icon i {
+  color: white;
+  /* Unity logo color */
+  font-size: 16px;
+  /* Adjust size */
+}
+
+.corner-icon-new {
+  position: absolute;
+  top: 39px;
+  left: 8px;
+  background-color: rgba(0, 0, 0, 0.6);
+  /* Semi-transparent black background */
+  padding: 6px;
+  padding-bottom: 3px;
+  border-radius: 10%;
+  z-index: 2;
+  font-size: 12px;
+}
+
+.corner-icon-new::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: var(--eerie-black-1);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.corner-icon-new2 i {
+  color: white;
+  /* Unity logo color */
+  font-size: 16px;
+  /* Adjust size */
+}
+
+.corner-icon-new2 {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background-color: rgba(0, 0, 0, 0.6);
+  /* Semi-transparent black background */
+  padding: 6px;
+  padding-bottom: 3px;
+  border-radius: 10%;
+  z-index: 2;
+  font-size: 12px;
+}
+
+.corner-icon-new2::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: var(--eerie-black-1);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.corner-icon-new2 i {
+  color: white;
+  /* Unity logo color */
+  font-size: 16px;
+  /* Adjust size */
+}
+
+
+
+
+
+/**
+ * responsive larger than 768px screen
+ */
+
+@media (min-width: 768px) {
+
+  /**
+   * REUSED STYLE
+   */
+
+  .sidebar,
+  article {
+    width: 700px;
+  }
+
+  .has-scrollbar::-webkit-scrollbar-button {
+    width: 100px;
+  }
+
+
+
+  /**
+   * SIDEBAR
+   */
+
+  .contacts-list {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px 15px;
+  }
+
+
+
+  /**
+   * NAVBAR
+   */
+
+  .navbar-link {
+    --fs-8: 15px;
+  }
+
+
+
+  /**
+   * ABOUT
+   */
+
+  /* testimonials modal */
+
+  .testimonials-modal {
+    gap: 35px;
+    max-width: 680px;
+  }
+
+  .modal-avatar-box img {
+    width: 80px;
+  }
+
+
+
+  /**
+   * PORTFOLIO
+   */
+
+  .article-title {
+    padding-bottom: 20px;
+  }
+
+  .filter-select-box {
+    display: none;
+  }
+
+  .filter-list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 25px;
+    padding-left: 5px;
+    margin-bottom: 30px;
+  }
+
+  .filter-item button {
+    color: var(--light-gray);
+    font-size: var(--fs-5);
+    transition: var(--transition-1);
+  }
+
+  .filter-item button:hover {
+    color: var(--light-gray-70);
+  }
+
+  .filter-item button.active {
+    color: var(--orange-yellow-crayola);
+  }
+
+  /* portfolio and blog grid */
+
+  .project-list,
+  .blog-posts-list {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .github-list {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+
+
+
+
+
+  /**
+   * CONTACT
+   */
+
+  .input-wrapper {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .form-btn {
+    width: max-content;
+    margin-left: auto;
+  }
+
+}
+
+
+
+
+
+/**
+ * responsive larger than 1024px screen
+ */
+
+@media (min-width: 1024px) {
+
+  /**
+   * CUSTOM PROPERTY
+   */
+
+  :root {
+
+    /**
+    * shadow
+    */
+
+    --shadow-1: -4px 8px 24px hsla(0, 0%, 0%, 0.125);
+    --shadow-2: 0 16px 30px hsla(0, 0%, 0%, 0.125);
+    --shadow-3: 0 16px 40px hsla(0, 0%, 0%, 0.125);
+
+  }
+
+
+
+  /**
+   * REUSED STYLE
+   */
+
+  .sidebar,
+  article {
+    width: 950px;
+    box-shadow: var(--shadow-5);
+  }
+
+
+
+  /**
+   * MAIN 
+   */
+
+  main {
+    margin-bottom: 60px;
+  }
+
+  .main-content {
+    position: relative;
+    width: max-content;
+    margin: auto;
+  }
+
+
+
+  /**
+   * NAVBAR
+   */
+
+  .navbar {
+    position: absolute;
+    bottom: auto;
+    top: 0;
+    left: auto;
+    right: 0;
+    width: max-content;
+    border-radius: 0 20px;
+    padding: 0 20px;
+    box-shadow: none;
+  }
+
+  .navbar-list {
+    gap: 30px;
+    padding: 0 20px;
+  }
+
+  .navbar-link {
+    font-weight: var(--fw-500);
+  }
+
+
+
+  /**
+   * ABOUT
+   */
+
+  /* service */
+
+  .service-list {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 25px;
+  }
+
+  /* testimonials */
+
+  .testimonials-item {
+    min-width: calc(50% - 15px);
+  }
+
+  /* clients */
+  .clients-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+
+
+  /**
+   * PORTFOLIO
+   */
+
+  .project-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+
+
+  /**
+   * BLOG
+   */
+
+  .blog-banner-box {
+    height: 230px;
+  }
+
+}
+
+
+
+
+
+/**
+ * responsive larger than 1250px screen
+ */
+
+@media (min-width: 1250px) {
+
+  /**
+   * RESET
+   */
+
+  body::-webkit-scrollbar {
+    width: 20px;
+  }
+
+  body::-webkit-scrollbar-track {
+    background: var(--smoky-black);
+  }
+
+  body::-webkit-scrollbar-thumb {
+    border: 5px solid var(--smoky-black);
+    background: hsla(0, 0%, 100%, 0.1);
+    border-radius: 20px;
+    box-shadow: inset 1px 1px 0 hsla(0, 0%, 100%, 0.11),
+      inset -1px -1px 0 hsla(0, 0%, 100%, 0.11);
+  }
+
+  body::-webkit-scrollbar-thumb:hover {
+    background: hsla(0, 0%, 100%, 0.15);
+  }
+
+  body::-webkit-scrollbar-button {
+    height: 60px;
+  }
+
+
+
+  /**
+   * REUSED STYLE
+   */
+
+  .sidebar,
+  article {
+    width: auto;
+  }
+
+  article {
+    min-height: 100%;
+  }
+
+
+
+  /**
+   * MAIN
+   */
+
+  main {
+    max-width: 1200px;
+    margin-inline: auto;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 25px;
+    flex-direction: row-reverse;
+    /* sidebar swap*/
+  }
+
+  .main-content {
+    min-width: 75%;
+    width: 75%;
+    margin: 0;
+  }
+
+
+
+  /**
+   * SIDEBAR
+   */
+
+  .sidebar {
+    position: sticky;
+    top: 60px;
+    max-height: max-content;
+    height: 100%;
+    margin-bottom: 0;
+    padding-top: 60px;
+    z-index: 1;
+  }
+
+  .sidebar-info {
+    flex-direction: column;
+  }
+
+  .avatar-box img {
+    width: 150px;
+  }
+
+  .info-content .name {
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .info-content .title {
+    margin: auto;
+  }
+
+  .info-more-btn {
+    display: none;
+  }
+
+  .sidebar-info-more {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .contacts-list {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-info :is(.contact-link) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .contact-info :is(.contact-link, time, address) {
+    --fs-7: 14px;
+    font-weight: var(--fw-300);
+  }
+
+  .separator:last-of-type {
+    margin: 15px 0;
+    opacity: 0;
+  }
+
+  .social-list {
+    justify-content: center;
+  }
+
+
+
+  /**
+	 * RESUME
+	 */
+
+  .timeline-text {
+    max-width: 700px;
+  }
+
+
+  /**
+	 * spotify icon
+	 */
+
+  /* Default icon styling for desktop */
+  .social-item img.spotify-icon {
+    width: 16px !important;
+    height: 16px !important;
+    filter: grayscale(100%) brightness(70%);
+    transition: filter 0.3s ease;
+  }
+
+  /* Hover effect to turn the icon white */
+  .social-item a:hover img.spotify-icon {
+    filter: grayscale(0%) brightness(100%);
+  }
+
+  /* Mobile adjustments */
+  @media (max-width: 768px) {
+    .social-item img.spotify-icon {
+      width: 16px !important;
+      height: 16px !important;
+      filter: grayscale(100%) brightness(70%);
+    }
+
+    /* Mobile hover effect */
+    .social-item a:hover img.spotify-icon {
+      filter: grayscale(0%) brightness(100%);
+    }
+  }
+
+
+  /* Position the container and its images */
+  .avatar-box {
+    position: relative;
+    display: inline-block;
+    border-radius: 20px;
+  }
+
+  .avatar-box img.avatar-base {
+    display: block;
+    border-radius: inherit;
+  }
+
+  .avatar-box img.avatar-glitch {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: inherit;
+    opacity: 0;
+    /* hidden by default */
+  }
+
+  /* When .glitch-active is added to the container, show and animate the overlay */
+  .avatar-box.glitch-active img.avatar-glitch {
+    opacity: 1;
+    animation: glitch 0.3s linear;
+  }
+
+  /* Glitch keyframes for a quick glitch effect */
+  @keyframes glitch {
+    0% {
+      clip-path: inset(20% 0 0 0);
+      transform: translate(0);
+    }
+
+    20% {
+      clip-path: inset(10% 0 20% 0);
+      transform: translate(-5px, 5px);
+    }
+
+    40% {
+      clip-path: inset(30% 0 10% 0);
+      transform: translate(5px, -5px);
+    }
+
+    60% {
+      clip-path: inset(15% 0 15% 0);
+      transform: translate(-3px, 3px);
+    }
+
+    80% {
+      clip-path: inset(25% 0 5% 0);
+      transform: translate(3px, -3px);
+    }
+
+    100% {
+      clip-path: inset(20% 0 0 0);
+      transform: translate(0);
+    }
+  }
+
+
+
+
+}
+
+
+/* -----------------------------------
+   Instagram Card Component
+   ----------------------------------- */
+
+.insta-card {
+  max-width: 600px;
+  padding: 16px;
+  background: var(--eerie-black-2);
+  border: 1px solid var(--jet);
+  border-radius: 10px;
+  box-shadow: var(--shadow-1);
+  color: var(--white-2);
+}
+
+.insta-card__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.insta-card__avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--white-2);
+  flex-shrink: 0;
+}
+
+.insta-card__username {
+  font-size: var(--fs-3);
+  font-weight: var(--fw-600);
+  color: var(--white-2);
+  text-decoration: none;
+}
+
+.insta-card__username:hover {
+  text-decoration: underline;
+}
+
+.insta-card__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.insta-card__item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  aspect-ratio: 1 / 1;
+  display: block;
+}
+
+.insta-card__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.insta-card__item--selected {
+  border-color: var(--orange-yellow-crayola);
+}
+
+.insta-card__item:hover {
+  border-color: var(--orange-yellow-crayola);
+  filter: brightness(1.05);
+  transition: border-color 0.2s, filter 0.2s;
+}
+
+
+/* Make Devicon icons purple to match portfolio theme */
+.project-item-icon-box i[class*="devicon-"] {
+  color: var(--orange-yellow-crayola) !important;
+  font-size: 20px;
+}
+
+.project-item-icon-box i[class*="devicon-"].colored {
+  color: var(--orange-yellow-crayola) !important;
+}
+
+.project-item-icon-box i[class*="devicon-"] svg path {
+  fill: var(--orange-yellow-crayola) !important;
+}
+
+/*-----------------------------------*\
+
