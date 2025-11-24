@@ -1040,9 +1040,7 @@
   border-radius: 10px;
 }
 
-.info-more-btn {
-  display: none;
-}
+
 
 .sidebar-info-more {
   opacity: 1;
@@ -1174,11 +1172,6 @@
     clip-path: inset(20% 0 0 0);
     transform: translate(0);
   }
-}
-
-
-
-
 }
 
 
