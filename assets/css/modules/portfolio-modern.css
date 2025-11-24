@@ -44,8 +44,7 @@
     background: linear-gradient(135deg,
             hsla(240, 2%, 15%, 0.9) 0%,
             hsla(240, 2%, 12%, 0.95) 100%);
-    border-radius: 20px;
-    border: 1px solid hsla(0, 0%, 30%, 0.2);
+    border-radius: 15px;
     box-shadow: 0 8px 24px hsla(0, 0%, 0%, 0.3);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     backdrop-filter: blur(10px);
@@ -272,6 +271,8 @@
     /* Golden/yellow background */
     border-color: hsla(45, 100%, 60%, 0.8);
     color: var(--eerie-black-1);
+    box-shadow: 0 3px 12px rgba(255, 200, 0, 0.4);
+    /* Golden glow */
     /* Dark text for contrast */
     font-weight: 700;
     /* Bold */
@@ -279,8 +280,6 @@
     /* Slightly larger */
     padding: 5px 12px;
     /* Extra padding */
-    box-shadow: 0 3px 12px rgba(255, 200, 0, 0.4);
-    /* Golden glow */
 }
 
 .project-item>a:hover .project-tag {
