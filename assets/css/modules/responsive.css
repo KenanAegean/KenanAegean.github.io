@@ -323,7 +323,7 @@
     margin-left: 65px;
   }
 
-  .timeline-item:not(:last-child)::before {
+  .timeline-item:not(:last-child)::after {
     left: -40px;
   }
 
@@ -331,6 +331,8 @@
     height: 8px;
     width: 8px;
     left: -43px;
+    top: 30px;
+    /* Adjusted for new padding */
   }
 
   .skills-item:not(:last-child) {
@@ -1036,6 +1038,201 @@
   position: relative;
   overflow: hidden;
   border-radius: 10px;
+}
+
+.info-more-btn {
+  display: none;
+}
+
+.sidebar-info-more {
+  opacity: 1;
+  visibility: visible;
+}
+
+.contacts-list {
+  grid-template-columns: 1fr;
+}
+
+.contact-info :is(.contact-link) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.contact-info :is(.contact-link, time, address) {
+  --fs-7: 14px;
+  font-weight: var(--fw-300);
+}
+
+.separator:last-of-type {
+  margin: 15px 0;
+  opacity: 0;
+}
+
+.social-list {
+  justify-content: center;
+}
+
+
+
+/**
+	 * RESUME
+	 */
+
+.timeline-text {
+  max-width: 700px;
+}
+
+
+/**
+	 * spotify icon
+	 */
+
+/* Default icon styling for desktop */
+.social-item img.spotify-icon {
+  width: 16px !important;
+  height: 16px !important;
+  filter: grayscale(100%) brightness(70%);
+  transition: filter 0.3s ease;
+}
+
+/* Hover effect to turn the icon white */
+.social-item a:hover img.spotify-icon {
+  filter: grayscale(0%) brightness(100%);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .social-item img.spotify-icon {
+    width: 16px !important;
+    height: 16px !important;
+    filter: grayscale(100%) brightness(70%);
+  }
+
+  /* Mobile hover effect */
+  .social-item a:hover img.spotify-icon {
+    filter: grayscale(0%) brightness(100%);
+  }
+}
+
+
+/* Position the container and its images */
+.avatar-box {
+  position: relative;
+  display: inline-block;
+  border-radius: 20px;
+}
+
+.avatar-box img.avatar-base {
+  display: block;
+  border-radius: inherit;
+}
+
+.avatar-box img.avatar-glitch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: inherit;
+  opacity: 0;
+  /* hidden by default */
+}
+
+/* When .glitch-active is added to the container, show and animate the overlay */
+.avatar-box.glitch-active img.avatar-glitch {
+  opacity: 1;
+  animation: glitch 0.3s linear;
+}
+
+/* Glitch keyframes for a quick glitch effect */
+@keyframes glitch {
+  0% {
+    clip-path: inset(20% 0 0 0);
+    transform: translate(0);
+  }
+
+  20% {
+    clip-path: inset(10% 0 20% 0);
+    transform: translate(-5px, 5px);
+  }
+
+  40% {
+    clip-path: inset(30% 0 10% 0);
+    transform: translate(5px, -5px);
+  }
+
+  60% {
+    clip-path: inset(15% 0 15% 0);
+    transform: translate(-3px, 3px);
+  }
+
+  80% {
+    clip-path: inset(25% 0 5% 0);
+    transform: translate(3px, -3px);
+  }
+
+  100% {
+    clip-path: inset(20% 0 0 0);
+    transform: translate(0);
+  }
+}
+
+
+
+
+}
+
+
+/* -----------------------------------
+   Instagram Card Component
+   ----------------------------------- */
+
+.insta-card {
+  max-width: 600px;
+  padding: 16px;
+  background: var(--eerie-black-2);
+  border: 1px solid var(--jet);
+  border-radius: 10px;
+  box-shadow: var(--shadow-1);
+  color: var(--white-2);
+}
+
+.insta-card__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.insta-card__avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--white-2);
+  flex-shrink: 0;
+}
+
+.insta-card__username {
+  font-size: var(--fs-3);
+  font-weight: var(--fw-600);
+  color: var(--white-2);
+  text-decoration: none;
+}
+
+.insta-card__username:hover {
+  text-decoration: underline;
+}
+
+.insta-card__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.insta-card__item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
   border: 2px solid transparent;
   aspect-ratio: 1 / 1;
   display: block;
@@ -1059,19 +1256,18 @@
 }
 
 
-/* Make Devicon icons purple to match portfolio theme */
+/* Make Devicon icons white to match technology branding */
 .project-item-icon-box i[class*="devicon-"] {
-  color: var(--orange-yellow-crayola) !important;
+  color: #ffffff !important;
   font-size: 20px;
 }
 
 .project-item-icon-box i[class*="devicon-"].colored {
-  color: var(--orange-yellow-crayola) !important;
+  color: #ffffff !important;
 }
 
 .project-item-icon-box i[class*="devicon-"] svg path {
-  fill: var(--orange-yellow-crayola) !important;
+  fill: #ffffff !important;
 }
 
 /*-----------------------------------*\
-
