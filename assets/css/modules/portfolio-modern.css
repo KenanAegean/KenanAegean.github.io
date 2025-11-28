@@ -21,7 +21,6 @@
 .project-item.active {
     animation: fadeSlideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     height: 100%;
-    /* Ensure grid item fills row */
 }
 
 @keyframes fadeSlideUp {
@@ -49,7 +48,6 @@
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     backdrop-filter: blur(10px);
     overflow: hidden;
-    /* Ensure content clips to rounded corners */
 }
 
 /* Gradient border effect */
@@ -72,7 +70,7 @@
     pointer-events: none;
 }
 
-/* Enhanced hover state - Premium Lift & Glow */
+/* Enhanced hover state */
 .project-item>a:hover {
     transform: translateY(-10px) scale(1.02);
     box-shadow:
@@ -103,9 +101,7 @@
     border-radius: 0;
     margin-bottom: 0;
     height: 200px;
-    /* Increased from 150px */
     position: relative;
-    /* Needed for absolute positioning of tags */
 }
 
 /* Enhanced gradient overlay */
@@ -118,21 +114,17 @@
     background: linear-gradient(180deg, hsla(265, 69%, 53%, 0.1) 0%, hsla(0, 0%, 0%, 0.8) 100%);
 }
 
-/* Modern icon box with gradient background */
+/* Modern icon box */
 .project-item-icon-box {
     background: linear-gradient(135deg,
             hsla(265, 69%, 53%, 0.95) 0%,
             hsla(265, 69%, 45%, 0.95) 100%);
     color: var(--white-1);
     font-size: 24px;
-    /* Reduced from 28px */
     padding: 18px;
-    /* Reduced from 22px */
     border-radius: 14px;
-    /* Slightly smaller radius */
     z-index: 2;
     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    /* Bouncy effect */
     box-shadow: 0 8px 32px hsla(265, 69%, 53%, 0.5);
     backdrop-filter: blur(10px);
     transform: translate(-50%, -50%) scale(0) rotate(-180deg);
@@ -148,31 +140,24 @@
 .project-img img {
     transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     object-fit: cover;
-    /* Ensure image covers the area */
 }
 
 .project-item>a:hover img {
     transform: scale(1.15) rotate(2deg);
 }
 
-/* Modern content area with glassmorphism */
+/* Modern content area */
 .project-content {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     padding: 12px;
-    /* Reduced from 15px */
     background: linear-gradient(180deg,
             hsla(240, 2%, 13%, 0.6) 0%,
             hsla(240, 2%, 10%, 0.9) 100%);
     backdrop-filter: blur(10px);
     border-top: 1px solid hsla(0, 0%, 100%, 0.05);
     transition: transform 0.4s ease;
-}
-
-/* Removed translateY transform to fix gap at bottom */
-.project-item>a:hover .project-content {
-    /* transform: translateY(-5px); */
 }
 
 /* Reset margins for content */
@@ -186,11 +171,9 @@
 .project-title {
     color: var(--white-1);
     font-size: 16px;
-    /* Reduced from 18px */
     font-weight: 700;
     line-height: 1.3;
     margin-bottom: 3px;
-    /* Reduced margin */
     transition: all 0.3s ease;
     background: linear-gradient(135deg,
             var(--white-1) 0%,
@@ -202,7 +185,6 @@
 
 .project-item>a:hover .project-title {
     letter-spacing: 0.5px;
-    /* Reduced spacing */
     text-shadow: 0 0 20px hsla(265, 69%, 53%, 0.5);
 }
 
@@ -210,53 +192,42 @@
 .project-category {
     color: var(--orange-yellow-crayola);
     font-size: 11px;
-    /* Reduced from 12px */
     font-weight: var(--fw-500);
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 6px;
-    /* Reduced margin */
     opacity: 0.9;
 }
 
 /* Better description styling */
 .project-description {
     font-size: 12px;
-    /* Reduced from 13px */
     line-height: 1.5;
     margin-top: 0;
     color: var(--light-gray);
     margin-bottom: 4px;
-    /* Reduced margin */
     display: block;
-    /* Changed from -webkit-box to block */
     height: auto;
-    /* Allow full height */
 }
 
-/* Project Tags - Overlay Style */
+/* Project Tags */
 .project-tags {
     position: absolute;
     bottom: 8px;
-    /* Adjusted position */
     left: 8px;
     right: 8px;
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    /* Increased gap */
     z-index: 3;
     pointer-events: none;
-    /* Let clicks pass through to the card link */
 }
 
 .project-tag {
     font-size: 11px;
-    /* Increased from 9px */
     color: var(--white-1);
     background: hsla(240, 2%, 10%, 0.7);
     padding: 4px 10px;
-    /* Increased padding */
     border-radius: 5px;
     border: 1px solid hsla(0, 0%, 100%, 0.15);
     backdrop-filter: blur(4px);
@@ -265,21 +236,14 @@
     font-weight: 500;
 }
 
-/* Highlight the 3rd tag */
 .project-tag:nth-child(3) {
     background: hsla(45, 100%, 50%, 0.85);
-    /* Golden/yellow background */
     border-color: hsla(45, 100%, 60%, 0.8);
     color: var(--eerie-black-1);
     box-shadow: 0 3px 12px rgba(255, 200, 0, 0.4);
-    /* Golden glow */
-    /* Dark text for contrast */
     font-weight: 700;
-    /* Bold */
     font-size: 12px;
-    /* Slightly larger */
     padding: 5px 12px;
-    /* Extra padding */
 }
 
 .project-item>a:hover .project-tag {
@@ -288,61 +252,363 @@
     transform: translateY(-2px);
 }
 
-/* Keep 3rd tag golden even on hover, just add lift */
 .project-item>a:hover .project-tag:nth-child(3) {
     background: hsla(45, 100%, 55%, 0.95);
-    /* Brighter golden on hover */
     border-color: hsla(45, 100%, 65%, 1);
     color: var(--eerie-black-1);
     box-shadow: 0 4px 16px rgba(255, 200, 0, 0.6);
-    /* Stronger glow */
 }
 
-/**
- * TABLET (768px+)
- */
+/* Grid Spacing */
 @media (min-width: 768px) {
-
-    /* Tablet grid spacing */
     .project-list {
         gap: 20px;
     }
 }
 
-/**
- * DESKTOP (1024px+)
- */
 @media (min-width: 1024px) {
-
-    /* Desktop grid spacing - Override to 2 columns for wider cards */
     .project-list {
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
-        /* Reduced from 25px */
     }
 
-    /* Adjust image height for wider cards */
     .project-img {
         height: 250px;
-        /* Increased from 180px */
     }
 }
 
-/**
- * LARGE DESKTOP (1250px+)
- */
 @media (min-width: 1250px) {
-
-    /* Large desktop grid spacing - Keep 2 columns or go to 3 if very wide */
     .project-list {
         grid-template-columns: repeat(3, 1fr);
         gap: 20px;
-        /* Reduced from 30px */
     }
 
-    /* Adjust image height */
     .project-img {
         height: 220px;
-        /* Increased from 160px */
     }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-in {
+    animation: fadeInUp 0.6s ease backwards;
+}
+
+.animate-in-delay-1 {
+    animation: fadeInUp 0.6s ease backwards;
+    animation-delay: 0.1s;
+}
+
+.animate-in-delay-2 {
+    animation: fadeInUp 0.6s ease backwards;
+    animation-delay: 0.2s;
+}
+
+.animate-in-delay-3 {
+    animation: fadeInUp 0.6s ease backwards;
+    animation-delay: 0.3s;
+}
+
+/* ==========================================================================
+   SIMPLE MODERN RESUME TIMELINE
+   ========================================================================== */
+
+/* 1. List Container */
+.timeline-list {
+    margin-left: 10px !important;
+    padding-left: 30px !important;
+    border-left: 1px solid var(--jet);
+    /* Continuous thin line */
+}
+
+.timeline-list::before {
+    display: none !important;
+}
+
+/* 2. Timeline Item (Transparent, Clean) */
+.timeline-item {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin-bottom: 45px !important;
+    /* Increased spacing between items */
+    border-radius: 0 !important;
+    cursor: default !important;
+    /* Main area not clickable */
+}
+
+/* NO hover effects for timeline items */
+.timeline-item::before {
+    display: none !important;
+}
+
+.timeline-item:hover {
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* 3. The Dot (Minimal & Aligned) */
+.timeline-item::after {
+    content: "";
+    position: absolute;
+    top: 15px;
+    /* Aligns with logo center */
+    left: -34.5px;
+    /* Center on 1px line */
+    width: 9px;
+    height: 9px;
+    background: var(--text-gradient-yellow);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px var(--smoky-black);
+    /* Clean separation from line */
+    z-index: 1;
+    opacity: 1 !important;
+    inset: auto !important;
+    animation: none !important;
+    padding: 0 !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.timeline-item:hover::after {
+    transform: scale(1.3);
+    box-shadow: 0 0 0 4px var(--smoky-black), 0 0 10px var(--orange-yellow-crayola);
+}
+
+/* 4. Content Layout */
+
+/* Header Area (Clickable) */
+.timeline-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    width: fit-content;
+    transition: opacity 0.2s;
+}
+
+.timeline-header:hover {
+    opacity: 0.8;
+}
+
+/* Logo (Rounded Square) */
+.timeline-logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    object-fit: contain;
+    background: var(--eerie-black-2);
+    padding: 4px;
+    border: 1px solid var(--jet);
+    animation: none !important;
+    transition: border-color 0.3s ease;
+}
+
+.timeline-header:hover .timeline-logo {
+    border-color: var(--orange-yellow-crayola);
+}
+
+/* Company Name */
+.timeline-item .h4 {
+    font-size: 17px;
+    color: var(--white-1);
+    margin-bottom: 0;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* Position Container */
+.position-item {
+    position: relative;
+    padding-left: 58px;
+    /* Indent to align with text */
+    margin-top: -12px;
+    /* Pull closer to header */
+}
+
+/* Divider for multiple positions */
+.position-item+.position-item {
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px dashed hsla(240, 2%, 20%, 0.5);
+}
+
+/* Header (Role + Date) */
+.position-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Role Title */
+.timeline-item-title {
+    font-size: 15px;
+    color: var(--orange-yellow-crayola);
+    margin: 0;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+/* Date (Clean Text, Right Aligned) */
+.position-header span {
+    color: var(--light-gray);
+    font-size: 13px;
+    font-weight: 400;
+    white-space: nowrap;
+    opacity: 0.7;
+    background: transparent;
+    padding: 0;
+    border: none;
+}
+
+/* Description Text */
+.timeline-text {
+    color: var(--light-gray);
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0;
+    border-left: none !important;
+    padding-left: 0 !important;
+    max-width: 100% !important;
+    /* Full width utilization */
+    font-weight: 300;
+}
+
+.timeline-text strong {
+    color: var(--white-2);
+    font-weight: 500;
+}
+
+/* CV Button - Matching Filter Buttons with Animation */
+#cv-download-link {
+    color: var(--light-gray);
+    font-size: var(--fs-5);
+    font-weight: var(--fw-500);
+    text-transform: capitalize;
+    padding: 10px 24px;
+    border: 1px solid var(--jet);
+    border-radius: 12px;
+    background: var(--eerie-black-2);
+    transition: var(--transition-1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    width: auto;
+    min-width: 180px;
+    cursor: pointer;
+    box-shadow: var(--shadow-1);
+    background-size: 400% 400%;
+    /* Prepared for gradient animation */
+}
+
+#cv-download-link:hover {
+    color: var(--white-1);
+    border-color: var(--orange-yellow-crayola);
+    background-image: linear-gradient(-45deg,
+            var(--orange-yellow-crayola),
+            var(--vegas-gold),
+            var(--eerie-black-1),
+            var(--eerie-black-1));
+    animation: gradient-pan-fast 4s ease infinite;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-2);
+}
+
+/* Optional: Active/Pressed State Animation */
+#cv-download-link:active {
+    transform: translateY(0);
+    animation: none;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 580px) {
+
+    /* Adjust timeline list spacing */
+    .timeline-list {
+        padding-left: 20px !important;
+        margin-left: 0 !important;
+    }
+
+    /* Re-align timeline dot */
+    .timeline-item::after {
+        left: -24.5px !important;
+    }
+
+    /* Reset padding for content items */
+    .position-item {
+        padding-left: 0;
+        /* Remove indent on mobile */
+        margin-top: 15px;
+    }
+
+    /* Stack header elements vertically */
+    .position-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        margin-bottom: 10px;
+    }
+
+    /* Move Date under Title */
+    .position-header {
+        display: flex;
+        flex-direction: column;
+        /* Stack vertically */
+        align-items: flex-start;
+        /* Align left */
+    }
+
+    .timeline-item-title {
+        order: 1;
+        /* Title first */
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .position-header span {
+        order: 2;
+        /* Date second */
+        font-size: 12px;
+        opacity: 0.8;
+        align-self: flex-start;
+        /* Align to left under title */
+        margin-left: 0;
+        padding-left: 0;
+    }
+
+    /* Adjust company name size */
+    .timeline-item .h4 {
+        font-size: 16px;
+    }
+
+    /* Ensure logo doesn't shrink */
+    .timeline-logo {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+/* --- 5. Spacing Fixes --- */
+/* Remove extra line breaks from HTML structure to fix large gaps */
+.resume>br,
+.timeline>br {
+    display: none;
 }
