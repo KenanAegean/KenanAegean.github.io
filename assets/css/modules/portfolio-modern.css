@@ -559,7 +559,20 @@
         margin-top: 15px;
     }
 
-    /* Stack header elements vertically */
+    /* FORCE HEADER TO ROW LAYOUT (Fixing the centered logo issue) */
+    .timeline-header {
+        display: flex !important;
+        flex-direction: row !important;
+        /* Keep logo next to text */
+        justify-content: flex-start !important;
+        align-items: center !important;
+        gap: 15px;
+        /* Consistent gap */
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    /* Stack header elements vertically (Role + Date) */
     .position-header {
         flex-direction: column;
         align-items: flex-start;
@@ -601,8 +614,10 @@
 
     /* Ensure logo doesn't shrink */
     .timeline-logo {
-        width: 36px;
-        height: 36px;
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        /* Prevent crushing */
     }
 }
 
