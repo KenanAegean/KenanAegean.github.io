@@ -627,3 +627,16 @@
 .timeline>br {
     display: none;
 }
+
+/* --- Education Section Specific Overrides --- */
+#education-timeline-list .timeline-item {
+    margin-bottom: 10px !important;
+    /* Significantly reduced gap for education items */
+}
+
+#education-timeline-list .position-item+.position-item {
+    margin-top: 10px;
+    /* Reduced margin between degrees */
+    padding-top: 10px;
+    /* Reduced padding between degrees */
+}
