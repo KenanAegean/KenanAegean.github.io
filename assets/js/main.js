@@ -505,7 +505,7 @@ class PortfolioApp {
           <div class="position-item">
             <div class="position-header">
               <h5 class="h5 timeline-item-title">${position.title}</h5>
-              <span>${position.startDate} — ${position.endDate}</span>
+              <span class="timeline-date">${position.startDate} — ${position.endDate}</span>
             </div>
             <p class="timeline-text">${responsibilitiesHtml}</p>
           </div>
@@ -548,7 +548,7 @@ class PortfolioApp {
           <div class="position-item">
             <div class="position-header">
               <h5 class="h5 timeline-item-title">${degree.title}</h5>
-              <span>${degree.startDate} — ${degree.endDate}</span>
+              <span class="timeline-date">${degree.startDate} — ${degree.endDate}</span>
             </div>
             ${descriptionHtml}
           </div>

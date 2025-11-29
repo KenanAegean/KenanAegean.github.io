@@ -448,12 +448,14 @@
 /* Header (Role + Date) */
 .position-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    /* Stack items vertically */
+    justify-content: flex-start;
+    align-items: flex-start;
+    /* Align left */
     margin-bottom: 12px;
     width: 100%;
-    flex-wrap: wrap;
-    gap: 10px;
+    gap: 2px;
 }
 
 /* Role Title */
@@ -465,7 +467,8 @@
     line-height: 1.4;
 }
 
-/* Date (Clean Text, Right Aligned) */
+/* Date (Clean Text, Left Aligned under title) */
+.position-header .timeline-date,
 .position-header span {
     color: var(--light-gray);
     font-size: 13px;
