@@ -461,7 +461,8 @@ class PortfolioApp {
     $('#highlighted-games-list').html(highlightedHtml);
 
     // Update GitHub stats username
-    const githubImg = `https://github-readme-stats.vercel.app/api?username=${this.siteConfig.external.githubUsername}&theme=tokyonight&hide_border=false&include_all_commits=false&count_private=false`;
+    const githubImg = `http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=${this.siteConfig.external.githubUsername}&theme=material_palenight`;
+    //const githubImg = `https://github-readme-stats.vercel.app/api?username=${this.siteConfig.external.githubUsername}&theme=tokyonight&hide_border=false&include_all_commits=false&count_private=false`;
     $('#github-stats-img').attr('src', githubImg);
 
     // Populate in-development games
