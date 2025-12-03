@@ -1,8 +1,8 @@
 {
   "versions": {
-    "css": "2.2.6",
-    "js": "2.2.6",
-    "data": "2.2.6"
+    "css": "2.2.7",
+    "js": "2.2.7",
+    "data": "2.2.7"
   },
   "personal": {
     "name": "Kenan EGE",
@@ -17,8 +17,8 @@
     "birthdayDisplay": "December 7, 1999",
     "location": "Warsaw, PL",
     "about": {
-      "greeting": "Hi 👾, I'm Kenan Ege",
-      "description": "A passionate Computer Engineer / Game Developer from Turkey! <br> I'm deeply into Game Development. Currently exploring vast real-life open world, seeking stories and side missions that are worth telling and experiencing.  <br> 🎮👾"
+      "greeting": "Hey, I’m Kenan 👾",
+      "description": "I'm a <strong>computer engineer</strong> and <strong>game developer</strong> currently based in <strong>Warsaw</strong>. I have a passion for building strange worlds and the sturdy code that supports them. Whether it's a reliable <strong>backend system</strong> or a game mechanic that lets you play as a destructive cat, I love the process of creation.<br><br>On the tech side, I build functional platforms like <strong>GamerLog</strong> (Django) and creative tools like <strong>Bitmapify</strong>. I even combined my love for sports and code to build an <strong>AI-powered NBA match predictor</strong>.<br><br>Creatively, I live in <strong>Unity</strong> and <strong>Unreal Engine</strong>. I've explored narrative horror in <strong>Echoes of Stella</strong>, arcade survival in <strong>Swarmbreaker</strong>, and pure chaos in <strong>In A Bad Mewd</strong>. I also collaborated on the high-speed sports game <strong>Killwats League</strong>.<br><br>With a degree in <strong>Computer Engineering</strong>, I'm now diving deeper into the industry through <strong>Game Programming at Futuregames</strong>. When I’m not debugging, you'll find me making music or jumping into random creative side quests."
     }
   },
   "external": {
