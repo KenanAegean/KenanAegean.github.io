@@ -57,6 +57,7 @@ jobs:
             --exclude '.github' \
             --exclude '${{ secrets.PROTECTED_FILE }}' \
             --exclude '${{ secrets.PROTECTED_FILE_2 }}' \
+            --exclude '${{ secrets.PROTECTED_FILE_3 }}' \
             public_repo/ private_repo/
           echo "✅ Files synced successfully!"
 
