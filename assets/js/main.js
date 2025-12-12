@@ -1,955 +1,1039 @@
-'use strict';
+// ==================== GLOBAL DATA ====================
+let portfolioItems = [];
+let experience = [];
+let education = [];
+let gamesShowcase = { highlighted: [], inDevelopment: [] };
+let themes = {};
+let siteConfig = null;
+let socialLinks = []; 
+let footerConfig = null;
+let instagram = null;
+let projectDetails = {};
+let navigation = [];
 
-/**
- * Portfolio Website - Main JavaScript
- * Clean, organized, and data-driven with dynamic content loading
- * * VERSION MANAGEMENT:
- * All versions are now managed in assets/data/site-config.json under "versions"
- * This eliminates hardcoded version numbers and provides a single source of truth
- */
+let currentSection = 'portfolio';
+let currentFilter = 'highlighted';
+let themeColor = '#bc13fe'; // Current Hex String
+let dataLoaded = false;
 
-class PortfolioApp {
-  constructor() {
-    this.portfolioItems = [];
-    this.siteConfig = null;
-    this.socialLinks = [];
-    this.navigation = [];
-    this.experience = [];
-    this.education = [];
-    this.gamesShowcase = null;
-    this.instagram = null;
-    this.footerConfig = null;
+// Animation State for Color Transition
+let currentThemeRgb = { r: 188, g: 19, b: 254 }; // Initial RGB
+let targetThemeRgb = { r: 188, g: 19, b: 254 };  // Target RGB
+let isTransitioningColor = false;
 
-    this.init();
-  }
+// Base path for data files
+const DATA_PATH = './assets/data/';
 
-  async init() {
-    await this.loadAllData();
-    this.renderSidebar();
-    this.renderNavbar();
-    this.renderFooter();
-    this.setupEventListeners();
-    this.checkVersions();
-  }
-
-  /**
-   * Helper method to create cache-busted URL
-   * Uses version from site-config.json after it's loaded
-   */
-  getCacheBustedUrl(url) {
-    const version = this.siteConfig?.versions?.data || Date.now();
-    return `${url}?v=${version}`;
-  }
-
-  /**
-   * Load all JSON data files with cache-busting
-   * Site config is loaded FIRST to get version numbers
-   */
-  async loadAllData() {
+// ==================== DATA LOADING ====================
+async function fetchJSON(filename, params = null) {
     try {
-      // Load site-config FIRST (use timestamp for initial load)
-      const configResponse = await fetch(`./assets/data/site-config.json?v=${Date.now()}`);
-      this.siteConfig = await configResponse.json();
-
-      // Now load everything else with proper cache-busting from config
-      const [socialLinks, navigation, experience, education, gamesShowcase, instagram, footerConfig] = await Promise.all([
-        fetch(this.getCacheBustedUrl('./assets/data/social-links.json')).then(r => r.json()),
-        fetch(this.getCacheBustedUrl('./assets/data/navigation.json')).then(r => r.json()),
-        fetch(this.getCacheBustedUrl('./assets/data/experience.json')).then(r => r.json()),
-        fetch(this.getCacheBustedUrl('./assets/data/education.json')).then(r => r.json()),
-        fetch(this.getCacheBustedUrl('./assets/data/games-showcase.json')).then(r => r.json()),
-        fetch(this.getCacheBustedUrl('./assets/data/instagram.json')).then(r => r.json()),
-        fetch(this.getCacheBustedUrl('./assets/data/footer.json')).then(r => r.json()).catch(() => null)
-      ]);
-
-      this.socialLinks = socialLinks.filter(link => link.visible !== false);
-      this.navigation = navigation.filter(item => item.visible !== false).sort((a, b) => a.order - b.order);
-      this.experience = experience;
-      this.education = education;
-      this.gamesShowcase = gamesShowcase;
-      this.instagram = instagram;
-      this.footerConfig = footerConfig;
+        let url = DATA_PATH + filename;
+        if (params) {
+            url += '?' + params;
+        }
+        
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Failed to load ' + filename);
+        }
+        return await response.json();
     } catch (error) {
-      console.error('Error loading data:', error);
+        console.error('Error loading ' + filename + ':', error);
+        return null;
     }
-  }
-
-  /**
-   * Check if HTML versions match config versions
-   * Logs warnings if versions are mismatched
-   */
-  checkVersions() {
-    if (!this.siteConfig?.versions) {
-      console.warn('⚠️ No version configuration found in site-config.json');
-      return;
-    }
-
-    const configVersions = this.siteConfig.versions;
-    const htmlJsVersion = this.getHtmlVersion('main.js');
-    const htmlCssVersion = this.getHtmlVersion('style.css');
-
-    console.log('📦 Current versions from site-config.json:', configVersions);
-
-    if (htmlJsVersion && htmlJsVersion !== configVersions.js) {
-      console.warn(`⚠️ JS Version mismatch!
-        HTML script version: ${htmlJsVersion}
-        Config JS version: ${configVersions.js}
-        → Update index.html to use v=${configVersions.js}`);
-    }
-
-    if (htmlCssVersion && htmlCssVersion !== configVersions.css) {
-      console.warn(`⚠️ CSS Version mismatch!
-        HTML stylesheet version: ${htmlCssVersion}
-        Config CSS version: ${configVersions.css}
-        → Update index.html to use v=${configVersions.css}`);
-    }
-
-    if (htmlJsVersion === configVersions.js && htmlCssVersion === configVersions.css) {
-      console.log('✅ All versions are in sync!');
-    }
-  }
-
-  /**
-   * Extract version from current script/link tag
-   */
-  getHtmlVersion(filename) {
-    let element;
-    if (filename.endsWith('.js')) {
-      element = document.querySelector(`script[src*="${filename}"]`);
-    } else if (filename.endsWith('.css')) {
-      element = document.querySelector(`link[href*="${filename}"]`);
-    }
-
-    if (!element) return null;
-
-    const url = filename.endsWith('.js') ? element.src : element.href;
-    const match = url.match(/v=([^&]+)/);
-    return match ? match[1] : null;
-  }
-
-  /**
-   * Render dynamic sidebar
-   */
-  renderSidebar() {
-    const config = this.siteConfig.personal;
-    const socialHtml = this.socialLinks.map(link => {
-      const iconHtml = link.iconType === 'fontawesome'
-        ? `<i class="fa-brands ${link.icon}"></i>`
-        : `<ion-icon name="${link.icon}"></ion-icon>`;
-
-      return `
-        <li class="social-item">
-          <a href="${link.url}" target="_blank" class="social-link">
-            ${iconHtml}
-          </a>
-        </li>
-      `;
-    }).join('');
-
-    const titlesHtml = config.titles.map(title => `${title}<br>`).join(' ');
-
-    const sidebarHtml = `
-      <aside class="sidebar" data-sidebar>
-        <div class="sidebar-info">
-          <div>
-            <figure class="avatar-box">
-              <a href="./index.html">
-                <img src="${config.avatar}" alt="${config.name}" class="avatar-base" width="80" style="border-radius: 30px;">
-              </a>
-            </figure>
-          </div>
-          
-          <div class="info-content">
-            <a href="./index.html"><h1 class="name" title="${config.name}">${config.name} </h1></a>
-            <p class="title">${titlesHtml}</p>
-          </div>
-
-          <div class="info-social">
-            <ul class="social-list">
-              ${socialHtml}
-            </ul>
-          </div>
-
-          <button class="info-more-btn" data-sidebar-toggle>
-            <span>Show Details</span>
-            <ion-icon name="chevron-down"></ion-icon>
-          </button>
-        </div>
-
-        <div class="sidebar-info-more">
-          <div class="separator"></div>
-
-          <ul class="contacts-list">
-            <li class="contact-item">
-              <div class="icon-box">
-                <ion-icon name="logo-steam"></ion-icon>
-              </div>
-              <div class="contact-info">
-                <p class="contact-title">Nickname</p>
-                <a class="contact-link">${this.siteConfig.external.steamUsername}</a>
-              </div>
-            </li>
-            
-            <li class="contact-item">
-              <div class="icon-box">
-                <ion-icon name="calendar-outline"></ion-icon>
-              </div>
-              <div class="contact-info">
-                <p class="contact-title">Birthday</p>
-                <time datetime="${config.birthday}">${config.birthdayDisplay}</time>
-              </div>
-            </li>
-
-            <li class="contact-item">
-              <div class="icon-box">
-                <ion-icon name="location-outline"></ion-icon>
-              </div>
-              <div class="contact-info">
-                <p class="contact-title">Location</p>
-                <address>${config.location}</address>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </aside>
-    `;
-
-    $('#sidebar-container').html(sidebarHtml);
-  }
-
-  /**
-   * Render dynamic navbar
-   */
-  renderNavbar() {
-    const navItems = this.navigation.map(item => {
-      const activeClass = item.default ? 'active' : '';
-      return `
-        <li class="navbar-item">
-          <button class="navbar-link ${activeClass}" data-nav-link>${item.label}</button>
-        </li>
-      `;
-    }).join('');
-
-    const navbarHtml = `
-      <nav class="navbar">
-        <ul class="navbar-list">
-          ${navItems}
-        </ul>
-      </nav>
-    `;
-
-    $('#navbar-container').html(navbarHtml);
-
-    // Navigate to default page
-    const defaultPage = this.navigation.find(item => item.default);
-    if (defaultPage) {
-      this.navigateTo(defaultPage.page);
-    }
-  }
-
-  /**
-   * Render dynamic footer with full configuration support
-   */
-  renderFooter() {
-    if (!this.footerConfig || !this.footerConfig.enabled) {
-      return;
-    }
-
-    const currentYear = new Date().getFullYear();
-    let footerHtml = '<footer class="footer"><div class="footer-content">';
-
-    // Profile Section
-    if (this.footerConfig.profile && this.footerConfig.profile.enabled) {
-      const profile = this.footerConfig.profile;
-      footerHtml += '<div class="footer-section">';
-
-      if (profile.showTitle && profile.title) {
-        footerHtml += `<h3 class="footer-title">${profile.title}</h3>`;
-      }
-
-      if (profile.showSubtitle && profile.subtitle) {
-        footerHtml += `<p class="footer-text">${profile.subtitle}</p>`;
-      }
-
-      if (profile.showLocation && profile.location) {
-        footerHtml += `<p class="footer-text">${profile.location}</p>`;
-      }
-
-      footerHtml += '</div>';
-    }
-
-    // Social Section
-    if (this.footerConfig.social && this.footerConfig.social.enabled) {
-      const social = this.footerConfig.social;
-      const visibleLinks = social.links ? social.links.filter(link => link.visible !== false) : [];
-      const maxIcons = social.maxIcons || 6;
-      const linksToShow = visibleLinks.slice(0, maxIcons);
-
-      if (linksToShow.length > 0) {
-        const socialHtml = linksToShow.map(link => {
-          const iconHtml = link.iconType === 'fontawesome'
-            ? `<i class="fa-brands ${link.icon}"></i>`
-            : `<ion-icon name="${link.icon}"></ion-icon>`;
-
-          return `
-            <a href="${link.url}" target="_blank" class="footer-social-link" title="${link.platform}">
-              ${iconHtml}
-            </a>
-          `;
-        }).join('');
-
-        footerHtml += `
-          <div class="footer-section">
-            <h4 class="footer-subtitle">${social.title || 'Connect'}</h4>
-            <div class="footer-social">
-              ${socialHtml}
-            </div>
-          </div>
-        `;
-      }
-    }
-
-    footerHtml += '</div><div class="footer-bottom">';
-
-    // Copyright Section
-    if (this.footerConfig.copyright && this.footerConfig.copyright.enabled) {
-      const copyright = this.footerConfig.copyright;
-      const year = copyright.showYear ? currentYear : '';
-      const name = copyright.name || '';
-      const text = copyright.text || '';
-
-      footerHtml += `
-        <p class="footer-copyright">
-          ${year ? `© ${year}` : ''} ${name}${name && text ? '.' : ''} ${text}
-        </p>
-      `;
-    }
-
-    // Credits Section
-    if (this.footerConfig.credits && this.footerConfig.credits.enabled) {
-      const creditsText = this.footerConfig.credits.text || '';
-      footerHtml += `<p class="footer-credits">${creditsText}</p>`;
-    }
-
-    // Custom Links Section (optional)
-    if (this.footerConfig.customLinks && this.footerConfig.customLinks.length > 0) {
-      const visibleCustomLinks = this.footerConfig.customLinks.filter(link => link.visible !== false);
-      if (visibleCustomLinks.length > 0) {
-        const customLinksHtml = visibleCustomLinks.map(link =>
-          `<a href="${link.url}" class="footer-custom-link">${link.text}</a>`
-        ).join(' • ');
-        footerHtml += `<p class="footer-custom-links">${customLinksHtml}</p>`;
-      }
-    }
-
-    footerHtml += '</div></footer>';
-
-    $('#footer-container').html(footerHtml);
-  }
-
-  /**
-   * Setup all event listeners using event delegation
-   */
-  setupEventListeners() {
-    // Navigation
-    $(document).on('click', '.navbar-link', (e) => this.handleNavigation(e));
-
-    // Sidebar toggle
-    $(document).on('click', '[data-sidebar-toggle]', () => this.toggleSidebar());
-
-    // Portfolio filters
-    $(document).on('click', '[data-filter-btn]', (e) => this.handleFilterClick(e));
-    $(document).on('click', '[data-select]', (e) => this.toggleFilterSelect(e));
-    $(document).on('click', '[data-select-item]', (e) => this.handleSelectItem(e));
-
-    // Close select dropdown when clicking outside
-    $(document).on('click', (e) => {
-      if (!$(e.target).closest('[data-select]').length) {
-        $('.filter-select').removeClass('active');
-      }
-    });
-
-    // Update: Click event for timeline items specifically targets header/logo
-    $(document).on('click', '.timeline-item-clickable .timeline-header', (e) => this.handleTimelineCardClick(e));
-
-    // Curriculum Vitae Button Logic (same as portfolio filter buttons)
-    $(document).on('click', '#cv-download-link', (e) => {
-      // Optional: Add any specific logic here if needed, like analytics tracking
-      // For now, let the default link behavior happen or add a class for active state animation
-      const $btn = $(e.currentTarget);
-      $btn.addClass('active');
-      setTimeout(() => $btn.removeClass('active'), 200); // Remove active class after animation
-    });
-  }
-
-  handleTimelineCardClick(e) {
-    // The event is now attached to .timeline-header, so we look up to the parent item to get the URL
-    const $item = $(e.currentTarget).closest('.timeline-item-clickable');
-    const url = $item.data('url');
-
-    if (url) {
-      window.open(url, '_blank');
-    }
-  }
-
-  /**
-   * Handle navigation between pages
-   */
-  handleNavigation(e) {
-    const pageName = $(e.currentTarget).text().trim().toLowerCase();
-    this.navigateTo(pageName);
-
-    // Update active state
-    $('.navbar-link').removeClass('active');
-    $(e.currentTarget).addClass('active');
-  }
-
-  /**
-   * Navigate to a specific page
-   */
-  navigateTo(pageName) {
-    // Hide all sections
-    $('.content-section').hide();
-
-    const pageMap = {
-      'about': () => this.loadAboutPage(),
-      'resume': () => this.loadResumePage(),
-      'portfolio': () => this.loadPortfolioPage(),
-      'contact': () => this.loadContactPage(),
-      'more': () => this.loadMorePage()
-    };
-
-    const loadPage = pageMap[pageName] || pageMap['portfolio'];
-    loadPage();
-  }
-
-  /**
-   * Load About page and populate with JSON data
-   */
-  async loadAboutPage() {
-    $('#about-section').load('./pages/about.html article.about', () => {
-      // Populate dynamic content from JSON
-      this.populateAboutPage();
-      $('#about-section').show();
-    });
-  }
-
-  /**
-   * Populate About page with data from JSON
-   */
-  populateAboutPage() {
-    const config = this.siteConfig.personal.about;
-    const highlightedGames = this.gamesShowcase.highlighted.filter(g => g.visible !== false);
-    const inDevelopment = this.gamesShowcase.inDevelopment.filter(g => g.visible !== false);
-
-    // Update about text if placeholders exist
-    if ($('#about-greeting').length) {
-      $('#about-greeting').text(config.greeting);
-    }
-    if ($('#about-description').length) {
-      $('#about-description').html(config.description);
-    }
-
-    // Populate highlighted games
-    const highlightedHtml = highlightedGames.map(game => `
-      <li class="clients-item">
-        <a href="${game.link}" target="_blank">
-          <img src="${game.image}" alt="${game.title}">
-        </a>
-      </li>
-    `).join('');
-    $('#highlighted-games-list').html(highlightedHtml);
-
-    // Update GitHub stats username
-    const githubImg = `http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=${this.siteConfig.external.githubUsername}&theme=material_palenight`;
-    //const githubImg = `https://github-readme-stats.vercel.app/api?username=${this.siteConfig.external.githubUsername}&theme=tokyonight&hide_border=false&include_all_commits=false&count_private=false`;
-    $('#github-stats-img').attr('src', githubImg);
-
-    // Populate in-development games
-    const inDevHtml = inDevelopment.map(game => `
-      <li class="clients-item">
-        <a href="${game.link}" target="_blank">
-          <img src="${game.image}" alt="${game.title}">
-        </a>
-      </li>
-    `).join('');
-    $('#indev-games-list').html(inDevHtml);
-  }
-
-  /**
-   * Load Resume page and populate with JSON data
-   */
-  async loadResumePage() {
-    $('#resume-section').load('./pages/resume.html article.resume', () => {
-      // Populate dynamic content from JSON
-      this.populateResumePage();
-      $('#resume-section').show();
-      // Setup CV localization after page loads
-      this.setupCVLocalization();
-    });
-  }
-
-  /**
-   * Populate Resume page with data from JSON
-   */
-  populateResumePage() {
-    // --- START: EXPERIENCE SECTION ---
-    const experienceHtml = this.experience.map(company => {
-      // Loop through each position and wrap it in a div
-      const positionsHtml = company.positions.map(position => {
-        const responsibilitiesHtml = position.responsibilities.map(r =>
-          `• ${r}<br>`
-        ).join('');
-
-        // This "position-item" div is key
-        return `
-          <div class="position-item">
-            <div class="position-header">
-              <h5 class="h5 timeline-item-title">${position.title}</h5>
-              <span class="timeline-date">${position.startDate} — ${position.endDate}</span>
-            </div>
-            <p class="timeline-text">${responsibilitiesHtml}</p>
-          </div>
-        `;
-      }).join('');
-
-      // Logo HTML
-      const logoHtml = (company.logo && company.url)
-        ? `<a href="${company.url}" target="_blank" class="timeline-logo-link">
-             <img src="${company.logo}" alt="${company.company} logo" class="timeline-logo">
-           </a>`
-        : '';
-
-      // NEW: Add clickable class and data-url if URL exists
-      const clickableClass = company.url ? 'timeline-item-clickable' : '';
-      const dataUrl = company.url ? `data-url="${company.url}"` : '';
-
-      // All positions are placed inside the single timeline-item card
-      return `
-        <li class="timeline-item ${clickableClass}" ${dataUrl}>
-          <div class="timeline-header">
-            ${logoHtml}
-            <h4 class="h4">${company.company}</h4>
-          </div>
-          ${positionsHtml}
-        </li>
-      `;
-    }).join('');
-    $('#experience-timeline-list').html(experienceHtml);
-    // --- END: EXPERIENCE SECTION ---
-
-    // --- START: UPDATED EDUCATION SECTION ---
-    const educationHtml = this.education.map(edu => {
-
-      // NEW: Loop through each degree and create a "position-item" for it
-      const degreesHtml = edu.degrees.map(degree => {
-        const descriptionHtml = degree.description ? `<p class="timeline-text">${degree.description}</p>` : '';
-        // We reuse the ".position-item" and ".position-header" classes from the CSS
-        return `
-          <div class="position-item">
-            <div class="position-header">
-              <h5 class="h5 timeline-item-title">${degree.title}</h5>
-              <span class="timeline-date">${degree.startDate} — ${degree.endDate}</span>
-            </div>
-            ${descriptionHtml}
-          </div>
-        `;
-      }).join('');
-
-      // Logo HTML
-      const logoHtml = (edu.logo && edu.url)
-        ? `<a href="${edu.url}" target="_blank" class="timeline-logo-link">
-             <img src="${edu.logo}" alt="${edu.institution} logo" class="timeline-logo">
-           </a>`
-        : '';
-
-      // NEW: Add clickable class and data-url if URL exists
-      const clickableClass = edu.url ? 'timeline-item-clickable' : '';
-      const dataUrl = edu.url ? `data-url="${edu.url}"` : '';
-
-      // All degrees are placed inside the single timeline-item card
-      return `
-        <li class="timeline-item ${clickableClass}" ${dataUrl}>
-          <div class="timeline-header"> 
-            ${logoHtml}
-            <h4 class="h4">${edu.institution}</h4>
-          </div>
-          ${degreesHtml}
-        </li>
-      `;
-    }).join('');
-    $('#education-timeline-list').html(educationHtml);
-    // --- END: UPDATED EDUCATION SECTION ---
-  }
-
-  /**
-   * Setup CV download link based on user location
-   */
-  setupCVLocalization() {
-    const link = document.getElementById('cv-download-link');
-    if (!link) return;
-
-    const userInTurkey = () => {
-      const lang = (navigator.language || '').toLowerCase();
-      const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
-      return lang.startsWith('tr') || tz.includes('istanbul');
-    };
-
-    if (userInTurkey()) {
-      link.href = this.siteConfig.cv.turkey;
-    } else {
-      link.href = this.siteConfig.cv.default;
-    }
-  }
-
-  /**
-   * Load Portfolio page
-   */
-  async loadPortfolioPage() {
-    $('#portfolio-section').load('./pages/portfolio.html article.portfolio', () => {
-      $('#portfolio-section').show();
-      this.loadPortfolioItems();
-    });
-  }
-
-  /**
-   * Load Contact page
-   */
-  async loadContactPage() {
-    $('#contact-section').load('./pages/contact.html article.contact', () => {
-      $('#contact-section').show();
-    });
-  }
-
-  /**
-   * Load More page and populate with JSON data
-   */
-  async loadMorePage() {
-    $('#more-section').load('./pages/more.html article.More', () => {
-      // Populate dynamic content from JSON
-      this.populateMorePage();
-      $('#more-section').show();
-    });
-  }
-
-  /**
-   * Populate More page with data from JSON
-   */
-  populateMorePage() {
-    // Update Spotify embed
-    const spotifyUrl = `https://open.spotify.com/embed/artist/${this.siteConfig.external.spotifyArtistId}?utm_source=generator&theme=0`;
-    $('#spotify-embed').attr('src', spotifyUrl);
-
-    // Update Instagram profile
-    $('#insta-avatar').attr('src', this.instagram.profileImage);
-    $('#insta-username').attr('href', this.instagram.profileUrl).text(`@${this.instagram.username}`);
-
-    // Populate Instagram posts
-    const instagramPostsHtml = this.instagram.posts.map(post => `
-      <a class="insta-card__item" href="${post.link}" target="_blank" rel="noopener">
-        <img src="${post.image}" alt="${post.alt}"/>
-      </a>
-    `).join('');
-    $('#insta-grid').html(instagramPostsHtml);
-
-    // Update Steam stats
-    const steamUrl = `https://steam-stat.vercel.app/api?profileName=${this.siteConfig.external.steamUsername}`;
-    $('#steam').attr('src', steamUrl);
-  }
-
-  /**
-   * Load portfolio items from JSON and render them (with cache-busting)
-   */
-  async loadPortfolioItems() {
-    try {
-      const response = await fetch(this.getCacheBustedUrl('./assets/data/portfolio-items.json'));
-      this.portfolioItems = await response.json();
-      this.generateFilterButtons();
-      this.renderPortfolioItems();
-      this.initPortfolioFilters();
-    } catch (error) {
-      console.error('Error loading portfolio items:', error);
-    }
-  }
-
-  /**
-   * Dynamically generate filter buttons based on available categories
-   */
-  generateFilterButtons() {
-    const visibleItems = this.portfolioItems.filter(item => item.visible !== false);
-    const categories = new Set();
-
-    visibleItems.forEach(item => {
-      if (item.category) {
-        categories.add(item.category);
-      }
-    });
-
-    // Define custom order
-    const categoryOrder = [
-      'game development',
-      'web application',
-      'windows application',
-      'mobile application',
-      'other projects'
-    ];
-
-    // Filter the categories from the Set to match your defined order
-    const sortedCategories = categoryOrder.filter(category => categories.has(category));
-    const hasHighlighted = visibleItems.some(item => item.highlighted);
-
-    // Generate desktop filter buttons
-    const $filterList = $('.filter-list');
-    if ($filterList.length) {
-      $filterList.empty();
-
-      $filterList.append(`
-        <li class="filter-item">
-          <button class="active" data-filter-btn>All</button>
-        </li>
-      `);
-
-      if (hasHighlighted) {
-        $filterList.append(`
-          <li class="filter-item">
-            <button data-filter-btn>Highlighted Projects</button>
-          </li>
-        `);
-      }
-
-      sortedCategories.forEach(category => {
-        const displayName = this.capitalizeCategory(category);
-        $filterList.append(`
-          <li class="filter-item">
-            <button data-filter-btn>${displayName}</button>
-          </li>
-        `);
-      });
-    }
-
-    // Generate mobile dropdown items
-    const $selectList = $('.select-list');
-    if ($selectList.length) {
-      $selectList.empty();
-
-      $selectList.append(`
-        <li class="select-item">
-          <button data-select-item>All</button>
-        </li>
-      `);
-
-      if (hasHighlighted) {
-        $selectList.append(`
-          <li class="select-item">
-            <button data-select-item>Highlighted Projects</button>
-          </li>
-        `);
-      }
-
-      sortedCategories.forEach(category => {
-        const displayName = this.capitalizeCategory(category);
-        $selectList.append(`
-          <li class="select-item">
-            <button data-select-item>${displayName}</button>
-          </li>
-        `);
-      });
-    }
-  }
-
-  /**
-   * Render portfolio items dynamically
-   */
-  renderPortfolioItems() {
-    const $projectList = $('.project-list');
-    if (!$projectList.length) return;
-
-    $projectList.empty();
-    const visibleItems = this.portfolioItems.filter(item => item.visible !== false);
-
-    visibleItems.forEach(item => {
-      const $item = this.createPortfolioItem(item);
-      $projectList.append($item);
-    });
-  }
-
-  /**
-   * Create a single portfolio item element with opennewtab support
-   */
-  createPortfolioItem(item) {
-    const highlightedAttr = item.highlighted ? 'is-highlighted="yes"' : '';
-    const hoverIcon = this.getHoverIcon(item.iconType);
-
-    // Determine target attribute based on opennewtab field (default to true)
-    const targetAttr = (item.opennewtab !== false) ? 'target="_blank" rel="noopener noreferrer"' : '';
-
-    // Generate tags HTML as a list of pills
-    let tagsHtml = '';
-    if (item.tags && item.tags.length > 0) {
-      tagsHtml = '<div class="project-tags">';
-      item.tags.forEach(tag => {
-        tagsHtml += `<span class="project-tag">${tag}</span>`;
-      });
-      tagsHtml += '</div>';
-    }
-
-    return $(`
-      <li data-value="${item.id}" class="project-item active" 
-          data-filter-item 
-          data-category="${item.category}" 
-          ${highlightedAttr}>
-        <a href="${item.link}" ${targetAttr}>
-          <figure class="project-img">
-            <div class="project-item-icon-box">
-              ${hoverIcon}
-            </div>
-            ${tagsHtml}
-            <img src="${item.image}" alt="${item.title}" loading="lazy">
-          </figure>
-          
-          <div class="project-content">
-            <h3 class="project-title">${item.title}</h3>
-            <p class="project-category">${this.capitalizeCategory(item.category)}</p>
-            ${item.description ? `<p class="project-description">${item.description}</p>` : ''}
-          </div>
-
-        </a>
-      </li>
-    `);
-  }
-
-  /**
-   * Get the appropriate hover icon based on project type
-   */
-  getHoverIcon(iconType) {
-    const iconMap = {
-      'unity': '<i class="fa-brands fa-unity"></i>',
-      'unreal': '<i class="devicon-unrealengine-original colored"></i>',
-      'web': '<ion-icon name="logo-html5"></ion-icon>',
-      'django': '<i class="devicon-django-plain colored"></i>',
-      'python': '<i class="fa-brands fa-python"></i>',
-      'cpp': '<i class="devicon-cplusplus-plain colored"></i>',
-      'csharp': '<i class="devicon-csharp-plain colored"></i>',
-      'android': '<i class="devicon-android-plain colored"></i>',
-      'design': '<ion-icon name="color-palette-outline"></ion-icon>',
-      'music': '<ion-icon name="musical-notes-outline"></ion-icon>',
-      'default': '<ion-icon name="eye-outline"></ion-icon>'
-    };
-
-    return iconMap[iconType] || iconMap['default'];
-  }
-
-  /**
-   * Capitalize category text
-   */
-  capitalizeCategory(category) {
-    return category.split(' ').map(word =>
-      word.charAt(0).toUpperCase() + word.slice(1)
-    ).join(' ');
-  }
-
-  /**
-   * Initialize portfolio filters
-   */
-  initPortfolioFilters() {
-    const $items = $('[data-filter-item]');
-    const hasHighlighted = $items.filter((_, el) => this.isHighlighted($(el))).length > 0;
-    const initialFilter = hasHighlighted ? 'Highlighted Projects' : 'All';
-
-    this.updateFilterLabel(initialFilter);
-    this.applyFilter(initialFilter);
-
-    $('[data-filter-btn]').removeClass('active')
-      .filter((_, btn) => $(btn).text().trim() === initialFilter)
-      .addClass('active');
-  }
-
-  /**
-   * Check if an item is marked as highlighted
-   */
-  isHighlighted($element) {
-    const value = $element.attr('is-highlighted') ?? $element.data('highlighted');
-    if (value === undefined) return false;
-    const str = String(value).toLowerCase();
-    return str === '' || str === 'yes' || str === 'true' || str === '1';
-  }
-
-  /**
-   * Handle filter button clicks
-   */
-  handleFilterClick(e) {
-    const filterText = $(e.currentTarget).text().trim();
-
-    $('[data-filter-btn]').removeClass('active');
-    $(e.currentTarget).addClass('active');
-
-    this.updateFilterLabel(filterText);
-    this.applyFilter(filterText);
-
-    $('.filter-select').removeClass('active');
-  }
-
-  /**
-   * Toggle filter select dropdown
-   */
-  toggleFilterSelect(e) {
-    e.stopPropagation();
-    $(e.currentTarget).toggleClass('active');
-  }
-
-  /**
-   * Handle select dropdown item clicks
-   */
-  handleSelectItem(e) {
-    const selectedText = $(e.currentTarget).text().trim();
-
-    this.updateFilterLabel(selectedText);
-    this.applyFilter(selectedText);
-    $('.filter-select').removeClass('active');
-
-    $('[data-filter-btn]').each((_, btn) => {
-      const $btn = $(btn);
-      $btn.toggleClass('active',
-        $btn.text().trim().toLowerCase() === selectedText.toLowerCase()
-      );
-    });
-  }
-
-  /**
-   * Update filter dropdown label
-   */
-  updateFilterLabel(text) {
-    $('[data-select-value]').text(text);
-  }
-
-  /**
-   * Apply filter to portfolio items
-   */
-  applyFilter(filterText) {
-    const filter = filterText.toLowerCase();
-
-    $('[data-filter-item]').each((_, item) => {
-      const $item = $(item);
-      const category = String($item.data('category') || '').toLowerCase();
-
-      const shouldShow =
-        filter === 'all' ||
-        (filter === 'highlighted projects' && this.isHighlighted($item)) ||
-        category === filter;
-
-      $item.toggleClass('active', shouldShow);
-    });
-  }
-
-  /**
-   * Toggle sidebar visibility
-   */
-  toggleSidebar() {
-    $('[data-sidebar]').toggleClass('active');
-  }
 }
 
-// Initialize app when DOM is ready
-$(function () {
-  new PortfolioApp();
-});
+async function loadData() {
+    try {
+        // 1. Fetch site-config.json FIRST with a timestamp to bust cache.
+        const siteConfigData = await fetchJSON('site-config.json', 't=' + new Date().getTime());
+        
+        if (!siteConfigData) {
+            throw new Error('Critical: Could not load site-config.json');
+        }
+        
+        siteConfig = siteConfigData;
+        
+        // 2. Extract the data version to use for all other files
+        const dataVersion = siteConfig.versions && siteConfig.versions.data ? siteConfig.versions.data : '1.0';
+        const vParam = 'v=' + dataVersion;
+
+        console.log('Loading data with version:', dataVersion);
+
+        // 3. Fetch all other data files using the version from site-config
+        const [
+            portfolioItemsData,
+            experienceData,
+            educationData,
+            gamesShowcaseData,
+            socialLinksData,
+            footerData,
+            instagramData,
+            projectDetailsData,
+            navigationData
+        ] = await Promise.all([
+            fetchJSON('portfolio-items.json', vParam),
+            fetchJSON('experience.json', vParam),
+            fetchJSON('education.json', vParam),
+            fetchJSON('games-showcase.json', vParam),
+            fetchJSON('social-links.json', vParam),
+            fetchJSON('footer.json', vParam),
+            fetchJSON('instagram.json', vParam),
+            fetchJSON('project-details.json', vParam),
+            fetchJSON('navigation.json', vParam)
+        ]);
+
+        portfolioItems = (portfolioItemsData || []).filter(item => item.visible !== false);
+        experience = experienceData || [];
+        education = educationData || [];
+        gamesShowcase = gamesShowcaseData || { highlighted: [], inDevelopment: [] };
+        socialLinks = socialLinksData || []; 
+        footerConfig = footerData || null;
+        instagram = instagramData || null;
+        projectDetails = projectDetailsData || {};
+        navigation = (navigationData || []).filter(item => item.visible !== false).sort((a, b) => a.order - b.order);
+
+        // Theme colors configuration
+        const defaultThemes = {
+            about: { hex: '#00f3ff' },
+            games: { hex: '#ff0055' },
+            portfolio: { hex: '#bc13fe' },
+            experience: { hex: '#ffd700' },
+            education: { hex: '#0051ff' },
+            more: { hex: '#ff6600' }
+        };
+        themes = siteConfig?.themes || defaultThemes;
+
+        const defaultNav = navigation.find(n => n.default) || navigation[0];
+        if (defaultNav) {
+            currentSection = defaultNav.section;
+            // Initialize colors immediately without transition for the first load
+            const startHex = themes[currentSection]?.hex || '#bc13fe';
+            themeColor = startHex;
+            const startRgb = hexToRgb(startHex);
+            if(startRgb) {
+                currentThemeRgb = startRgb;
+                targetThemeRgb = startRgb;
+            }
+        }
+
+        dataLoaded = true;
+        console.log('All Data Loaded Successfully');
+        return true;
+    } catch (error) {
+        console.error('Error loading data:', error);
+        dataLoaded = false;
+        return false;
+    }
+}
+
+// ==================== COLOR UTILITIES & ANIMATION ====================
+
+function hexToRgb(hex) {
+    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+        return r + r + g + g + b + b;
+    });
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
+function rgbToHex(r, g, b) {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
+
+function lerp(start, end, t) {
+    return start * (1 - t) + end * t;
+}
+
+function processColorTransition() {
+    if (!isTransitioningColor) return;
+
+    // Transition speed (0.05 is smooth and slow)
+    const speed = 0.05; 
+    
+    // Check if close enough to snap to target
+    if (Math.abs(targetThemeRgb.r - currentThemeRgb.r) < 0.5 &&
+        Math.abs(targetThemeRgb.g - currentThemeRgb.g) < 0.5 &&
+        Math.abs(targetThemeRgb.b - currentThemeRgb.b) < 0.5) {
+        
+        currentThemeRgb = { ...targetThemeRgb };
+        isTransitioningColor = false;
+    } else {
+        currentThemeRgb.r = lerp(currentThemeRgb.r, targetThemeRgb.r, speed);
+        currentThemeRgb.g = lerp(currentThemeRgb.g, targetThemeRgb.g, speed);
+        currentThemeRgb.b = lerp(currentThemeRgb.b, targetThemeRgb.b, speed);
+        requestAnimationFrame(processColorTransition);
+    }
+
+    // Convert current RGB to Hex
+    const newHex = rgbToHex(Math.round(currentThemeRgb.r), Math.round(currentThemeRgb.g), Math.round(currentThemeRgb.b));
+    
+    // Update global variable
+    themeColor = newHex; 
+    
+    // Update CSS Variable
+    document.documentElement.style.setProperty('--theme-color', newHex);
+    
+    // Update elements that rely on JS values (gradients, active states)
+    updateDynamicColors();
+    updateFilterStyles();
+}
+
+// ==================== BACKGROUND ANIMATION (RESTORED) ====================
+function initBackground() {
+    const canvas = document.getElementById('bg-canvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let time = 0;
+
+    const mouse = { x: null, y: null, radius: 250 };
+
+    document.addEventListener('mousemove', function(e) {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+    });
+
+    document.addEventListener('mouseleave', function() {
+        mouse.x = null;
+        mouse.y = null;
+    });
+
+    const dotSpacing = 12;
+    let gridDots = [];
+
+    const shapes = [
+        { type: 'controller', x: 0.1 + Math.random() * 0.25, y: 0.15 + Math.random() * 0.3, scale: 45 + Math.random() * 20, rx: Math.random() * Math.PI, ry: Math.random() * Math.PI, speedX: 0.001 + Math.random() * 0.001, speedY: 0.0012 + Math.random() * 0.001, vx: (Math.random() - 0.5) * 0.00003, vy: (Math.random() - 0.5) * 0.00002, baseX: 0, baseY: 0, driftAngle: Math.random() * Math.PI * 2, driftSpeed: 0.001 + Math.random() * 0.001, driftRadius: 0.005 + Math.random() * 0.005 },
+        { type: 'codetag', x: 0.65 + Math.random() * 0.25, y: 0.2 + Math.random() * 0.35, scale: 50 + Math.random() * 20, rx: Math.random() * Math.PI, ry: Math.random() * Math.PI, speedX: -0.0008 - Math.random() * 0.001, speedY: 0.001 + Math.random() * 0.001, vx: (Math.random() - 0.5) * 0.00003, vy: (Math.random() - 0.5) * 0.00002, baseX: 0, baseY: 0, driftAngle: Math.random() * Math.PI * 2, driftSpeed: 0.0008 + Math.random() * 0.001, driftRadius: 0.004 + Math.random() * 0.006 },
+        { type: 'cube', x: 0.7 + Math.random() * 0.2, y: 0.6 + Math.random() * 0.25, scale: 35 + Math.random() * 20, rx: Math.random() * Math.PI, ry: Math.random() * Math.PI, speedX: 0.0012 + Math.random() * 0.001, speedY: -0.0008 - Math.random() * 0.001, vx: (Math.random() - 0.5) * 0.00004, vy: (Math.random() - 0.5) * 0.00003, baseX: 0, baseY: 0, driftAngle: Math.random() * Math.PI * 2, driftSpeed: 0.0012 + Math.random() * 0.0008, driftRadius: 0.003 + Math.random() * 0.004 },
+        { type: 'terminal', x: 0.1 + Math.random() * 0.2, y: 0.55 + Math.random() * 0.3, scale: 40 + Math.random() * 20, rx: Math.random() * Math.PI, ry: Math.random() * Math.PI, speedX: -0.0007 - Math.random() * 0.0008, speedY: 0.001 + Math.random() * 0.001, vx: (Math.random() - 0.5) * 0.00003, vy: (Math.random() - 0.5) * 0.00002, baseX: 0, baseY: 0, driftAngle: Math.random() * Math.PI * 2, driftSpeed: 0.0007 + Math.random() * 0.0008, driftRadius: 0.005 + Math.random() * 0.005 },
+        { type: 'potion', x: 0.4 + Math.random() * 0.2, y: 0.7 + Math.random() * 0.2, scale: 30 + Math.random() * 15, rx: Math.random() * Math.PI, ry: Math.random() * Math.PI, speedX: 0.0015 + Math.random() * 0.001, speedY: -0.0005 - Math.random() * 0.001, vx: (Math.random() - 0.5) * 0.00004, vy: (Math.random() - 0.5) * 0.00003, baseX: 0, baseY: 0, driftAngle: Math.random() * Math.PI * 2, driftSpeed: 0.0009 + Math.random() * 0.001, driftRadius: 0.004 + Math.random() * 0.005 }
+    ];
+
+    shapes.forEach(function(shape) {
+        shape.baseX = shape.x;
+        shape.baseY = shape.y;
+    });
+
+    const controllerVerts = [
+        {x:-2, y:-0.5, z:0.3}, {x:-1.5, y:-0.8, z:0.3}, {x:1.5, y:-0.8, z:0.3}, {x:2, y:-0.5, z:0.3},
+        {x:2, y:0.3, z:0.3}, {x:1.5, y:0.6, z:0.3}, {x:-1.5, y:0.6, z:0.3}, {x:-2, y:0.3, z:0.3},
+        {x:-2, y:-0.5, z:-0.3}, {x:-1.5, y:-0.8, z:-0.3}, {x:1.5, y:-0.8, z:-0.3}, {x:2, y:-0.5, z:-0.3},
+        {x:2, y:0.3, z:-0.3}, {x:1.5, y:0.6, z:-0.3}, {x:-1.5, y:0.6, z:-0.3}, {x:-2, y:0.3, z:-0.3},
+        {x:-1.2, y:-0.1, z:0.4}, {x:-0.8, y:-0.1, z:0.4}, {x:-0.8, y:0.3, z:0.4}, {x:-1.2, y:0.3, z:0.4},
+        {x:1, y:0, z:0.4}, {x:1.3, y:-0.2, z:0.4}, {x:1.3, y:0.2, z:0.4}, {x:1, y:0.4, z:0.4},
+        {x:-1, y:-0.3, z:0.35}, {x:-1, y:0.1, z:0.35}, {x:-1.2, y:-0.1, z:0.35}, {x:-0.8, y:-0.1, z:0.35}
+    ];
+    const controllerEdges = [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,0],[8,9],[9,10],[10,11],[11,12],[12,13],[13,14],[14,15],[15,8],[0,8],[1,9],[2,10],[3,11],[4,12],[5,13],[6,14],[7,15],[16,17],[17,18],[18,19],[19,16],[20,21],[21,22],[22,23],[23,20],[24,25],[26,27]];
+
+    const codetagVerts = [
+        {x:-1.5, y:0, z:0.2}, {x:-0.5, y:1, z:0.2}, {x:-0.5, y:0.6, z:0.2}, {x:-1.1, y:0, z:0.2}, {x:-0.5, y:-0.6, z:0.2}, {x:-0.5, y:-1, z:0.2},
+        {x:-1.5, y:0, z:-0.2}, {x:-0.5, y:1, z:-0.2}, {x:-0.5, y:0.6, z:-0.2}, {x:-1.1, y:0, z:-0.2}, {x:-0.5, y:-0.6, z:-0.2}, {x:-0.5, y:-1, z:-0.2},
+        {x:-0.15, y:1.2, z:0.2}, {x:0.15, y:1.2, z:0.2}, {x:0.15, y:-1.2, z:0.2}, {x:-0.15, y:-1.2, z:0.2},
+        {x:-0.15, y:1.2, z:-0.2}, {x:0.15, y:1.2, z:-0.2}, {x:0.15, y:-1.2, z:-0.2}, {x:-0.15, y:-1.2, z:-0.2},
+        {x:1.5, y:0, z:0.2}, {x:0.5, y:1, z:0.2}, {x:0.5, y:0.6, z:0.2}, {x:1.1, y:0, z:0.2}, {x:0.5, y:-0.6, z:0.2}, {x:0.5, y:-1, z:0.2},
+        {x:1.5, y:0, z:-0.2}, {x:0.5, y:1, z:-0.2}, {x:0.5, y:0.6, z:-0.2}, {x:1.1, y:0, z:-0.2}, {x:0.5, y:-0.6, z:-0.2}, {x:0.5, y:-1, z:-0.2}
+    ];
+    const codetagEdges = [[0,1],[1,2],[2,3],[3,4],[4,5],[5,0],[6,7],[7,8],[8,9],[9,10],[10,11],[11,6],[0,6],[1,7],[5,11],[12,13],[13,14],[14,15],[15,12],[16,17],[17,18],[18,19],[19,16],[12,16],[13,17],[14,18],[15,19],[20,21],[21,22],[22,23],[23,24],[24,25],[25,20],[26,27],[27,28],[28,29],[29,30],[30,31],[31,26],[20,26],[21,27],[25,31]];
+
+    const cubeVerts = [{x:-1,y:-1,z:-1},{x:1,y:-1,z:-1},{x:1,y:1,z:-1},{x:-1,y:1,z:-1},{x:-1,y:-1,z:1},{x:1,y:-1,z:1},{x:1,y:1,z:1},{x:-1,y:1,z:1}];
+    const cubeEdges = [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
+
+    const terminalVerts = [
+        {x:-1.5, y:-1, z:0.4}, {x:1.5, y:-1, z:0.4}, {x:1.5, y:1, z:0.4}, {x:-1.5, y:1, z:0.4},
+        {x:-1.5, y:-1, z:-0.2}, {x:1.5, y:-1, z:-0.2}, {x:1.5, y:1, z:-0.2}, {x:-1.5, y:1, z:-0.2},
+        {x:-0.3, y:-1, z:0.1}, {x:0.3, y:-1, z:0.1}, {x:0.3, y:-1.5, z:0.1}, {x:-0.3, y:-1.5, z:0.1},
+        {x:-0.8, y:-1.5, z:0.3}, {x:0.8, y:-1.5, z:0.3}, {x:0.8, y:-1.5, z:-0.3}, {x:-0.8, y:-1.5, z:-0.3},
+        {x:-1.2, y:0.6, z:0.45}, {x:0.5, y:0.6, z:0.45}, {x:-1.2, y:0.2, z:0.45}, {x:1, y:0.2, z:0.45},
+        {x:-1.2, y:-0.2, z:0.45}, {x:0, y:-0.2, z:0.45}, {x:-1.2, y:-0.6, z:0.45}, {x:0.8, y:-0.6, z:0.45}
+    ];
+    const terminalEdges = [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7],[8,9],[9,10],[10,11],[11,8],[12,13],[13,14],[14,15],[15,12],[16,17],[18,19],[20,21],[22,23]];
+
+    const potionVerts = [
+        {x:-0.6, y:-1, z:0.3}, {x:0.6, y:-1, z:0.3}, {x:0.6, y:0.2, z:0.3}, {x:0.3, y:0.5, z:0.3},
+        {x:0.3, y:0.8, z:0.3}, {x:-0.3, y:0.8, z:0.3}, {x:-0.3, y:0.5, z:0.3}, {x:-0.6, y:0.2, z:0.3},
+        {x:-0.6, y:-1, z:-0.3}, {x:0.6, y:-1, z:-0.3}, {x:0.6, y:0.2, z:-0.3}, {x:0.3, y:0.5, z:-0.3},
+        {x:0.3, y:0.8, z:-0.3}, {x:-0.3, y:0.8, z:-0.3}, {x:-0.3, y:0.5, z:-0.3}, {x:-0.6, y:0.2, z:-0.3},
+        {x:-0.25, y:0.8, z:0.2}, {x:0.25, y:0.8, z:0.2}, {x:0.25, y:1.1, z:0.2}, {x:-0.25, y:1.1, z:0.2},
+        {x:-0.25, y:0.8, z:-0.2}, {x:0.25, y:0.8, z:-0.2}, {x:0.25, y:1.1, z:-0.2}, {x:-0.25, y:1.1, z:-0.2}
+    ];
+    const potionEdges = [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,0],[8,9],[9,10],[10,11],[11,12],[12,13],[13,14],[14,15],[15,8],[0,8],[1,9],[2,10],[3,11],[4,12],[5,13],[6,14],[7,15],[16,17],[17,18],[18,19],[19,16],[20,21],[21,22],[22,23],[23,20],[16,20],[17,21],[18,22],[19,23]];
+
+    function noise(x, y, t) {
+        const n1 = Math.sin(x * 0.02 + t) * Math.cos(y * 0.02 - t * 0.5);
+        const n2 = Math.sin(x * 0.015 - t * 0.7) * Math.sin(y * 0.025 + t * 0.3);
+        const n3 = Math.cos(x * 0.01 + y * 0.01 + t * 0.2);
+        return (n1 + n2 + n3) / 3;
+    }
+
+    function createGrid() {
+        gridDots = [];
+        const cols = Math.ceil(canvas.width / dotSpacing) + 1;
+        const rows = Math.ceil(canvas.height / dotSpacing) + 1;
+        for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < cols; col++) {
+                gridDots.push({ baseX: col * dotSpacing, baseY: row * dotSpacing, x: col * dotSpacing, y: row * dotSpacing, col: col, row: row });
+            }
+        }
+    }
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        createGrid();
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    function rotatePoint(p, rx, ry) {
+        let x = p.x * Math.cos(ry) - p.z * Math.sin(ry);
+        let z = p.x * Math.sin(ry) + p.z * Math.cos(ry);
+        let y = p.y * Math.cos(rx) - z * Math.sin(rx);
+        z = p.y * Math.sin(rx) + z * Math.cos(rx);
+        return { x: x, y: y, z: z };
+    }
+
+    function project(point, shape, w, h) {
+        const fov = 400;
+        const scale = fov / (fov + point.z + 300);
+        return { x: (w * shape.x) + point.x * shape.scale * scale, y: (h * shape.y) + point.y * shape.scale * scale };
+    }
+
+    function drawGrid() {
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const maxDist = Math.sqrt(centerX * centerX + centerY * centerY);
+
+        for (let i = 0; i < gridDots.length; i++) {
+            const dot = gridDots[i];
+            const distFromCenter = Math.sqrt(Math.pow(dot.baseX - centerX, 2) + Math.pow(dot.baseY - centerY, 2));
+            const noiseVal = noise(dot.baseX, dot.baseY, time);
+            const noiseVal2 = noise(dot.baseX * 1.5, dot.baseY * 1.5, time * 0.5);
+            let baseSize = 1 + (noiseVal + 1) * 1.2;
+            const radialFactor = 1 - (distFromCenter / maxDist);
+            baseSize *= (0.5 + radialFactor * 0.8);
+            let baseOpacity = 0.1 + (noiseVal2 + 1) * 0.15;
+            baseOpacity *= (0.3 + radialFactor * 0.7);
+            const wave1 = Math.sin(dot.baseX * 0.03 + time * 2) * 0.3;
+            const wave2 = Math.cos(dot.baseY * 0.025 + time * 1.5) * 0.2;
+            baseOpacity += (wave1 + wave2) * radialFactor * 0.15;
+            let size = baseSize;
+            let opacity = baseOpacity;
+            let offsetX = 0;
+            let offsetY = 0;
+
+            if (mouse.x !== null && mouse.y !== null) {
+                const dx = dot.baseX - mouse.x;
+                const dy = dot.baseY - mouse.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < mouse.radius) {
+                    const force = Math.pow((mouse.radius - distance) / mouse.radius, 1.5);
+                    const angle = Math.atan2(dy, dx);
+                    offsetX = Math.cos(angle) * force * 12;
+                    offsetY = Math.sin(angle) * force * 12;
+                    const ripple = Math.sin(distance * 0.05 - time * 5) * 0.5 + 0.5;
+                    size = baseSize + force * 3 * ripple;
+                    opacity = Math.min(1, opacity + force * 0.7);
+                }
+            }
+
+            dot.x += ((dot.baseX + offsetX) - dot.x) * 0.2;
+            dot.y += ((dot.baseY + offsetY) - dot.y) * 0.2;
+
+            if (opacity > 0.02 && size > 0.3) {
+                ctx.beginPath();
+                ctx.arc(dot.x, dot.y, Math.max(0.5, size), 0, Math.PI * 2);
+                ctx.fillStyle = themeColor;
+                ctx.globalAlpha = Math.max(0, Math.min(1, opacity));
+                ctx.fill();
+            }
+        }
+        ctx.globalAlpha = 1;
+    }
+
+    function draw3DShapes() {
+        ctx.strokeStyle = themeColor;
+        ctx.lineWidth = 1.5;
+        ctx.shadowColor = themeColor;
+        ctx.shadowBlur = 10;
+        ctx.globalAlpha = 0.55;
+
+        shapes.forEach(function(shape) {
+            shape.rx += shape.speedX;
+            shape.ry += shape.speedY;
+            shape.driftAngle += shape.driftSpeed;
+            const driftX = Math.sin(shape.driftAngle) * shape.driftRadius;
+            const driftY = Math.sin(shape.driftAngle * 0.7) * shape.driftRadius * 0.6;
+            shape.baseX += shape.vx;
+            shape.baseY += shape.vy;
+            if (shape.baseX < 0.05 || shape.baseX > 0.95) { shape.vx *= -1; shape.baseX = Math.max(0.05, Math.min(0.95, shape.baseX)); }
+            if (shape.baseY < 0.05 || shape.baseY > 0.95) { shape.vy *= -1; shape.baseY = Math.max(0.05, Math.min(0.95, shape.baseY)); }
+            shape.x = shape.baseX + driftX;
+            shape.y = shape.baseY + driftY;
+
+            let verts, edges;
+            if (shape.type === 'controller') { verts = controllerVerts; edges = controllerEdges; }
+            else if (shape.type === 'codetag') { verts = codetagVerts; edges = codetagEdges; }
+            else if (shape.type === 'cube') { verts = cubeVerts; edges = cubeEdges; }
+            else if (shape.type === 'terminal') { verts = terminalVerts; edges = terminalEdges; }
+            else if (shape.type === 'potion') { verts = potionVerts; edges = potionEdges; }
+            if (!verts || !edges) return;
+
+            ctx.beginPath();
+            edges.forEach(function(edge) {
+                const p1 = rotatePoint(verts[edge[0]], shape.rx, shape.ry);
+                const p2 = rotatePoint(verts[edge[1]], shape.rx, shape.ry);
+                const proj1 = project(p1, shape, canvas.width, canvas.height);
+                const proj2 = project(p2, shape, canvas.width, canvas.height);
+                ctx.moveTo(proj1.x, proj1.y);
+                ctx.lineTo(proj2.x, proj2.y);
+            });
+            ctx.stroke();
+        });
+        ctx.shadowBlur = 0;
+        ctx.globalAlpha = 1;
+    }
+
+    function animate() {
+        time += 0.016;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawGrid();
+        draw3DShapes();
+        requestAnimationFrame(animate);
+    }
+    animate();
+}
+
+// ==================== RENDER CONTENT SECTIONS ====================
+
+function renderNavigation() {
+    const navContainer = document.getElementById('main-nav');
+    if (!navContainer || !navigation) return;
+
+    let navHtml = '';
+    navigation.forEach(item => {
+        navHtml += `
+        <a href="${item.link}" class="nav-item flex items-center gap-4 px-4 py-3 rounded-lg transition-all duration-300 group text-sm font-bold uppercase tracking-wider relative overflow-hidden text-gray-500 hover:text-white" data-section="${item.section}">
+            <div class="nav-bg absolute inset-0 opacity-10 transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100" style="background-color: var(--theme-color)"></div>
+            <i data-lucide="${item.icon}" class="nav-icon w-[18px] h-[18px] relative z-10 transition-colors duration-300"></i>
+            <span class="relative z-10">${item.label}</span>
+            <i data-lucide="chevron-right" class="nav-chevron w-[14px] h-[14px] ml-auto relative z-10 animate-pulse hidden" style="color: var(--theme-color)"></i>
+        </a>`;
+    });
+
+    navContainer.innerHTML = navHtml;
+}
+
+function renderSidebarSocials() {
+    const container = document.getElementById('sidebar-socials');
+    // Changed to use socialLinks directly to ensure we use iconType definitions
+    const links = socialLinks; 
+    
+    if (!container || !links) return;
+
+    let html = '';
+    links.forEach(link => {
+        if (link.visible === false) return;
+        
+        let iconElement = '';
+        if (link.iconType === 'ionicon') {
+            iconElement = `<ion-icon name="${link.icon}" class="w-5 h-5"></ion-icon>`;
+        } else if (link.iconType === 'fontawesome') {
+            // FIX: Use font-size and line-height for alignment instead of w/h
+            iconElement = `<i class="fa-brands ${link.icon} text-xl leading-none"></i>`;
+        } else {
+            // Default fallback to Lucide
+            iconElement = `<i data-lucide="${link.icon}" class="w-5 h-5"></i>`;
+        }
+
+        html += `
+        <a href="${link.url}" target="_blank" class="flex items-center justify-center p-3 text-gray-500 hover:text-white hover:bg-white/10 rounded-full transition-all hover:scale-110" title="${link.platform}">
+            ${iconElement}
+        </a>`;
+    });
+    container.innerHTML = html;
+    
+    // Re-initialize Lucide icons in case any were added
+    if(window.lucide) lucide.createIcons();
+}
+
+// Variable to store the timeout ID
+let titleTypeTimeout = null;
+
+function renderPersonal() {
+    if (!siteConfig || !siteConfig.personal) return;
+
+    const { personal } = siteConfig;
+    
+    // Update Sidebar Avatar & Name
+    const avatarImg = document.getElementById('avatar-ring')?.querySelector('img');
+    if (avatarImg) avatarImg.src = personal.avatar;
+    
+    const sidebarTitle = document.querySelector('#sidebar h1');
+    if (sidebarTitle) sidebarTitle.textContent = personal.name;
+
+    // --- Typewriter Effect ---
+    const titleContainer = document.querySelector('#sidebar .flex.flex-wrap');
+    
+    if (titleContainer && personal.titles && personal.titles.length > 0) {
+        titleContainer.innerHTML = '';
+        const wrapper = document.createElement('div');
+        wrapper.className = 'px-3 py-1.5 rounded bg-white/5 border border-white/10 inline-flex items-center justify-center min-w-[200px] min-h-[32px]';
+        const typeText = document.createElement('span');
+        typeText.className = 'text-[11px] font-mono text-gray-300 whitespace-nowrap';
+        const cursor = document.createElement('span');
+        cursor.textContent = '|';
+        cursor.className = 'ml-1 animate-pulse text-[11px]';
+        cursor.style.color = 'var(--theme-color)';
+        wrapper.appendChild(typeText);
+        wrapper.appendChild(cursor);
+        titleContainer.appendChild(wrapper);
+
+        if (titleTypeTimeout) clearTimeout(titleTypeTimeout);
+
+        let loopNum = 0;
+        let isDeleting = false;
+        let charIndex = 0;
+        let typeSpeed = 100;
+
+        function type() {
+            const i = loopNum % personal.titles.length;
+            const fullTxtArray = Array.from(personal.titles[i]);
+
+            if (isDeleting) {
+                charIndex--;
+                typeSpeed = 50; 
+            } else {
+                charIndex++;
+                typeSpeed = 100; 
+            }
+
+            typeText.textContent = fullTxtArray.slice(0, charIndex).join('');
+
+            if (!isDeleting && charIndex === fullTxtArray.length) {
+                typeSpeed = 2000; 
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                loopNum++;
+                typeSpeed = 500; 
+            }
+
+            titleTypeTimeout = setTimeout(type, typeSpeed);
+        }
+        type();
+    }
+    
+    // Update Hero Section
+    if (personal.about) {
+        const heroTitle = document.getElementById('hero-title');
+        const heroDesc = document.getElementById('hero-desc');
+        if (heroTitle) heroTitle.innerHTML = personal.about.greeting;
+        if (heroDesc) heroDesc.innerHTML = personal.about.description;
+    }
+
+    // Update Hero Buttons - REDUCED GLOW HERE
+    if (siteConfig.overview_buttons) {
+        const btnContainer = document.getElementById('hero-buttons');
+        if (btnContainer) {
+            let btnsHtml = '';
+            siteConfig.overview_buttons.forEach(btn => {
+                if (btn.visible === false) return;
+                
+                if (btn.style === 'primary') {
+                    // Reduced shadow from 30px to 10px
+                    btnsHtml += `<a href="${btn.href}" id="cta-primary" class="px-8 py-4 text-black font-black uppercase tracking-widest text-sm rounded transition-all duration-300 hover:scale-105 hover:-translate-y-1" style="background-color: var(--theme-color); box-shadow: 0 0 10px var(--theme-color);">${btn.label}</a>`;
+                } else {
+                    btnsHtml += `<a href="${btn.href}" class="px-8 py-4 border-2 border-white/20 text-white font-bold uppercase tracking-widest text-sm rounded hover:bg-white/10 hover:border-white transition-colors backdrop-blur-sm">${btn.label}</a>`;
+                }
+            });
+            btnContainer.innerHTML = btnsHtml;
+        }
+    }
+}
+
+function renderFooter() {
+    const footerEl = document.getElementById('main-footer');
+    if (!footerEl || !footerConfig || !footerConfig.enabled) {
+        if(footerEl) footerEl.style.display = 'none';
+        return;
+    }
+
+    let html = '';
+    if (footerConfig.text) {
+        html += `<p>${footerConfig.text}</p>`;
+    }
+    if (footerConfig.copyright && footerConfig.copyright.enabled) {
+        html += `<p class="mt-2">${footerConfig.copyright.text}</p>`;
+    }
+    
+    footerEl.innerHTML = html;
+}
+
+// ==================== HELPER FUNCTIONS ====================
+function capitalizeCategory(category) {
+    return category.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+}
+
+function getHoverIcon(iconType) {
+    const iconMap = {
+        'unity': 'gamepad-2', 'unreal': 'gamepad-2', 'web': 'globe', 'django': 'server',
+        'python': 'terminal', 'cpp': 'code', 'csharp': 'code', 'android': 'smartphone',
+        'design': 'palette', 'music': 'music', 'default': 'eye'
+    };
+    return iconMap[iconType] || iconMap['default'];
+}
+
+function renderGames() {
+    const grid = document.getElementById('games-grid');
+    if (!grid) return;
+
+    const highlightedGames = gamesShowcase.highlighted ? gamesShowcase.highlighted.filter(g => g.visible !== false) : [];
+
+    if (highlightedGames.length === 0) return;
+
+    let html = '';
+    // Reduced text shadow here
+    highlightedGames.forEach((game, idx) => {
+        // CHANGED: Use special classes only on desktop (md:), default to aspect-video for mobile
+        const sizeClass = idx === 0 ? 'aspect-video md:col-span-2 md:aspect-[21/9]' : 'aspect-video';
+        
+        html += `<a href="${game.link}" target="_blank" class="game-card group relative ${sizeClass} bg-black/80 border border-white/10 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl">
+            <div class="game-border absolute inset-0 border-2 border-transparent transition-colors duration-300 rounded-xl z-20 pointer-events-none"></div>
+            <div class="game-bg absolute inset-0 bg-cover bg-center opacity-60 transition-all duration-700" style="background-image: url(${game.image})"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
+            <div class="absolute bottom-0 left-0 p-6 z-10">
+                <h3 class="text-2xl md:text-4xl font-black uppercase italic text-white mb-2 drop-shadow-md">${game.title}</h3>
+                <div class="flex items-center gap-2 font-mono text-sm uppercase tracking-widest transition-colors duration-300" style="color: var(--theme-color); text-shadow: 0 0 5px var(--theme-color)">
+                    <i data-lucide="gamepad-2" class="w-4 h-4"></i> Click to Play
+                </div>
+            </div>
+        </a>`;
+    });
+    grid.innerHTML = html;
+}
+
+function renderPortfolio(filter) {
+    filter = filter || 'all';
+    let items = portfolioItems;
+
+    if (filter === 'game') items = items.filter(i => i.category.includes('game'));
+    else if (filter === 'web') items = items.filter(i => i.category.includes('web'));
+    else if (filter === 'android') items = items.filter(i => i.category.includes('mobile'));
+    else if (filter === 'windows') items = items.filter(i => i.category.includes('windows'));
+    else if (filter === 'other') items = items.filter(i => i.category.includes('other'));
+    else if (filter === 'highlighted') items = items.filter(i => i.highlighted === true);
+
+    const grid = document.getElementById('portfolio-grid');
+    if (!grid) return;
+
+    let html = '';
+    items.forEach(item => {
+        const iconName = getHoverIcon(item.iconType);
+        const targetAttr = (item.opennewtab !== false) ? 'target="_blank" rel="noopener noreferrer"' : '';
+
+        let tagsHtml = '';
+        if (item.tags && item.tags.length > 0) {
+            tagsHtml = item.tags.slice(0, 3).map((tag, index) => {
+                let styleAttr = '';
+                let tagClass = "bg-black/90 text-white border-white/10"; // Darker tag bg
+                
+                if (index === 2) {
+                    tagClass = "text-black font-bold border-transparent";
+                    // Reduced shadow from 10px to 5px
+                    styleAttr = `style="background-color: var(--theme-color); box-shadow: 0 0 5px var(--theme-color);"`;
+                }
+
+                return `<span class="px-2 py-1 text-[8px] uppercase font-bold border shadow-[0_0_5px_black] backdrop-blur-sm ${tagClass}" ${styleAttr}>${tag}</span>`;
+            }).join('');
+        }
+
+        // Updated Card Background to be darker: bg-[#050505]/90
+        html += `<a href="${item.link}" ${targetAttr} class="project-card group relative block bg-[#050505]/90 backdrop-blur-md border border-white/10 rounded-lg h-full flex flex-col overflow-hidden transition-all duration-300">
+            <div class="card-border absolute inset-0 border border-transparent transition-colors duration-300 pointer-events-none rounded-lg z-20"></div>
+            <div class="aspect-video w-full bg-[#050505] relative overflow-hidden border-b border-white/5">
+                <img src="${item.image}" loading="lazy" alt="${item.title}" class="card-image w-full h-full object-cover transition-transform duration-700 opacity-80" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                <div class="w-full h-full items-center justify-center bg-[#0a0a0a] relative hidden" style="color: var(--theme-color)">
+                    <i data-lucide="gamepad-2" class="w-10 h-10 opacity-50 relative z-10 animate-pulse"></i>
+                </div>
+                <div class="absolute top-2 right-2 flex flex-col items-end gap-1">${tagsHtml}</div>
+            </div>
+            <div class="p-5 flex-grow flex flex-col relative z-10">
+                <h4 class="card-title text-lg font-bold text-white mb-2 leading-tight transition-colors">${item.title}</h4>
+                <p class="text-gray-400 text-xs mb-4 line-clamp-2 flex-grow font-mono leading-relaxed group-hover:text-gray-300">${item.description}</p>
+                <div class="flex items-center justify-between mt-auto pt-4 border-t border-white/5 font-bold text-[10px] uppercase tracking-wider transition-colors duration-300" style="color: var(--theme-color)">
+                    <span class="flex items-center gap-2">
+                        <i data-lucide="${iconName}" class="w-3 h-3"></i>
+                        ${capitalizeCategory(item.category)}
+                    </span>
+                    <i data-lucide="external-link" class="w-3 h-3 group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </div>
+        </a>`;
+    });
+    grid.innerHTML = html;
+    
+    if(window.lucide) lucide.createIcons();
+}
+
+function renderExperience() {
+    const list = document.getElementById('experience-list');
+    if (!list || experience.length === 0) return;
+
+    let html = '';
+    experience.forEach(job => {
+        let positionsHtml = '';
+        job.positions.forEach(pos => {
+            let responsibilitiesHtml = '';
+            if (pos.responsibilities && pos.responsibilities.length > 0) {
+                responsibilitiesHtml = `<ul class="mt-3 space-y-2">`;
+                pos.responsibilities.forEach(r => {
+                    responsibilitiesHtml += `<li class="text-sm text-gray-300 leading-relaxed flex items-start gap-2"><span class="text-[10px] mt-1.5" style="color: var(--theme-color)">▸</span><span>${r}</span></li>`;
+                });
+                responsibilitiesHtml += `</ul>`;
+            }
+
+            // Darker BG: bg-black/70
+            positionsHtml += `<div class="exp-card bg-black/70 backdrop-blur-md p-6 rounded-xl border border-white/10 transition-all duration-300 relative overflow-hidden mb-4">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-3">
+                    <h4 class="exp-title text-xl font-bold text-white transition-colors">${pos.title}</h4>
+                    <span class="text-xs font-mono text-gray-400 bg-black/50 px-3 py-1 rounded border border-white/10 mt-2 md:mt-0">${pos.startDate} — ${pos.endDate}</span>
+                </div>
+                ${responsibilitiesHtml}
+            </div>`;
+        });
+
+        // Reduced Shadow on dot
+        const logoHtml = (job.logo && job.url)
+            ? `<a href="${job.url}" target="_blank" class="shrink-0 p-2 bg-black/70 backdrop-blur-md border border-white/10 rounded-xl hover:scale-105 transition-transform"><img src="${job.logo}" loading="lazy" alt="${job.company} logo" class="w-12 h-12 object-contain"></a>`
+            : '';
+
+        html += `<div class="relative pl-8 group">
+            <div class="absolute -left-[9px] top-2 w-4 h-4 bg-[#050505] border-2 rounded-full group-hover:scale-125 transition-all duration-300" style="border-color: var(--theme-color); background-color: var(--theme-color); box-shadow: 0 0 5px var(--theme-color)"></div>
+            <div class="flex items-center gap-4 mb-4">
+                ${logoHtml}
+                <div>
+                    <h3 class="text-2xl font-bold text-white">${job.company}</h3>
+                    ${job.url ? `<a href="${job.url}" target="_blank" class="text-xs font-mono hover:underline" style="color: var(--theme-color)">Visit Company Website →</a>` : ''}
+                </div>
+            </div>
+            <div class="space-y-4">${positionsHtml}</div>
+        </div>`;
+    });
+    list.innerHTML = html;
+}
+
+function renderEducation() {
+    const grid = document.getElementById('education-grid');
+    if (!grid || education.length === 0) return;
+
+    let html = '';
+    education.forEach(edu => {
+        let degreesHtml = '';
+        if (edu.degrees && edu.degrees.length > 0) {
+            edu.degrees.forEach(degree => {
+                degreesHtml += `<div class="mb-3 last:mb-0">
+                    <h5 class="text-sm font-bold text-white">${degree.title}</h5>
+                    <span class="text-xs text-gray-500 font-mono">${degree.startDate} — ${degree.endDate}</span>
+                    ${degree.description ? `<p class="text-xs text-gray-400 mt-1">${degree.description}</p>` : ''}
+                </div>`;
+            });
+        }
+
+        const logoHtml = edu.logo
+            ? `<img src="${edu.logo}" loading="lazy" alt="${edu.institution} logo" class="w-10 h-10 object-contain">`
+            : `<i data-lucide="graduation-cap" class="w-8 h-8"></i>`;
+
+        const clickableClass = edu.url ? 'cursor-pointer hover:scale-[1.02]' : '';
+        const onClickAttr = edu.url ? `onclick="window.open('${edu.url}', '_blank')"` : '';
+
+        // Darker BG: bg-black/70
+        html += `<div class="edu-card group p-6 bg-black/70 backdrop-blur-md border border-white/10 rounded-2xl transition-all duration-300 ${clickableClass}" ${onClickAttr}>
+            <div class="flex items-start gap-4 mb-4">
+                <div class="edu-icon transition-colors duration-300 p-2 bg-white/5 rounded-lg" style="color: var(--theme-color)">
+                    ${logoHtml}
+                </div>
+                <div class="flex-grow">
+                    <h4 class="edu-title text-lg font-bold text-white leading-tight mb-1 transition-colors">${edu.institution}</h4>
+                    ${edu.url ? `<span class="text-xs font-mono opacity-50 group-hover:opacity-100 transition-opacity" style="color: var(--theme-color)">Click to visit →</span>` : ''}
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-4">${degreesHtml}</div>
+        </div>`;
+    });
+    grid.innerHTML = html;
+}
+
+function renderMore() {
+    if (!siteConfig) return;
+
+    // Spotify
+    const spotifyEmbed = document.getElementById('spotify-embed');
+    if (spotifyEmbed && siteConfig.external && siteConfig.external.spotifyArtistId) {
+        spotifyEmbed.src = 'https://open.spotify.com/embed/artist/' + siteConfig.external.spotifyArtistId + '?utm_source=generator&theme=0';
+    }
+
+    // Steam
+    const steamStats = document.getElementById('steam-stats');
+    const steamProfileLink = document.getElementById('steam-profile-link');
+    if (siteConfig.external && siteConfig.external.steamUsername) {
+        if (steamProfileLink) steamProfileLink.href = 'https://steamcommunity.com/id/' + siteConfig.external.steamUsername;
+        if (steamStats) steamStats.src = 'https://steam-stat.vercel.app/api?profileName=' + siteConfig.external.steamUsername;
+    }
+
+    // GitHub
+    if (siteConfig.external && siteConfig.external.githubUsername) {
+        const ghUser = siteConfig.external.githubUsername;
+        const ghStats = document.getElementById('github-stats');
+        if (ghStats) ghStats.src = `https://github-readme-stats.vercel.app/api?username=${ghUser}&show_icons=true&theme=github_dark&hide_border=true&bg_color=0d1117`;
+        
+        const ghStreak = document.getElementById('github-streak');
+        if (ghStreak) ghStreak.src = `https://github-readme-streak-stats.herokuapp.com/?user=${ghUser}&theme=github-dark-blue&hide_border=true&background=0d1117`;
+    }
+
+    // Instagram
+    if (instagram) {
+        const instaAvatar = document.getElementById('insta-avatar');
+        const instaUsername = document.getElementById('insta-username');
+        const instaGrid = document.getElementById('insta-grid');
+
+        if (instaAvatar && instagram.profileImage) instaAvatar.src = instagram.profileImage;
+        if (instaUsername && instagram.username) {
+            instaUsername.href = instagram.profileUrl;
+            instaUsername.textContent = '@' + instagram.username;
+        }
+
+        if (instaGrid && instagram.posts && instagram.posts.length > 0) {
+            let instaHtml = '';
+            instagram.posts.forEach(post => {
+                instaHtml += `<a href="${post.link}" target="_blank" class="block aspect-square overflow-hidden rounded-lg group">
+                    <img src="${post.image}" loading="lazy" alt="${post.alt}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                </a>`;
+            });
+            instaGrid.innerHTML = instaHtml;
+        }
+    }
+}
+
+// ==================== THEME & UI LOGIC ====================
+
+function updateTheme(section) {
+    currentSection = section;
+    const targetHex = (themes[section] && themes[section].hex) ? themes[section].hex : '#bc13fe';
+    
+    // Parse new target and start transition
+    const target = hexToRgb(targetHex);
+    if(target) {
+        targetThemeRgb = target;
+        if(!isTransitioningColor) {
+            isTransitioningColor = true;
+            processColorTransition();
+        }
+    }
+
+    // Update Nav Active States
+    document.querySelectorAll('.nav-item').forEach(item => {
+        const isActive = item.dataset.section === section;
+        const chevron = item.querySelector('.nav-chevron');
+        const icon = item.querySelector('.nav-icon');
+
+        if (isActive) {
+            item.classList.add('active', 'text-white');
+            item.classList.remove('text-gray-500');
+            if (chevron) chevron.classList.remove('hidden');
+            // Allow CSS var to handle color transition naturally via stylesheet
+            if (icon) icon.style.color = ''; 
+        } else {
+            item.classList.remove('active', 'text-white');
+            item.classList.add('text-gray-500');
+            if (chevron) chevron.classList.add('hidden');
+            if (icon) icon.style.color = ''; 
+        }
+    });
+
+    updateFilterStyles();
+}
+
+function updateDynamicColors() {
+    const elementsToColor = [
+        { selector: '#status-badge', property: 'borderColor', value: themeColor + '60' },
+        { selector: '#hero-accent', property: 'color', value: themeColor },
+        { selector: '#avatar-ring', property: 'borderColor', value: themeColor },
+        { selector: '#cta-primary', property: 'backgroundColor', value: themeColor },
+        { selector: '[data-lucide="map-pin"]', property: 'color', value: themeColor },
+        { selector: '#sidebar-glow', property: 'background', value: `linear-gradient(to right, transparent, ${themeColor}, transparent)` }
+    ];
+
+    elementsToColor.forEach(el => {
+        const domEl = document.querySelector(el.selector);
+        if (domEl) domEl.style[el.property] = el.value;
+    });
+
+    // REDUCED GLOW LOGIC
+    const heroAccent = document.getElementById('hero-accent');
+    if (heroAccent) {
+        // Significantly reduced shadow for cleaner look, especially on mobile
+        heroAccent.style.textShadow = `0 0 8px ${themeColor}`;
+    }
+    
+    // Reduce avatar glow
+    const avatarRing = document.getElementById('avatar-ring');
+    if (avatarRing) {
+        avatarRing.style.boxShadow = `0 0 10px ${themeColor}`; // Reduced from 20px
+    }
+
+    document.querySelectorAll('.nav-item.active .nav-icon').forEach(icon => {
+        icon.style.color = themeColor;
+    });
+}
+
+function updateFilterStyles() {
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        const isActive = btn.dataset.filter === currentFilter;
+        if (isActive) {
+            btn.style.backgroundColor = themeColor;
+            btn.style.borderColor = themeColor;
+            btn.style.color = 'black';
+        } else {
+            btn.style.backgroundColor = 'transparent';
+            btn.style.borderColor = 'rgba(255,255,255,0.2)';
+            btn.style.color = '#9ca3af';
+        }
+    });
+}
+
+function setupCVLocalization() {
+    const cvLinks = [document.getElementById('cv-download-link'), document.getElementById('cv-download-link-exp')];
+    if (!siteConfig || !siteConfig.cv) return;
+
+    const userInTurkey = () => {
+        const lang = (navigator.language || '').toLowerCase();
+        const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
+        return lang.startsWith('tr') || tz.includes('istanbul');
+    };
+
+    const cvUrl = userInTurkey() ? siteConfig.cv.turkey : siteConfig.cv.default;
+
+    cvLinks.forEach(link => {
+        if (link) link.href = cvUrl;
+    });
+}
+
+function initEventListeners() {
+    let scrollThrottle;
+    window.addEventListener('scroll', function() {
+        if (!scrollThrottle) {
+            scrollThrottle = setTimeout(function() {
+                scrollThrottle = null;
+                const sections = navigation.map(n => n.section);
+                const scrollPos = window.scrollY + window.innerHeight * 0.3;
+                
+                for (const section of sections) {
+                    const el = document.getElementById(section);
+                    if (el && scrollPos >= el.offsetTop && scrollPos < el.offsetTop + el.offsetHeight) {
+                        if (currentSection !== section) updateTheme(section);
+                        break;
+                    }
+                }
+            }, 50);
+        }
+    });
+
+    // Find this block inside the initEventListeners() function
+    document.getElementById('main-nav').addEventListener('click', function(e) {
+        const link = e.target.closest('.nav-item');
+        if (!link) return;
+        e.preventDefault();
+        const section = link.dataset.section;
+        const el = document.getElementById(section);
+        
+        // --- MODIFIED SECTION START ---
+        if (el) {
+            const offset = 40; // Adjust this value (in pixels) to change the gap size
+            const elementPosition = el.getBoundingClientRect().top + window.scrollY;
+            const offsetPosition = elementPosition - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+        // --- MODIFIED SECTION END ---
+        
+        document.getElementById('sidebar').classList.add('-translate-x-full');
+        document.getElementById('menu-icon').classList.remove('hidden');
+        document.getElementById('close-icon').classList.add('hidden');
+    });
+    
+    document.getElementById('mobile-toggle').addEventListener('click', function() {
+        const sidebar = document.getElementById('sidebar');
+        const isOpen = !sidebar.classList.contains('-translate-x-full');
+        if (isOpen) {
+            sidebar.classList.add('-translate-x-full');
+            document.getElementById('menu-icon').classList.remove('hidden');
+            document.getElementById('close-icon').classList.add('hidden');
+        } else {
+            sidebar.classList.remove('-translate-x-full');
+            document.getElementById('menu-icon').classList.add('hidden');
+            document.getElementById('close-icon').classList.remove('hidden');
+        }
+    });
+
+    document.querySelectorAll('.filter-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            currentFilter = btn.dataset.filter;
+            updateFilterStyles();
+            renderPortfolio(currentFilter);
+        });
+    });
+}
+
+// ==================== INIT ====================
+async function init() {
+    await loadData();
+    
+    renderNavigation();
+    renderPersonal();
+    renderSidebarSocials();
+    renderGames();
+    renderPortfolio('highlighted');
+    renderExperience();
+    renderEducation();
+    renderMore();
+    renderFooter();
+    
+    setupCVLocalization();
+    initEventListeners();
+    
+    lucide.createIcons();
+    initBackground();
+    
+    const hash = window.location.hash.substring(1); // Remove '#'
+    const defaultNav = navigation.find(n => n.default);
+    let startSection = (hash && document.getElementById(hash)) ? hash : (defaultNav ? defaultNav.section : 'portfolio');
+    
+    updateTheme(startSection);
+    updateFilterStyles();
+
+    setTimeout(() => {
+        const el = document.getElementById(startSection);
+        if(el) {
+            const offset = 40; // Ensure this matches the gap size you set in the click listener
+            const elementPosition = el.getBoundingClientRect().top + window.scrollY;
+            const offsetPosition = elementPosition - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth' 
+            });
+        }
+    }, 100);
+}
+
+document.addEventListener('DOMContentLoaded', init);

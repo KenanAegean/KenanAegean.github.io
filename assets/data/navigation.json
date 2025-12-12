@@ -1,31 +1,57 @@
 [
   {
     "id": 1,
-    "label": "About",
-    "page": "about",
+    "label": "Overview",
+    "section": "about",
+    "link": "#about",
+    "icon": "terminal",
     "order": 1,
     "visible": true
   },
   {
     "id": 2,
-    "label": "Resume",
-    "page": "resume",
+    "label": "Arcade",
+    "section": "games",
+    "link": "#games",
+    "icon": "gamepad-2",
     "order": 2,
     "visible": true
   },
   {
     "id": 3,
-    "label": "Portfolio",
-    "page": "portfolio",
+    "label": "Inventory",
+    "section": "portfolio",
+    "link": "#portfolio",
+    "icon": "layers",
     "order": 3,
     "default": true,
     "visible": true
   },
   {
     "id": 4,
-    "label": "More",
-    "page": "more",
+    "label": "Career Log",
+    "section": "experience",
+    "link": "#experience",
+    "icon": "briefcase",
     "order": 4,
+    "visible": true
+  },
+  {
+    "id": 5,
+    "label": "Stats",
+    "section": "education",
+    "link": "#education",
+    "icon": "graduation-cap",
+    "order": 5,
+    "visible": true
+  },
+  {
+    "id": 6,
+    "label": "More",
+    "section": "more",
+    "link": "#more",
+    "icon": "sparkles",
+    "order": 6,
     "visible": true
   }
 ]
