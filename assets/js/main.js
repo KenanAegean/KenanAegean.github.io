@@ -329,11 +329,15 @@ function initBackground() {
             let offsetY = 0;
 
             if (mouse.x !== null && mouse.y !== null) {
-                const dx = dot.baseX - mouse.x;
-                const dy = dot.baseY - mouse.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                if (distance < mouse.radius) {
-                    const force = Math.pow((mouse.radius - distance) / mouse.radius, 1.5);
+            const dx = dot.baseX - mouse.x;
+            const dy = dot.baseY - mouse.y;
+            const distSq = dx * dx + dy * dy; // Faster multiplication
+            const radSq = mouse.radius * mouse.radius;
+
+            // Only calculate sqrt if the dot is actually close enough
+            if (distSq < radSq) {
+                const distance = Math.sqrt(distSq);
+                const force = Math.pow((mouse.radius - distance) / mouse.radius, 1.5);
                     const angle = Math.atan2(dy, dx);
                     offsetX = Math.cos(angle) * force * 12;
                     offsetY = Math.sin(angle) * force * 12;
@@ -360,8 +364,11 @@ function initBackground() {
     function draw3DShapes() {
         ctx.strokeStyle = themeColor;
         ctx.lineWidth = 1.5;
-        ctx.shadowColor = themeColor;
-        ctx.shadowBlur = 10;
+
+        // COMMENT OUT or REMOVE these lines to disable shadows
+        // ctx.shadowColor = themeColor;
+        // ctx.shadowBlur = 10;
+        
         ctx.globalAlpha = 0.55;
 
         shapes.forEach(function(shape) {
@@ -400,14 +407,31 @@ function initBackground() {
         ctx.globalAlpha = 1;
     }
 
-    function animate() {
-        time += 0.016;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawGrid();
-        draw3DShapes();
+    let lastFrameTime = 0;
+    const fpsInterval = 1000 / 30; // Target 30 FPS
+
+    function animate(currentTime) {
+        // STOP if tab is not visible
+        if (document.hidden) {
+            requestAnimationFrame(animate); // Keep checking until visible again
+            return; // Skip drawing and math
+        }
+
         requestAnimationFrame(animate);
+
+        const elapsed = currentTime - lastFrameTime;
+
+        if (elapsed > fpsInterval) {
+            lastFrameTime = currentTime - (elapsed % fpsInterval);
+            
+            // Your existing drawing code goes here
+            time += 0.016; 
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawGrid();
+            draw3DShapes();
+        }
     }
-    animate();
+    requestAnimationFrame(animate);
 }
 
 // ==================== RENDER CONTENT SECTIONS ====================
