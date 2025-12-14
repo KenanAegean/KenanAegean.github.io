@@ -794,6 +794,49 @@ function renderEducation() {
     grid.innerHTML = html;
 }
 
+/**
+ * Fetches the SVG, checks for error text inside it, and sets the image.
+ * Falls back to the snake animation if an error is found.
+ */
+async function loadSvgWidget(url, imgId, fallbackUrl) {
+    const imgElement = document.getElementById(imgId);
+    if (!imgElement) return;
+
+    try {
+        // 1. Fetch the image data manually
+        const response = await fetch(url);
+        
+        // 2. If the server is completely down (404/500)
+        if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
+        
+        // 3. Get the SVG text content
+        const svgText = await response.text();
+        
+        // 4. CHECK FOR ERROR KEYWORDS inside the SVG text
+        // These are the specific error phrases used by readme-stats and streak-stats
+        if (svgText.includes("Something went wrong") || 
+            svgText.includes("could not resolve") || 
+            svgText.includes("Failed") || 
+            svgText.includes("banned")) {
+            throw new Error("SVG contains visible error message");
+        }
+
+        // 5. If safe, create a Blob URL and show it
+        // This avoids fetching the URL a second time
+        const blob = new Blob([svgText], {type: 'image/svg+xml'});
+        imgElement.src = URL.createObjectURL(blob);
+        imgElement.style.opacity = "1"; // Ensure it's fully visible
+
+    } catch (error) {
+        console.warn(`GitHub Widget (${imgId}) failed:`, error.message);
+        
+        // 6. Apply the Fallback Image
+        imgElement.src = fallbackUrl;
+        imgElement.style.opacity = "0.8"; // Optional: fade fallback slightly
+        imgElement.style.borderRadius = "10px"; // Optional styling
+    }
+}
+
 function renderMore() {
     if (!siteConfig) return;
 
@@ -811,14 +854,21 @@ function renderMore() {
         if (steamStats) steamStats.src = 'https://steam-stat.vercel.app/api?profileName=' + siteConfig.external.steamUsername;
     }
 
-    // GitHub
+    // GitHub Section
     if (siteConfig.external && siteConfig.external.githubUsername) {
         const ghUser = siteConfig.external.githubUsername;
-        const ghStats = document.getElementById('github-stats');
-        if (ghStats) ghStats.src = `https://github-readme-stats.vercel.app/api?username=${ghUser}&show_icons=true&theme=github_dark&hide_border=true&bg_color=0d1117`;
         
-        const ghStreak = document.getElementById('github-streak');
-        if (ghStreak) ghStreak.src = `https://github-readme-streak-stats.herokuapp.com/?user=${ghUser}&theme=github-dark-blue&hide_border=true&background=0d1117`;
+        // Path to your snake animation fallback
+        const fallbackImageStats = './assets/images/fallback/streak.svg';
+        const fallbackImageStreak = './assets/images/fallback/stats.svg';  
+
+        // URLs for the widgets
+        const statsUrl = `https://github-readme-stats.vercel.app/api?username=${ghUser}&show_icons=true&theme=github_dark&hide_border=true&bg_color=0d1117`;
+        const streakUrl = `https://github-readme-streak-stats.herokuapp.com/?user=${ghUser}&theme=github-dark-blue&hide_border=true&background=0d1117`;
+
+        // Execute the safe loader
+        loadSvgWidget(statsUrl, 'github-stats', fallbackImageStats);
+        loadSvgWidget(streakUrl, 'github-streak', fallbackImageStreak);
     }
 
     // Instagram
