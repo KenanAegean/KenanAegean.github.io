@@ -710,10 +710,15 @@ function renderExperience() {
     const list = document.getElementById('experience-list');
     if (!list || experience.length === 0) return;
 
-    let html = '';
-    experience.forEach(job => {
+    // Clear previous classes to prevent conflicts
+    list.className = '';
+
+    // --- CARD GENERATOR HELPER ---
+    // Creates a flexible height card. 
+    // We removed 'h-full' so it shrinks to fit content exactly.
+    const createCard = (job) => {
         let positionsHtml = '';
-        job.positions.forEach(pos => {
+        job.positions.forEach((pos, index) => {
             let responsibilitiesHtml = '';
             if (pos.responsibilities && pos.responsibilities.length > 0) {
                 responsibilitiesHtml = `<ul class="mt-3 space-y-2">`;
@@ -722,35 +727,97 @@ function renderExperience() {
                 });
                 responsibilitiesHtml += `</ul>`;
             }
+            
+            // Separator between multiple positions
+            const separator = index > 0 ? '<div class="h-px bg-white/10 my-4"></div>' : '';
 
-            // Darker BG: bg-black/70
-            positionsHtml += `<div class="exp-card bg-black/70 backdrop-blur-md p-6 rounded-xl border border-white/10 transition-all duration-300 relative overflow-hidden mb-4">
-                <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-3">
-                    <h4 class="exp-title text-xl font-bold text-white transition-colors">${pos.title}</h4>
-                    <span class="text-xs font-mono text-gray-400 bg-black/50 px-3 py-1 rounded border border-white/10 mt-2 md:mt-0">${pos.startDate} — ${pos.endDate}</span>
+            positionsHtml += `${separator}
+            <div class="relative">
+                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-2">
+                    <h4 class="text-lg font-bold text-white transition-colors group-hover:text-[var(--theme-color)]">${pos.title}</h4>
+                    <span class="text-xs font-mono text-gray-400 bg-white/5 px-2 py-1 rounded border border-white/5 whitespace-nowrap mt-1 sm:mt-0">${pos.startDate} — ${pos.endDate}</span>
                 </div>
                 ${responsibilitiesHtml}
             </div>`;
         });
 
-        // Reduced Shadow on dot
+        // Company Logo Logic
         const logoHtml = (job.logo && job.url)
-            ? `<a href="${job.url}" target="_blank" class="shrink-0 p-2 bg-black/70 backdrop-blur-md border border-white/10 rounded-xl hover:scale-105 transition-transform"><img src="${job.logo}" loading="lazy" alt="${job.company} logo" class="w-12 h-12 object-contain"></a>`
+            ? `<a href="${job.url}" target="_blank" class="shrink-0 p-2 bg-white/5 rounded-xl border border-white/5 hover:border-[var(--theme-color)] transition-colors"><img src="${job.logo}" loading="lazy" alt="${job.company} logo" class="w-10 h-10 object-contain"></a>`
             : '';
 
-        html += `<div class="relative pl-8 group">
-            <div class="absolute -left-[9px] top-2 w-4 h-4 bg-[#050505] border-2 rounded-full group-hover:scale-125 transition-all duration-300" style="border-color: var(--theme-color); background-color: var(--theme-color); box-shadow: 0 0 5px var(--theme-color)"></div>
-            <div class="flex items-center gap-4 mb-4">
+        // Note: Removed 'h-full' class to ensure height fits content
+        return `<div class="group bg-black/70 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:border-[var(--theme-color)] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg flex flex-col w-full">
+            <div class="flex items-center gap-4 mb-6 border-b border-white/10 pb-4">
                 ${logoHtml}
                 <div>
-                    <h3 class="text-2xl font-bold text-white">${job.company}</h3>
-                    ${job.url ? `<a href="${job.url}" target="_blank" class="text-xs font-mono hover:underline" style="color: var(--theme-color)">Visit Company Website →</a>` : ''}
+                    <h3 class="text-2xl font-bold text-white leading-none mb-1">${job.company}</h3>
+                    ${job.url ? `<a href="${job.url}" target="_blank" class="text-xs font-mono opacity-60 hover:opacity-100 hover:text-[var(--theme-color)] transition-all flex items-center gap-1">Visit Website <i data-lucide="external-link" class="w-3 h-3"></i></a>` : ''}
                 </div>
             </div>
-            <div class="space-y-4">${positionsHtml}</div>
+            <div class="flex-grow">
+                ${positionsHtml}
+            </div>
         </div>`;
+    };
+
+    // --- MOBILE LAYOUT (Linear) ---
+    // Simple stack for mobile so chronological order is strictly preserved (1, 2, 3...)
+    const mobileHtml = `
+        <div class="flex flex-col gap-6 md:hidden">
+            ${experience.map(job => createCard(job)).join('')}
+        </div>
+    `;
+
+    // --- DESKTOP LAYOUT (Smart Masonry) ---
+    // Calculates approximate height of each card (based on bullet points)
+    // and distributes them to the shorter column to keep layout balanced.
+    const leftItems = [];
+    const rightItems = [];
+    let leftHeight = 0;
+    let rightHeight = 0;
+
+    experience.forEach(job => {
+        // Estimate height: base padding (100) + title (50) + bullets (50 each)
+        // This is a rough heuristic to balance the columns visually
+        let jobHeight = 100; 
+        job.positions.forEach(pos => {
+            jobHeight += 50; // Title row
+            if (pos.responsibilities) {
+                jobHeight += pos.responsibilities.length * 50; // ~50px per bullet point including margin
+            }
+        });
+
+        // Add to the shorter column to balance height
+        // NOTE: We favor left column slightly if equal (<=)
+        if (leftHeight <= rightHeight) {
+            leftItems.push(job);
+            leftHeight += jobHeight;
+        } else {
+            rightItems.push(job);
+            rightHeight += jobHeight;
+        }
     });
-    list.innerHTML = html;
+
+    const leftColHtml = leftItems.map(job => createCard(job)).join('<div class="h-6"></div>'); // Manual gap or flex gap
+    const rightColHtml = rightItems.map(job => createCard(job)).join('<div class="h-6"></div>');
+
+    // Using 'items-start' ensures columns don't stretch to match each other's height
+    const desktopHtml = `
+        <div class="hidden md:grid grid-cols-2 gap-6 items-start">
+            <div class="flex flex-col gap-6">
+                ${leftItems.map(job => createCard(job)).join('')}
+            </div>
+            <div class="flex flex-col gap-6">
+                ${rightItems.map(job => createCard(job)).join('')}
+            </div>
+        </div>
+    `;
+
+    list.innerHTML = mobileHtml + desktopHtml;
+    
+    // Re-initialize Lucide icons for the newly added elements
+    if(window.lucide) lucide.createIcons();
 }
 
 function renderEducation() {
