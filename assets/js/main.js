@@ -862,45 +862,82 @@ function renderEducation() {
 }
 
 /**
- * Fetches the SVG, checks for error text inside it, and sets the image.
- * Falls back to the snake animation if an error is found.
+ * Robustly fetches SVG widgets with fallback, timeout, and content validation.
  */
 async function loadSvgWidget(url, imgId, fallbackUrl) {
     const imgElement = document.getElementById(imgId);
     if (!imgElement) return;
 
+    // 1. Show Fallback IMMEDIATELY
+    // This ensures the user sees the static image while the dynamic one loads.
+    imgElement.src = fallbackUrl;
+    imgElement.style.opacity = "0.8"; // Indicate loading/fallback state
+    imgElement.style.borderRadius = "10px";
+
     try {
-        // 1. Fetch the image data manually
-        const response = await fetch(url);
+        // 2. Setup a timeout (e.g., 5 seconds)
+        // If the external API is slow or hanging, we abort to save resources.
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+        // 3. Fetch with specific headers
+        const response = await fetch(url, { 
+            signal: controller.signal,
+            cache: 'no-cache',      // Ensure we don't serve cached error states
+            headers: { 'Accept': 'image/svg+xml' } 
+        });
         
-        // 2. If the server is completely down (404/500)
+        clearTimeout(timeoutId); // Clear timeout if fetch completes
+
+        // 4. Check HTTP Status
         if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
         
-        // 3. Get the SVG text content
+        // 5. Get text content to validate
         const svgText = await response.text();
         
-        // 4. CHECK FOR ERROR KEYWORDS inside the SVG text
-        // These are the specific error phrases used by readme-stats and streak-stats
-        if (svgText.includes("Something went wrong") || 
-            svgText.includes("could not resolve") || 
-            svgText.includes("Failed") || 
-            svgText.includes("banned")) {
+        // 6. VALIDATION: Check content integrity
+        // Must start with SVG tag (ignoring whitespace)
+        if (!svgText.trim().startsWith('<svg')) {
+            throw new Error("Response is not a valid SVG");
+        }
+
+        // Check for specific error phrases often returned by stats widgets
+        // These widgets often return a 200 OK but with an SVG containing text like "Something went wrong"
+        const errorKeywords = [
+            "Something went wrong",
+            "could not resolve",
+            "Failed to fetch",
+            "banned",
+            "rate limit",
+            "bad request",
+            "internal server error"
+        ];
+        
+        // Case-insensitive check
+        const lowerSvg = svgText.toLowerCase();
+        if (errorKeywords.some(key => lowerSvg.includes(key.toLowerCase()))) {
             throw new Error("SVG contains visible error message");
         }
 
-        // 5. If safe, create a Blob URL and show it
-        // This avoids fetching the URL a second time
+        // 7. Success: Render the dynamic SVG
         const blob = new Blob([svgText], {type: 'image/svg+xml'});
-        imgElement.src = URL.createObjectURL(blob);
-        imgElement.style.opacity = "1"; // Ensure it's fully visible
+        const blobUrl = URL.createObjectURL(blob);
+        
+        // Clean up previous blob if exists (optional but good for memory)
+        if (imgElement.dataset.blobUrl) {
+            URL.revokeObjectURL(imgElement.dataset.blobUrl);
+        }
+        
+        imgElement.onload = () => {
+            imgElement.style.opacity = "1"; // Fade in full opacity
+        };
+        
+        imgElement.src = blobUrl;
+        imgElement.dataset.blobUrl = blobUrl; // Store reference for cleanup
 
     } catch (error) {
-        console.warn(`GitHub Widget (${imgId}) failed:`, error.message);
-        
-        // 6. Apply the Fallback Image
-        imgElement.src = fallbackUrl;
-        imgElement.style.opacity = "0.8"; // Optional: fade fallback slightly
-        imgElement.style.borderRadius = "10px"; // Optional styling
+        console.warn(`GitHub Widget (${imgId}) kept fallback. Reason:`, error.message);
+        // Fallback is already displayed from step 1, so no action needed.
     }
 }
 
