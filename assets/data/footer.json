@@ -1,5 +1,6 @@
 {
   "enabled": true,
+  "visitCounter": true,
   "text": "SYSTEM REBOOT COMPLETE.",
   "copyright": {
     "enabled": true,

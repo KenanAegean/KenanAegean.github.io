@@ -590,12 +590,24 @@ function renderFooter() {
     }
 
     let html = '';
+
+    
+
     if (footerConfig.text) {
         html += `<p>${footerConfig.text}</p>`;
     }
     if (footerConfig.copyright && footerConfig.copyright.enabled) {
         html += `<p class="mt-2">${footerConfig.copyright.text}</p>`;
     }
+
+    // --- UPDATED: Visit Counter Logic ---
+    if (footerConfig.visitCounter) {
+        // Changed page_id to 'kenanege.com' to track your custom domain
+        html += `<br> <div class="mb-6 flex justify-center">
+            <img src="https://visitor-badge.laobi.icu/badge?page_id=kenanege.com&left_color=black&right_color=bc13fe&left_text=Total Visit:" alt="Total Visit:" style="border-radius: 4px; box-shadow: 0 0 10px rgba(188, 19, 254, 0.3);">
+        </div>`;
+    }
+    // ------------------------------------
     
     footerEl.innerHTML = html;
 }
