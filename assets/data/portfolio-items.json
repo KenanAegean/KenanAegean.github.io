@@ -485,7 +485,7 @@
     "description": "Logo designs, event posters, and UI mockups for various projects.",
     "highlighted": false,
     "image": "./assets/images/Portfolio/design.png",
-    "link": "https://github.com/KenanAegean/graphic-design-projects",
+    "link":"./projects/design-showcase.html",
     "tags": [],
     "iconType": "design",
     "opennewtab": true,
