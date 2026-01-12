@@ -488,7 +488,7 @@
     "link":"./projects/design-showcase.html",
     "tags": [],
     "iconType": "design",
-    "opennewtab": true,
+    "opennewtab": false,
     "visible": true
   },
   {
