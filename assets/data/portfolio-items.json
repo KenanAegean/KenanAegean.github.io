@@ -8,7 +8,7 @@
     "image": "./assets/images/Portfolio/gifs/echo.gif",
     "link": "https://github.com/KenanAegean/Echolocation-System",
     "tags": [
-      "UE 5",
+      "Unreal Engine 5",
       "Gameplay Mechanic"
     ],
     "iconType": "unreal",
@@ -25,7 +25,7 @@
     "image": "./assets/images/Portfolio/gifs/eos.gif",
     "link": "https://kenanege.itch.io/echoes-of-stella",
     "tags": [
-      "UE 5",
+      "Unreal Engine 5",
       "Group Project",
       "🏆 Nominee: Best Animation"
     ],
@@ -43,7 +43,7 @@
     "image": "./assets/images/Portfolio/gifs/kw.gif",
     "link": "https://kenanege.itch.io/killwats-league",
     "tags": [
-      "UE 5",
+      "Unreal Engine 5",
       "Group Project",
       "🏆 Nominee: Best Multiplayer"
     ],
@@ -176,7 +176,7 @@
     "image": "./assets/images/Portfolio/gifs/sue.gif",
     "link": "https://github.com/KenanAegean/Snake-Game-UnrealEngine",
     "tags": [
-      "UE 5",
+      "Unreal Engine 5",
       "Solo Project"
     ],
     "iconType": "unreal",
