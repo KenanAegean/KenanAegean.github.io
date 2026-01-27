@@ -665,6 +665,7 @@ function renderPortfolio(filter) {
     else if (filter === 'windows') items = items.filter(i => i.category.includes('windows'));
     else if (filter === 'other') items = items.filter(i => i.category.includes('other'));
     else if (filter === 'highlighted') items = items.filter(i => i.highlighted === true);
+    else if (filter === 'awards') items = items.filter(i => i.award);
 
     const grid = document.getElementById('portfolio-grid');
     if (!grid) return;
