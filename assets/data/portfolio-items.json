@@ -20,12 +20,14 @@
     "title": "Echoes Of Stella",
     "category": "game development",
     "description": "Narrative horror game exploring isolation and memory through echolocation mechanics.",
+    "award": "Futuregames Awards 2025 Nominee: Best Animation",
     "highlighted": true,
     "image": "./assets/images/Portfolio/gifs/eos.gif",
     "link": "https://kenanege.itch.io/echoes-of-stella",
     "tags": [
       "UE 5",
-      "Group Project"
+      "Group Project",
+      "🏆 Nominee: Best Animation"
     ],
     "iconType": "unreal",
     "opennewtab": true,
@@ -36,12 +38,14 @@
     "title": "Killwats League",
     "category": "game development",
     "description": "Fast-paced 1v1 sports game with dynamic cameras and arcade ball physics.",
+    "award": "Futuregames Awards 2025 Nominee: Best Multiplayer",
     "highlighted": true,
     "image": "./assets/images/Portfolio/gifs/kw.gif",
     "link": "https://kenanege.itch.io/killwats-league",
     "tags": [
       "UE 5",
-      "Group Project"
+      "Group Project",
+      "🏆 Nominee: Best Multiplayer"
     ],
     "iconType": "unreal",
     "opennewtab": true,

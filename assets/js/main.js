@@ -702,7 +702,7 @@ function renderPortfolio(filter) {
             </div>
             <div class="p-5 flex-grow flex flex-col relative z-10">
                 <h4 class="card-title text-lg font-bold text-white mb-2 leading-tight transition-colors">${item.title}</h4>
-                <p class="text-gray-400 text-xs mb-4 line-clamp-2 flex-grow font-mono leading-relaxed group-hover:text-gray-300">${item.description}</p>
+                <p class="text-gray-400 text-xs mb-4 flex-grow font-mono leading-relaxed group-hover:text-gray-300">${item.description}${item.award ? '<br><span class="text-yellow-400 font-semibold"> ' + item.award + '</span>' : ''}</p>
                 <div class="flex items-center justify-between mt-auto pt-4 border-t border-white/5 font-bold text-[10px] uppercase tracking-wider transition-colors duration-300" style="color: var(--theme-color)">
                     <span class="flex items-center gap-2">
                         <i data-lucide="${iconName}" class="w-3 h-3"></i>
@@ -1226,4 +1226,21 @@ async function init() {
     }, 100);
 }
 
+function styleNominationTags() {
+    document.querySelectorAll('#portfolio-grid span').forEach(el => {
+        if (el.textContent.trim().startsWith('🏆')) {
+            el.classList.add('nominee-tag');
+        }
+    });
+}
+setTimeout(styleNominationTags, 500);
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('filter-btn')) {
+        setTimeout(styleNominationTags, 150);
+    }
+});
+
+
+
 document.addEventListener('DOMContentLoaded', init);
+

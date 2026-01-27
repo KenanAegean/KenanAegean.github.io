@@ -119,3 +119,16 @@ body {
     border-radius: 30px;
     filter: blur(20px);
 }
+
+.nominee-tag {
+    background: linear-gradient(135deg, #ffd700, #f0a500) !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    border: 1px solid #ffc800 !important;
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
+}
+
+.nominee-description {
+    color: #ffd700 !important;
+    font-weight: 600;
+}
