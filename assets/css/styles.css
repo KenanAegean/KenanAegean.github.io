@@ -140,3 +140,22 @@ body {
 .animate-bounce {
     animation: bounce 1s infinite;
 }
+
+@media (max-width: 768px) {
+    /* Option 1: Hide the scroll indicator on mobile to save space */
+    #hero-content .absolute.bottom-10 {
+        display: none;
+    }
+
+    /* Option 2: If you prefer to keep it, adjust the hero content margin 
+       to ensure buttons don't push into the indicator area */
+    #hero-buttons {
+        margin-bottom: 5rem; 
+    }
+}
+
+@media (max-width: 768px) {
+    #scroll-indicator {
+        display: none;
+    }
+}
