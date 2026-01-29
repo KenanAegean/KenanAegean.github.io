@@ -1,5 +1,21 @@
 [
   {
+    "id": 35,
+    "title": "Arcade Vehicle Physics System Detailed Showcase",
+    "category": "game development",
+    "description": "Hybrid UE5 arcade vehicle physics (Chaos Vehicle base + custom C++ drift/grip, downforce, nitro, air control, and dynamic camera).",
+    "highlighted": true,
+    "image": "./assets/images/Portfolio/gifs/arcade.gif",
+    "link": "https://github.com/KenanAegean/Arcade-Vehicle-Physics-System",
+    "tags": [
+      "Unreal Engine 5",
+      "Gameplay Mechanic"
+    ],
+    "iconType": "unreal",
+    "opennewtab": true,
+    "visible": true
+  },
+  {
     "id": 1,
     "title": "Echolocation Mechanic Detailed Showcase",
     "category": "game development",
