@@ -4,7 +4,7 @@
 
 [![Live Site](https://img.shields.io/badge/Live-kenanege.com-8f6be8?style=for-the-badge&logo=google-chrome&logoColor=white)](https://kenanege.com)
 [![GitHub Pages](https://img.shields.io/badge/GitHub-Pages-181717?style=for-the-badge&logo=github&logoColor=white)](https://kenanaegean.github.io)
-[![Version](https://img.shields.io/badge/Version-3.4.5-bc13fe?style=for-the-badge)](https://github.com/KenanAegean/KenanAegean.github.io)
+[![Version](https://img.shields.io/badge/Version-3.4.7-bc13fe?style=for-the-badge)](https://github.com/KenanAegean/KenanAegean.github.io)
 
 **Modern, data-driven portfolio showcasing game development projects and professional experience**
 
