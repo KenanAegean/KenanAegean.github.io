@@ -16,15 +16,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="./assets/css/styles.css?v=3.4.8">
+    <link rel="stylesheet" href="./assets/css/styles.css?v=3.5.9">
 </head>
 <body class="min-h-screen text-white">
     <div class="fixed inset-0 z-0 pointer-events-none bg-[#0a0a0a] overflow-hidden">
         <canvas id="bg-canvas"></canvas>
         <div class="fixed inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#000000_120%)] pointer-events-none"></div>
     </div>
-
-    <button id="bg-toggle-btn" onclick="window.toggleBackground()" title="Toggle background (B)" style="position:fixed;bottom:1rem;right:1rem;z-index:50;font-family:'Space Mono','Courier New',monospace;font-size:10px;color:var(--theme-color);background:rgba(0,0,0,0.8);border:1px solid var(--theme-color);padding:4px 8px;cursor:pointer;opacity:0.4;transition:opacity 0.2s;" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.4'">[ASCII]</button>
 
     <div id="mobile-toggle" class="md:hidden fixed top-4 right-4 z-50 p-2 bg-black/50 backdrop-blur-md rounded-lg border border-white/20 cursor-pointer">
         <i data-lucide="menu" id="menu-icon" class="w-6 h-6"></i>
@@ -65,6 +63,10 @@
                     <div id="sidebar-socials" class="flex flex-wrap justify-center gap-2"></div>
                 </div>
                 <div class="mt-auto pt-5 border-t border-white/5 relative z-10">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-[9px] font-mono text-gray-600 uppercase tracking-wider">Background</span>
+                        <button id="bg-toggle-btn" onclick="window.toggleBackground()" title="Toggle background (B)" class="text-[9px] font-mono uppercase tracking-wider px-2 py-1 rounded transition-all duration-300 hover:brightness-125" style="color:var(--theme-color);border:1px solid var(--theme-color);background:transparent;cursor:pointer;">[CANVAS]</button>
+                    </div>
                     <img src="assets/images/snake/github-contribution-grid-snake.svg" alt="" class="w-full">
                 </div>
             </div>
@@ -241,6 +243,6 @@
         </main>
     </div>
 
-    <script src="./assets/js/main.js?v=3.4.8"></script>
+    <script src="./assets/js/main.js?v=3.5.9"></script>
 </body>
 </html>

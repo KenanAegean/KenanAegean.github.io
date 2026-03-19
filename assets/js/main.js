@@ -564,7 +564,7 @@ function initBackground() {
             if (asciiEl) asciiEl.style.display = 'none';
         }
         const btn = document.getElementById('bg-toggle-btn');
-        if (btn) btn.textContent = bgMode === 'ascii' ? '[CANVAS]' : '[ASCII]';
+        if (btn) btn.textContent = bgMode === 'ascii' ? '[ASCII]' : '[CANVAS]';
     };
 
     // Press B to toggle (when not typing)
