@@ -21,6 +21,10 @@ let currentThemeRgb = { r: 188, g: 19, b: 254 }; // Initial RGB
 let targetThemeRgb = { r: 188, g: 19, b: 254 };  // Target RGB
 let isTransitioningColor = false;
 
+// Background mode toggle
+let bgMode = 'canvas'; // 'canvas' or 'ascii'
+let asciiEl = null;
+
 // Base path for data files
 const DATA_PATH = './assets/data/';
 
@@ -361,16 +365,7 @@ function initBackground() {
         ctx.globalAlpha = 1;
     }
 
-    function draw3DShapes() {
-        ctx.strokeStyle = themeColor;
-        ctx.lineWidth = 1.5;
-
-        // COMMENT OUT or REMOVE these lines to disable shadows
-        // ctx.shadowColor = themeColor;
-        // ctx.shadowBlur = 10;
-        
-        ctx.globalAlpha = 0.55;
-
+    function tickShapes() {
         shapes.forEach(function(shape) {
             shape.rx += shape.speedX;
             shape.ry += shape.speedY;
@@ -383,7 +378,20 @@ function initBackground() {
             if (shape.baseY < 0.05 || shape.baseY > 0.95) { shape.vy *= -1; shape.baseY = Math.max(0.05, Math.min(0.95, shape.baseY)); }
             shape.x = shape.baseX + driftX;
             shape.y = shape.baseY + driftY;
+        });
+    }
 
+    function draw3DShapes() {
+        ctx.strokeStyle = themeColor;
+        ctx.lineWidth = 1.5;
+
+        // COMMENT OUT or REMOVE these lines to disable shadows
+        // ctx.shadowColor = themeColor;
+        // ctx.shadowBlur = 10;
+
+        ctx.globalAlpha = 0.55;
+
+        shapes.forEach(function(shape) {
             let verts, edges;
             if (shape.type === 'controller') { verts = controllerVerts; edges = controllerEdges; }
             else if (shape.type === 'codetag') { verts = codetagVerts; edges = codetagEdges; }
@@ -407,6 +415,165 @@ function initBackground() {
         ctx.globalAlpha = 1;
     }
 
+    // ==================== ASCII BACKGROUND ====================
+    // Richer gradient: sparse → dense, intentionally dot/circle-like
+    const ASCII_CHARS = [' ', '.', '\'', '`', ':', ';', '+', 'i', 'o', 'O', '0', 'x', 'X', '#', '@'];
+    let asciiCharW = 0; // measured lazily after element is in DOM
+    let asciiCharH = 0;
+
+    function measureAsciiChars() {
+        if (!asciiEl || asciiCharW > 0) return;
+        const span = document.createElement('span');
+        span.style.cssText = 'position:absolute;visibility:hidden;';
+        span.textContent = 'M';
+        asciiEl.appendChild(span);
+        const rect = span.getBoundingClientRect();
+        asciiEl.removeChild(span);
+        asciiCharW = rect.width  > 0 ? rect.width  : 6.6;
+        asciiCharH = rect.height > 0 ? rect.height : 13;
+    }
+
+    function drawAscii() {
+        if (!asciiEl) return;
+        measureAsciiChars();
+
+        // ceil ensures we always fill to the right/bottom edge (overflow:hidden clips extra)
+        const cols = Math.max(1, Math.ceil(canvas.width  / asciiCharW));
+        const rows = Math.max(1, Math.ceil(canvas.height / asciiCharH));
+
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const maxDist = Math.sqrt(centerX * centerX + centerY * centerY);
+
+        const buf = new Array(rows * cols).fill(' ');
+
+        // Dot grid — mirrors canvas drawGrid logic exactly (both noise passes, waves, mouse)
+        for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+                const px = c * asciiCharW;
+                const py = r * asciiCharH;
+                const distFromCenter = Math.sqrt((px - centerX) * (px - centerX) + (py - centerY) * (py - centerY));
+                const radialFactor   = 1 - (distFromCenter / maxDist);
+                const noiseVal  = noise(px,       py,       time);
+                const noiseVal2 = noise(px * 1.5, py * 1.5, time * 0.5);
+                let intensity = 0.15 + (noiseVal + 1) * 0.12;
+                intensity *= (0.5 + radialFactor * 0.7);
+                const wave1 = Math.sin(px * 0.03 + time * 2) * 0.3;
+                const wave2 = Math.cos(py * 0.025 + time * 1.5) * 0.2;
+                intensity += (wave1 + wave2) * radialFactor * 0.15;
+                intensity += (noiseVal2 + 1) * 0.05 * radialFactor;
+
+                if (mouse.x !== null && mouse.y !== null) {
+                    const dx = px - mouse.x, dy = py - mouse.y;
+                    const distSq = dx * dx + dy * dy;
+                    if (distSq < mouse.radius * mouse.radius) {
+                        const force = Math.pow((mouse.radius - Math.sqrt(distSq)) / mouse.radius, 1.5);
+                        intensity = Math.min(0.99, intensity + force * 0.8);
+                    }
+                }
+
+                intensity = Math.max(0, Math.min(0.99, intensity));
+                buf[r * cols + c] = ASCII_CHARS[Math.floor(intensity * ASCII_CHARS.length)];
+            }
+        }
+
+        // 3D shapes — '@' on edge pixels, '#' halo on 4 neighbors for thickness/glow
+        shapes.forEach(function(shape) {
+            let verts, edges;
+            if (shape.type === 'controller') { verts = controllerVerts; edges = controllerEdges; }
+            else if (shape.type === 'codetag') { verts = codetagVerts; edges = codetagEdges; }
+            else if (shape.type === 'cube') { verts = cubeVerts; edges = cubeEdges; }
+            else if (shape.type === 'terminal') { verts = terminalVerts; edges = terminalEdges; }
+            else if (shape.type === 'potion') { verts = potionVerts; edges = potionEdges; }
+            if (!verts || !edges) return;
+
+            edges.forEach(function(edge) {
+                const p1    = rotatePoint(verts[edge[0]], shape.rx, shape.ry);
+                const p2    = rotatePoint(verts[edge[1]], shape.rx, shape.ry);
+                const proj1 = project(p1, shape, canvas.width, canvas.height);
+                const proj2 = project(p2, shape, canvas.width, canvas.height);
+
+                let c1 = Math.round(proj1.x / asciiCharW);
+                let r1 = Math.round(proj1.y / asciiCharH);
+                const c2 = Math.round(proj2.x / asciiCharW);
+                const r2 = Math.round(proj2.y / asciiCharH);
+
+                const dcol = Math.abs(c2 - c1);
+                const drow = Math.abs(r2 - r1);
+
+                // Directional char based on actual aspect-corrected angle
+                const angle = Math.atan2((r2 - r1) * asciiCharW, (c2 - c1) * asciiCharH);
+                const absA = Math.abs(angle);
+                let lineCh;
+                if (absA < Math.PI / 6)            lineCh = '=';
+                else if (absA > Math.PI * 5 / 12)  lineCh = '|';
+                else if ((c2 - c1) * (r2 - r1) >= 0) lineCh = '\\';
+                else                                lineCh = '/';
+
+                // Bresenham walk
+                const sx = c1 < c2 ? 1 : -1;
+                const sy = r1 < r2 ? 1 : -1;
+                let err = dcol - drow;
+                const maxSteps = dcol + drow + 2;
+                for (let i = 0; i < maxSteps; i++) {
+                    if (r1 >= 0 && r1 < rows && c1 >= 0 && c1 < cols) {
+                        buf[r1 * cols + c1] = '@';
+                        // halo — '#' on 4 orthogonal neighbors (don't overwrite another '@')
+                        if (r1 - 1 >= 0  && buf[(r1-1)*cols + c1]   !== '@') buf[(r1-1)*cols + c1]   = '#';
+                        if (r1 + 1 < rows && buf[(r1+1)*cols + c1]   !== '@') buf[(r1+1)*cols + c1]   = '#';
+                        if (c1 - 1 >= 0  && buf[r1*cols + (c1-1)]    !== '@') buf[r1*cols + (c1-1)]   = '#';
+                        if (c1 + 1 < cols && buf[r1*cols + (c1+1)]    !== '@') buf[r1*cols + (c1+1)]   = '#';
+                    }
+                    if (c1 === c2 && r1 === r2) break;
+                    const e2 = 2 * err;
+                    if (e2 > -drow) { err -= drow; c1 += sx; }
+                    if (e2 < dcol)  { err += dcol; r1 += sy; }
+                }
+            });
+        });
+
+        // Render buffer
+        const lines = [];
+        for (let r = 0; r < rows; r++) {
+            lines.push(buf.slice(r * cols, r * cols + cols).join(''));
+        }
+        asciiEl.textContent = lines.join('\n');
+        asciiEl.style.color = themeColor;
+    }
+
+    // Toggle between canvas and ASCII modes
+    window.toggleBackground = function() {
+        bgMode = bgMode === 'canvas' ? 'ascii' : 'canvas';
+        if (bgMode === 'ascii') {
+            if (!asciiEl) {
+                asciiEl = document.createElement('pre');
+                asciiEl.id = 'ascii-bg';
+                asciiEl.style.cssText = [
+                    'position:fixed', 'inset:0', 'margin:0', 'padding:0',
+                    'overflow:hidden', 'font-size:11px', 'line-height:13px',
+                    'pointer-events:none', 'white-space:pre',
+                    'font-family:"Space Mono","Courier New",monospace',
+                    'opacity:0.6', 'z-index:0'
+                ].join(';');
+                canvas.parentElement.insertBefore(asciiEl, canvas);
+                asciiCharW = 0; // force re-measurement with new element
+                asciiCharH = 0;
+            }
+            asciiEl.style.display = 'block';
+        } else {
+            if (asciiEl) asciiEl.style.display = 'none';
+        }
+        const btn = document.getElementById('bg-toggle-btn');
+        if (btn) btn.textContent = bgMode === 'ascii' ? '[CANVAS]' : '[ASCII]';
+    };
+
+    // Press B to toggle (when not typing)
+    document.addEventListener('keydown', function(e) {
+        if ((e.key === 'b' || e.key === 'B') && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+            window.toggleBackground();
+        }
+    });
+
     let lastFrameTime = 0;
     const fpsInterval = 1000 / 30; // Target 30 FPS
 
@@ -423,14 +590,19 @@ function initBackground() {
 
         if (elapsed > fpsInterval) {
             lastFrameTime = currentTime - (elapsed % fpsInterval);
-            
-            // Your existing drawing code goes here
-            time += 0.016; 
+            time += 0.016;
+            tickShapes();
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawGrid();
+            if (bgMode === 'canvas') {
+                drawGrid();
+            } else {
+                drawAscii();
+            }
             draw3DShapes();
         }
     }
+    // Randomly pick starting mode on each page load
+    if (Math.random() < 0.5) window.toggleBackground();
     requestAnimationFrame(animate);
 }
 
