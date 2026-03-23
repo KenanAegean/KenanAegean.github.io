@@ -5,6 +5,9 @@
     "backLink": "../index.html",
     "logo": "../assets/images/Gamerlog/logo.png",
     "logoAlt": "GamerLog logo",
+    "links": [
+      { "label": "Live Site", "url": "https://gamerlog.up.railway.app", "icon": "external-link" }
+    ],
     "sections": [
       {
         "type": "text",
