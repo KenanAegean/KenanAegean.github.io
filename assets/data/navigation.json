@@ -1,5 +1,15 @@
 [
   {
+    "id": 7,
+    "label": "Shipped Titles",
+    "section": "shipped-titles",
+    "link": "#shipped-titles",
+    "icon": "package-check",
+    "order": 0,
+    "default": true,
+    "visible": true
+  },
+  {
     "id": 1,
     "label": "Overview",
     "section": "about",
@@ -16,7 +26,7 @@
     "link": "#portfolio",
     "icon": "layers",
     "order": 1,
-    "default": true,
+    "default": false,
     "visible": true
   },
   {

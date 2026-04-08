@@ -3,9 +3,10 @@ let portfolioItems = [];
 let experience = [];
 let education = [];
 let gamesShowcase = { highlighted: [], inDevelopment: [] };
+let shippedTitles = [];
 let themes = {};
 let siteConfig = null;
-let socialLinks = []; 
+let socialLinks = [];
 let footerConfig = null;
 let instagram = null;
 let projectDetails = {};
@@ -70,6 +71,7 @@ async function loadData() {
             experienceData,
             educationData,
             gamesShowcaseData,
+            shippedTitlesData,
             socialLinksData,
             footerData,
             instagramData,
@@ -80,6 +82,7 @@ async function loadData() {
             fetchJSON('experience.json', vParam),
             fetchJSON('education.json', vParam),
             fetchJSON('games-showcase.json', vParam),
+            fetchJSON('shipped-titles.json', vParam),
             fetchJSON('social-links.json', vParam),
             fetchJSON('footer.json', vParam),
             fetchJSON('instagram.json', vParam),
@@ -91,7 +94,8 @@ async function loadData() {
         experience = experienceData || [];
         education = educationData || [];
         gamesShowcase = gamesShowcaseData || { highlighted: [], inDevelopment: [] };
-        socialLinks = socialLinksData || []; 
+        shippedTitles = ((shippedTitlesData && shippedTitlesData.titles) || []).filter(t => t.visible !== false);
+        socialLinks = socialLinksData || [];
         footerConfig = footerData || null;
         instagram = instagramData || null;
         projectDetails = projectDetailsData || {};
@@ -99,6 +103,7 @@ async function loadData() {
 
         // Theme colors configuration
         const defaultThemes = {
+            'shipped-titles': { hex: '#66c0f4' },
             about: { hex: '#00f3ff' },
             games: { hex: '#ff0055' },
             portfolio: { hex: '#bc13fe' },
@@ -798,6 +803,107 @@ function getHoverIcon(iconType) {
     return iconMap[iconType] || iconMap['default'];
 }
 
+function renderShippedTitles() {
+    const grid = document.getElementById('shipped-titles-grid');
+    if (!grid || shippedTitles.length === 0) return;
+
+    // Inline SVG logos for each platform
+    const storeMeta = {
+        steam: {
+            cls: 'shipped-btn-steam',
+            label: 'Steam',
+            svg: `<svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5 shrink-0"><path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.497 1.009 2.452-.397.957-1.494 1.41-2.454 1.015zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z"/></svg>`
+        },
+        itch: {
+            cls: 'shipped-btn-itch',
+            label: 'itch.io',
+            svg: `<svg viewBox="0 0 245.37 220.73" fill="currentColor" class="w-3.5 h-3.5 shrink-0"><path d="M31.99 1.365C21.687 7.61.563 28.346.044 29.77c-2.4 6.38.73 91.62 3.3 96.98 3.53 7.44 15.66 12.27 24.1 12.27 6.94 0 15.76-4.28 20.27-11.58 5.25 8.06 14.82 11.58 23.37 11.58h.49c8.55 0 18.12-3.52 23.37-11.58 4.51 7.3 13.33 11.58 20.27 11.58 8.44 0 20.57-4.83 24.1-12.27 2.57-5.36 5.7-90.6 3.3-96.98-.52-1.42-21.64-22.16-31.95-28.4C102.4.22 87.61 0 61.8 0 36 0 21.2.22 11.19 1.365H31.99zM52.5 40.5h140.37v.01c4.42 0 8 3.58 8 8v108c0 4.42-3.58 8-8 8H52.5c-4.42 0-8-3.58-8-8v-108c0-4.42 3.58-8 8-8zm25 20v60h90v-60h-90zm10 10h70v40h-70v-40z"/></svg>`
+        },
+        epic: {
+            cls: 'shipped-btn-epic',
+            label: 'Epic',
+            svg: `<svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5 shrink-0"><path d="M3 2h18v14.4L12 22 3 16.4V2zm2 2v11.28l7 4.2 7-4.2V4H5zm2 2h10v2H7V6zm0 4h10v2H7v-2z"/></svg>`
+        },
+        gog: {
+            cls: 'shipped-btn-gog',
+            label: 'GOG',
+            svg: `<svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5 shrink-0"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-5h2v2h-2zm0-8h2v6h-2z"/></svg>`
+        },
+        playstore: {
+            cls: 'shipped-btn-play',
+            label: 'Google Play',
+            svg: `<svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5 shrink-0"><path d="M3.18 23.76c.37.21.8.22 1.19.03l12.6-7.27-2.72-2.72-11.07 9.96zM.5 1.4C.19 1.78 0 2.32 0 3.01v17.98c0 .69.19 1.23.5 1.61l.08.08 10.08-10.08v-.24L.58 1.32.5 1.4zm16.12 11.47l-2.67-2.67L.58.82C.19.62-.24.64-.61.84L15.5 12l1.12 1.12v-.25zm4.22-2.14l-3.31-1.91-2.93 2.93 2.93 2.93 3.31-1.91c.95-.55.95-1.49 0-2.04z"/></svg>`
+        },
+        appstore: {
+            cls: 'shipped-btn-appstore',
+            label: 'App Store',
+            svg: `<svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5 shrink-0"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98l-.09.06c-.22.15-2.18 1.27-2.16 3.8.03 3.02 2.65 4.03 2.68 4.04l-.07.28zM13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>`
+        },
+        github: {
+            cls: 'shipped-btn-github',
+            label: 'GitHub',
+            svg: `<svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5 shrink-0"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>`
+        }
+    };
+
+    let html = '';
+    shippedTitles.forEach(title => {
+        const storesHtml = (title.stores || []).map(store => {
+            const meta = storeMeta[store.platform] || {
+                cls: 'shipped-btn-default',
+                label: store.label,
+                svg: `<svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5 shrink-0"><path d="M14 3v2H7v14h10v-4h2v4a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7zm5.293 5.293l1.414 1.414L16 14l-4.5-4.5 1.414-1.414L16 11.172l3.293-3.879z"/></svg>`
+            };
+            return `<a href="${store.url}" target="_blank" rel="noopener noreferrer"
+                       class="shipped-store-btn ${meta.cls} inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded text-[10px] font-bold uppercase tracking-wider transition-all duration-200 hover:brightness-125 hover:scale-105 whitespace-nowrap">
+                        ${meta.svg}
+                        <span>${store.label || meta.label}</span>
+                    </a>`;
+        }).join('');
+
+        const statusLabel = title.status === 'released' ? 'Released'
+            : title.status === 'early-access' ? 'Early Access'
+            : title.status === 'coming-soon' ? 'Coming Soon'
+            : title.status || '';
+
+        const gifAttr = title.gif ? `data-gif="${title.gif}"` : '';
+        html += `
+        <div class="shipped-card group relative overflow-hidden rounded-xl cursor-pointer select-none" style="aspect-ratio:2/3" ${gifAttr}>
+            <img src="${title.capsule}"
+                 data-capsule="${title.capsule}"
+                 alt="${title.title}" loading="lazy"
+                 class="shipped-cover absolute inset-0 w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                 onerror="this.style.display='none'">
+
+            ${statusLabel ? `<span class="shipped-status-badge absolute top-2 left-2 text-[9px] font-mono font-bold uppercase tracking-widest px-2 py-0.5 rounded-sm z-10">${statusLabel}</span>` : ''}
+
+            <!-- Always-visible bottom strip: gradient + title + store badges -->
+            <div class="shipped-bottom absolute bottom-0 left-0 right-0 z-10 px-3 pt-10 pb-3 flex flex-col gap-2">
+                <h3 class="shipped-title text-[11px] font-black uppercase tracking-wide leading-tight">${title.title}</h3>
+                ${storesHtml ? `<div class="flex flex-wrap gap-1.5">${storesHtml}</div>` : ''}
+            </div>
+        </div>`;
+    });
+
+    grid.innerHTML = html;
+    if (window.lucide) lucide.createIcons();
+
+    // GIF hold interaction: show gif on mousedown/touchstart, restore on release/leave
+    grid.querySelectorAll('.shipped-card[data-gif]').forEach(card => {
+        const img = card.querySelector('.shipped-cover');
+        const gif = card.dataset.gif;
+        const capsule = img.dataset.capsule;
+
+        function showGif() { img.src = gif; }
+        function showCapsule() { img.src = capsule; }
+
+        card.addEventListener('mouseenter', showGif);
+        card.addEventListener('mouseleave', showCapsule);
+        card.addEventListener('touchstart', showGif, { passive: true });
+        card.addEventListener('touchend', showCapsule);
+    });
+}
+
 function renderGames() {
     const grid = document.getElementById('games-grid');
     if (!grid) return;
@@ -1364,6 +1470,7 @@ async function init() {
     renderNavigation();
     renderPersonal();
     renderSidebarSocials();
+    renderShippedTitles();
     renderGames();
     renderPortfolio('highlighted');
     renderExperience();

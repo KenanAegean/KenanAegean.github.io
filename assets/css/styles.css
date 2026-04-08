@@ -141,6 +141,128 @@ body {
     animation: bounce 1s infinite;
 }
 
+/* ==================== SHIPPED TITLES (Steam Library Style) ==================== */
+.shipped-card {
+    background: #1b2838;
+    border: 1px solid rgba(102, 192, 244, 0.10);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.shipped-card:hover {
+    border-color: rgba(102, 192, 244, 0.55);
+    box-shadow: 0 0 0 1px rgba(102,192,244,0.3), 0 8px 32px rgba(0,0,0,0.7);
+    transform: translateY(-4px) scale(1.01);
+}
+
+/* Always-visible bottom strip */
+.shipped-bottom {
+    background: linear-gradient(to top, rgba(5,10,18,0.97) 0%, rgba(5,10,18,0.82) 55%, transparent 100%);
+}
+.shipped-title {
+    color: #c6d4df;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+}
+.shipped-card:hover .shipped-title {
+    color: #fff;
+}
+
+/* Status badge */
+.shipped-status-badge {
+    background: rgba(27, 40, 56, 0.88);
+    color: #4fc3f7;
+    border: 1px solid rgba(102, 192, 244, 0.35);
+    backdrop-filter: blur(6px);
+}
+
+/* Store Buttons */
+.shipped-store-btn {
+    border: 1px solid;
+    padding: 6px 8px;
+}
+.shipped-store-btn span {
+    max-width: 0;
+    overflow: hidden;
+    opacity: 0;
+    white-space: nowrap;
+    transition: max-width 0.25s ease, opacity 0.2s ease;
+}
+.shipped-card:hover .shipped-store-btn span {
+    max-width: 80px;
+    opacity: 1;
+}
+.shipped-btn-steam {
+    background: rgba(27, 40, 56, 0.8);
+    border-color: rgba(102, 192, 244, 0.35);
+    color: #66c0f4;
+}
+.shipped-btn-steam:hover {
+    background: #66c0f4;
+    color: #000;
+}
+.shipped-btn-itch {
+    background: rgba(250, 80, 80, 0.12);
+    border-color: rgba(250, 80, 80, 0.35);
+    color: #fa5050;
+}
+.shipped-btn-itch:hover {
+    background: #fa5050;
+    color: #fff;
+}
+.shipped-btn-epic {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.2);
+    color: #d0d0d0;
+}
+.shipped-btn-epic:hover {
+    background: #fff;
+    color: #000;
+}
+.shipped-btn-gog {
+    background: rgba(100, 200, 100, 0.1);
+    border-color: rgba(100, 200, 100, 0.3);
+    color: #64c864;
+}
+.shipped-btn-gog:hover {
+    background: #64c864;
+    color: #000;
+}
+.shipped-btn-play {
+    background: rgba(52, 168, 83, 0.12);
+    border-color: rgba(52, 168, 83, 0.35);
+    color: #34a853;
+}
+.shipped-btn-play:hover {
+    background: #34a853;
+    color: #fff;
+}
+.shipped-btn-appstore {
+    background: rgba(0, 122, 255, 0.12);
+    border-color: rgba(0, 122, 255, 0.35);
+    color: #007aff;
+}
+.shipped-btn-appstore:hover {
+    background: #007aff;
+    color: #fff;
+}
+.shipped-btn-github {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.2);
+    color: #d0d0d0;
+}
+.shipped-btn-github:hover {
+    background: #fff;
+    color: #000;
+}
+.shipped-btn-default {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.2);
+    color: #d0d0d0;
+}
+.shipped-btn-default:hover {
+    background: #fff;
+    color: #000;
+}
+
 @media (max-width: 768px) {
     /* Option 1: Hide the scroll indicator on mobile to save space */
     #hero-content .absolute.bottom-10 {

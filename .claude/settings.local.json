@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(du -sh /c/GitHub/KenanAegean.github.io/assets/*)",
+      "WebFetch(domain:store.steampowered.com)"
+    ]
+  }
+}
