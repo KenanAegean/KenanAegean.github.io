@@ -2,7 +2,7 @@
   "titles": [
     {
       "id": 1,
-      "title": "Echoes of Stella: Prologue",
+      "title": "Echoes of Stella",
       "capsule": "./assets/images/shipped/eos-capsule.png",
       "gif": "./assets/images/Portfolio/gifs/eos.gif",
       "description": "A short adventure game about echoes, memory, and finding your way back.",
@@ -14,7 +14,7 @@
         {
           "platform": "steam",
           "label": "Steam",
-          "url": "https://store.steampowered.com/app/4573570/Echoes_of_Stella_Prologue/"
+          "url": "https://store.steampowered.com/app/4573570/Echoes_of_Stella/"
         }
       ],
       "visible": true
