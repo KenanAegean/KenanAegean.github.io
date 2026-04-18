@@ -28,7 +28,7 @@
       "releaseDate": "2025",
       "developer": "Lobah",
       "tags": ["Battle Royale", "Hero Shooter", "Early Access"],
-      "status": "early-access",
+      "status": "coming-soon",
       "stores": [
         {
           "platform": "steam",
@@ -36,7 +36,7 @@
           "url": "https://store.steampowered.com/app/3988870/SAMLA/"
         }
       ],
-      "visible": false
+      "visible": true
     }
   ]
 }
