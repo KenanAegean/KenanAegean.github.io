@@ -9,7 +9,7 @@
       "releaseDate": "2026",
       "developer": "Chill Studio",
       "tags": ["Indie", "Adventure"],
-      "status": "demo-out",
+      "status": "demo is out",
       "stores": [
         {
           "platform": "steam",
@@ -22,8 +22,8 @@
     {
       "id": 2,
       "title": "SAMLA",
-      "capsule": "./assets/images/shipped/samla-capsule.png",
-      "gif": null,
+      "capsule": "./assets/images/shipped/samla-capsule1.png",
+      "gif": "./assets/images/shipped/samla.gif",
       "description": "A fast-paced hero battle royale set in a dystopian Arabic-inspired world. Assemble squads, traverse via hoverboard, and compete in 36-player matches.",
       "releaseDate": "2025",
       "developer": "Lobah",
