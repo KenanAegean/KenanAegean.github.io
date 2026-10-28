@@ -1,5 +1,35 @@
 [
   {
+    "id": 4,
+    "company": "Lobah",
+    "logo": "./assets/images/logos/lobah.png",
+    "url": "https://lobah.com/",
+    "positions": [
+      {
+        "title": "Technical Game Designer",
+        "startDate": "October 2026",
+        "endDate": "October 2026",
+        "responsibilities": [
+          "<strong>Owned the Account Level-up Rewards epic</strong> and wrote its GDD, coordinating the Online, UI and Concept Art teams through implementation.",
+          "<strong>Acted as the bridge between design specs and engineering</strong> on progression features."
+        ]
+      },
+      {
+        "title": "Game Programmer",
+        "startDate": "March 2026",
+        "endDate": "September 2026",
+        "responsibilities": [
+          "<strong>Implemented a full hero kit end to end (Hawwat)</strong>: primary fire, two actives, ultimate and passive in GAS, with data-driven tuning through curve tables and developer settings.",
+          "<strong>Built shared combat-feel systems</strong>: a hit flash component, an enemy health bar system with damage and crosshair reveal, and a weapon hit slow with a smooth ramp in the character movement component.",
+          "<strong>Created the destructible loot container system</strong> using GAS health, Chaos cached fracture and multi-stage destruction, and fixed its replication and client prediction issues.",
+          "<strong>Owned the Loot Gathering epic from research to shipping</strong>: competitor analysis and proposal doc, focused-item outline, a world-anchored loot tooltip, and crosshair-focus pickup.",
+          "<strong>Worked on the convoy dynamic objective</strong>: architecture research, health-driven damage states and Wwise audio hooks.",
+          "<strong>Diagnosed and fixed cross-system bugs</strong> in the damage and targeting pipeline, working closely with GAS, tech art, audio and design owners through Perforce code reviews."
+        ]
+      }
+    ]
+  },
+  {
     "id": 1,
     "company": "Orion Innovation",
     "logo": "./assets/images/logos/orion.png",

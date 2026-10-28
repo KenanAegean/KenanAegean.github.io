@@ -37,6 +37,25 @@
         }
       ],
       "visible": true
+    },
+    {
+      "id": 3,
+      "title": "Riziko",
+      "capsule": "./assets/images/shipped/riziko-capsule.png",
+      "gif": "./assets/images/Portfolio/gifs/riziko.gif",
+      "description": "",
+      "releaseDate": "2026",
+      "developer": "Kenan EGE",
+      "tags": [],
+      "status": "Soon on Steam",
+      "stores": [
+        {
+          "platform": "steam",
+          "label": "Steam",
+          "url": ""
+        }
+      ],
+      "visible": true
     }
   ]
 }
