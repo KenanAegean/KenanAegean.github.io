@@ -50,6 +50,11 @@
       "status": "Soon on Steam",
       "stores": [
         {
+          "platform": "browser",
+          "label": "Play in browser",
+          "url": "./projects/riziko/"
+        },
+        {
           "platform": "steam",
           "label": "Steam",
           "url": ""

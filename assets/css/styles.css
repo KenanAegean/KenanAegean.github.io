@@ -190,6 +190,15 @@ body {
     max-width: 80px;
     opacity: 1;
 }
+.shipped-btn-browser {
+    background: rgba(201, 182, 255, 0.12);
+    border-color: rgba(201, 182, 255, 0.4);
+    color: #c9b6ff;
+}
+.shipped-btn-browser:hover {
+    background: #c9b6ff;
+    color: #000;
+}
 .shipped-btn-steam {
     background: rgba(27, 40, 56, 0.8);
     border-color: rgba(102, 192, 244, 0.35);

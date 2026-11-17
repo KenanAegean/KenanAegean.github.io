@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0e0b16">
+    <title>Riziko</title>
+    <link rel="icon" href="TemplateData/favicon.ico">
+    <link rel="apple-touch-icon" href="TemplateData/apple-touch-icon.png">
+    <style>
+      /* Riziko web page: a dark plum room, the game icon (the Okey tile with the logo's R), "Riziko v0.9.x" under it and a slim
+         loading bar in the Okey tile's pearl rainbow. No external fonts or scripts. */
+      :root {
+        --bg-deep: #08060d;
+        --bg: #120e1d;
+        --bg-lift: #241a3a;
+        --text: #e9e4f5;
+        --muted: #8f87a8;
+        --track: rgba(255, 255, 255, 0.08);
+        --pearl: linear-gradient(90deg, #9be7ff, #c9b6ff, #ffb3e6, #ffe9a8, #a8f0c8, #9be7ff);
+        --error: #ff8a8a;
+      }
+
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        overscroll-behavior: none;
+        background: radial-gradient(ellipse 80% 70% at 50% 42%, var(--bg-lift) 0%, var(--bg) 52%, var(--bg-deep) 100%);
+        background-color: var(--bg);
+        color: var(--text);
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      #unity-container, #unity-fullscreen-container {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #unity-canvas {
+        width: 100% !important;
+        height: 100% !important;
+        background-color: transparent !important;
+        outline: none;
+      }
+
+      /* Loading screen */
+      #loader {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(18px, 3.2vh, 30px);
+        padding: env(safe-area-inset-top) 24px env(safe-area-inset-bottom);
+        z-index: 10;
+        transition: opacity 0.6s ease;
+      }
+      #loader.done { opacity: 0; pointer-events: none; }
+
+      .icon-wrap {
+        position: relative;
+        width: clamp(96px, 16vh, 150px);
+        aspect-ratio: 1;
+        animation: float 4.5s ease-in-out infinite;
+      }
+      .icon-wrap::before {          /* a soft glow in the tile's own colors */
+        content: "";
+        position: absolute;
+        inset: 8%;
+        border-radius: 18%;
+        background: var(--pearl);
+        background-size: 300% 100%;
+        filter: blur(34px);
+        opacity: 0.38;
+        animation: shimmer 6s linear infinite;
+      }
+      .icon-wrap img {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: block;
+        filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55));
+      }
+
+      .title {
+        margin: 0;
+        font-size: clamp(22px, 3.2vh, 30px);
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        color: var(--text);
+      }
+      .title .version {
+        margin-left: 0.35em;
+        font-size: 0.6em;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+
+      .progress {
+        width: clamp(200px, 34vw, 340px);
+      }
+      .bar {
+        height: 6px;
+        border-radius: 999px;
+        background: var(--track);
+        overflow: hidden;
+      }
+      .bar-fill {
+        width: 0%;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--pearl);
+        background-size: 300% 100%;
+        animation: shimmer 3s linear infinite;
+        transition: width 0.35s ease-out;
+      }
+      .status {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 12px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+      }
+      .status.error { color: var(--error); letter-spacing: 0.04em; text-transform: none; justify-content: center; text-align: center; }
+
+      /* Unity's own messages (warnings), as a quiet strip at the top */
+      #unity-warning {
+        position: absolute;
+        top: calc(12px + env(safe-area-inset-top));
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: min(90vw, 560px);
+        z-index: 20;
+        display: none;
+      }
+      #unity-warning div {
+        margin-top: 8px;
+        padding: 10px 14px;
+        border-radius: 10px;
+        background: rgba(20, 15, 32, 0.92);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: var(--text);
+        font-size: 13px;
+        line-height: 1.4;
+      }
+      #unity-warning div.error { border-color: rgba(255, 138, 138, 0.45); color: var(--error); }
+
+      @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+      @keyframes shimmer { from { background-position: 0% 0; } to { background-position: 300% 0; } }
+      @media (prefers-reduced-motion: reduce) {
+        .icon-wrap, .icon-wrap::before, .bar-fill { animation: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="unity-container">
+      <div id="unity-fullscreen-container">
+        <canvas id="unity-canvas" tabindex="-1"></canvas>
+      </div>
+      <div id="loader">
+        <div class="icon-wrap"><img src="TemplateData/icon.png" alt=""></div>
+        <h1 class="title">Riziko<span class="version">v0.9.419</span></h1>
+        <div class="progress">
+          <div class="bar"><div class="bar-fill" id="bar-fill"></div></div>
+          <div class="status" id="status"><span>Loading</span><span id="percent">0%</span></div>
+        </div>
+      </div>
+      <div id="unity-warning"></div>
+    </div>
+    <script>
+      var canvas = document.querySelector("#unity-canvas");
+      var loader = document.querySelector("#loader");
+      var barFill = document.querySelector("#bar-fill");
+      var percent = document.querySelector("#percent");
+      var statusLine = document.querySelector("#status"); // not "status": that is window.status, a string
+
+      function unityShowBanner(msg, type) {
+        var banner = document.querySelector("#unity-warning");
+        function refresh() { banner.style.display = banner.children.length ? "block" : "none"; }
+        var div = document.createElement("div");
+        div.textContent = msg;
+        if (type == "error") div.className = "error";
+        else setTimeout(function () { banner.removeChild(div); refresh(); }, 5000);
+        banner.appendChild(div);
+        refresh();
+      }
+
+      function showError(message) {
+        statusLine.className = "status error";
+        statusLine.textContent = "Riziko could not start: " + message;
+      }
+
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/riziko_0427.loader.js";
+      var config = {
+        arguments: [],
+        dataUrl: buildUrl + "/riziko_0427.data.unityweb",
+        frameworkUrl: buildUrl + "/riziko_0427.framework.js.unityweb",
+        codeUrl: buildUrl + "/riziko_0427.wasm.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        fullscreenElementID: "unity-fullscreen-container",
+        companyName: "Kenan Ege",
+        productName: "Riziko",
+        productVersion: "0.9.419",
+        showBanner: unityShowBanner,
+      };
+
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        document.querySelector("#unity-container").className = "unity-mobile";
+        canvas.className = "unity-mobile";
+      }
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = function () {
+        createUnityInstance(canvas, config, function (progress) {
+          var p = Math.round(100 * progress);
+          barFill.style.width = p + "%";
+          percent.textContent = p + "%";
+        }).then(function () {
+          barFill.style.width = "100%";
+          percent.textContent = "100%";
+          loader.classList.add("done");
+          setTimeout(function () { loader.style.display = "none"; }, 650);
+        }).catch(function (message) {
+          showError(message);
+        });
+      };
+      script.onerror = function () { showError("the game files did not load."); };
+      document.body.appendChild(script);
+    </script>
+  </body>
+</html>

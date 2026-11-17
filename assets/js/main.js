@@ -809,6 +809,11 @@ function renderShippedTitles() {
 
     // Inline SVG logos for each platform
     const storeMeta = {
+        browser: {
+            cls: 'shipped-btn-browser',
+            label: 'Play in browser',
+            svg: `<i class="fa-solid fa-play text-[10px] shrink-0"></i>`
+        },
         steam: {
             cls: 'shipped-btn-steam',
             label: 'Steam',
