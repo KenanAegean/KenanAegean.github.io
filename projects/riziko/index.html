@@ -204,12 +204,12 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/riziko_0423_2611211526.loader.js";
+      var loaderUrl = buildUrl + "/riziko_0423_2611211559.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/riziko_0423_2611211526.data.unityweb",
-        frameworkUrl: buildUrl + "/riziko_0423_2611211526.framework.js.unityweb",
-        codeUrl: buildUrl + "/riziko_0423_2611211526.wasm.unityweb",
+        dataUrl: buildUrl + "/riziko_0423_2611211559.data.unityweb",
+        frameworkUrl: buildUrl + "/riziko_0423_2611211559.framework.js.unityweb",
+        codeUrl: buildUrl + "/riziko_0423_2611211559.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         fullscreenElementID: "unity-fullscreen-container",
         companyName: "Kenan Ege",
@@ -223,9 +223,42 @@
         canvas.className = "unity-mobile";
       }
 
+      // Builds before 2026-11-21 ran the engine's own analytics, which froze the game in a browser, and it left its
+      // unsent events in the site's storage (/idbfs/<id>/Unity/<project>/Analytics/). A later build found them at start,
+      // tried to send them and froze the same way. So they are removed before the game starts: only that engine folder;
+      // saves, settings and the game's own play data stay. The game starts anyway after 1.5 s or on any error.
+      function clearEngineAnalytics(next) {
+        var started = false;
+        function go() { if (!started) { started = true; next(); } }
+        setTimeout(go, 1500);
+        try {
+          if (!window.indexedDB || !indexedDB.databases) { go(); return; }
+          indexedDB.databases().then(function (list) {
+            if (!list.some(function (d) { return d.name === "/idbfs"; })) { go(); return; }
+            var open = indexedDB.open("/idbfs");
+            open.onerror = go;
+            open.onsuccess = function () {
+              var db = open.result;
+              if (!db.objectStoreNames.contains("FILE_DATA")) { db.close(); go(); return; }
+              var tx = db.transaction("FILE_DATA", "readwrite");
+              var store = tx.objectStore("FILE_DATA");
+              var keys = store.getAllKeys();
+              keys.onsuccess = function () {
+                keys.result.forEach(function (key) {
+                  if (/^\/idbfs\/[^\/]+\/Unity\/[^\/]+\/Analytics(\/|$)/.test(String(key))) store.delete(key);
+                });
+              };
+              tx.oncomplete = function () { db.close(); go(); };
+              tx.onerror = tx.onabort = function () { db.close(); go(); };
+            };
+          }, go);
+        } catch (e) { go(); }
+      }
+
       var script = document.createElement("script");
       script.src = loaderUrl;
-      script.onload = function () {
+      script.onload = function () { clearEngineAnalytics(startGame); };
+      function startGame() {
         createUnityInstance(canvas, config, function (progress) {
           var p = Math.round(100 * progress);
           barFill.style.width = p + "%";
@@ -238,7 +271,7 @@
         }).catch(function (message) {
           showError(message);
         });
-      };
+      }
       script.onerror = function () { showError("the game files did not load."); };
       document.body.appendChild(script);
     </script>
