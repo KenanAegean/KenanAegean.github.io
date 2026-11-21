@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0e0b16">
+    <title>Riziko Privacy Policy</title>
+    <meta name="description" content="What data the game Riziko collects, why, and how to turn it off.">
+    <link rel="icon" href="../TemplateData/favicon.ico">
+    <style>
+      /* Same colors as the Riziko game page (../index.html). No external fonts or scripts. */
+      :root {
+        --bg-deep: #08060d;
+        --bg: #120e1d;
+        --bg-lift: #241a3a;
+        --text: #e9e4f5;
+        --muted: #a59ebd;
+        --line: rgba(255, 255, 255, 0.10);
+        --accent: #c9b6ff;
+        --pearl: linear-gradient(90deg, #9be7ff, #c9b6ff, #ffb3e6, #ffe9a8, #a8f0c8, #9be7ff);
+      }
+      html, body { margin: 0; padding: 0; }
+      body {
+        min-height: 100vh;
+        background: radial-gradient(ellipse 90% 60% at 50% 0%, var(--bg-lift) 0%, var(--bg) 55%, var(--bg-deep) 100%);
+        background-color: var(--bg);
+        color: var(--text);
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      main { max-width: 760px; margin: 0 auto; padding: 48px 16px 64px; }
+      header { text-align: center; margin-bottom: 36px; }
+      header img { width: 88px; height: 88px; image-rendering: pixelated; }
+      h1 { font-size: 1.9rem; margin: 12px 0 4px; letter-spacing: 0.02em; }
+      .bar { height: 3px; width: 160px; margin: 14px auto 0; border-radius: 3px; background: var(--pearl); }
+      .updated { color: var(--muted); font-size: 0.9rem; margin: 0; }
+      h2 { font-size: 1.2rem; margin: 36px 0 8px; color: var(--accent); }
+      p, li { color: var(--text); }
+      ul { padding-left: 1.3em; }
+      li { margin: 4px 0; }
+      .muted { color: var(--muted); }
+      .box { border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; background: rgba(255, 255, 255, 0.03); }
+      a { color: var(--accent); }
+      table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+      th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+      th { color: var(--muted); font-weight: 600; }
+      .table-wrap { overflow-x: auto; }
+      footer { margin-top: 48px; text-align: center; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <img src="../TemplateData/icon.png" alt="Riziko">
+        <h1>Riziko Privacy Policy</h1>
+        <p class="updated">Last updated: 21 November 2026</p>
+        <div class="bar"></div>
+      </header>
+
+      <div class="box">
+        <p><strong>In short:</strong> Riziko sends anonymous play data only if you say yes, and you can turn it off
+        any time in <em>Options &rarr; Share Play Data</em>. The leaderboard and online matches use a few online
+        services, listed below. Your settings and saved runs stay on your device.</p>
+      </div>
+
+      <h2>Who we are</h2>
+      <p>Riziko is made by an independent developer, <!-- TODO: your name or studio name -->[DEVELOPER NAME].
+      For any question about your data, or to ask for it to be deleted, write to
+      <!-- TODO: contact address --><a href="mailto:[CONTACT EMAIL]">[CONTACT EMAIL]</a>.</p>
+
+      <h2>Play data (only if you agree)</h2>
+      <p>The first time you open the game, it asks whether it may send anonymous data about how you play the
+      Rizikoway mode. Nothing is sent before you answer yes. You can change your answer any time in
+      <em>Options &rarr; Share Play Data</em>.</p>
+      <p>If you agree, the game sends:</p>
+      <ul>
+        <li>runs: when a run starts and ends, how far it got, the Jokers held, the time played;</li>
+        <li>rounds and boss fights: the result, the target and score, hands and discards used, the boss rule;</li>
+        <li>hands and discards: the hand type, the score, how close the play was to the best play the hand had,
+        which Jokers fired, which helper buttons were used, thinking time, and why a discard was sloppy;</li>
+        <li>the shop, the map and rewards: offers, purchases, sales, rerolls, the dot chosen and the reward picked;</li>
+        <li>the first time you use a feature (for example the sort buttons or the deck window).</li>
+      </ul>
+      <p>Each run gets a random id. The data contains no name, no email and nothing you type.
+      It is never collected in the tutorial or in versus matches.</p>
+      <p><strong>Why:</strong> to see which parts of the game are too hard or too easy, and to balance it.</p>
+      <p><strong>Who processes it:</strong> Unity Analytics, a service of Unity Technologies. Unity also records
+      technical details with each event, such as the device model, operating system, game version, country (from
+      the network) and a random install id. See
+      <a href="https://unity.com/legal/game-player-and-app-user-privacy-policy" rel="noopener">Unity's privacy policy
+      for game players</a>. If you say no, the game also tells Unity that you did not agree.</p>
+
+      <h2>Leaderboard</h2>
+      <p>When you submit a score, the game sends it to PlayFab, a Microsoft service, together with the name you
+      choose (or your Steam name), the round you reached and the run's seed. Other players can see these on the
+      leaderboard. To keep your place on the board, the game creates a random player id on your device.
+      See <a href="https://privacy.microsoft.com/privacystatement" rel="noopener">Microsoft's privacy statement</a>.</p>
+
+      <h2>Online versus matches</h2>
+      <p>Online matches use Unity's multiplayer services, which sign you in with an anonymous id and connect you to
+      the other player. During a match the game sends your moves, your player name and your portrait to your
+      opponent. They are not stored after the match.</p>
+
+      <h2>Steam</h2>
+      <p>On Steam the game shows your Steam name and avatar and may use your Steam language. Steam's own privacy
+      policy applies to your Steam account.</p>
+
+      <h2>On your device</h2>
+      <p>Settings, your profile, unlocked Jokers, boss cards and saved runs are stored only on your device (or in
+      your browser's storage when you play on the web). Removing the game or clearing the browser's site data
+      deletes them.</p>
+
+      <h2>Your choices and rights</h2>
+      <ul>
+        <li>Turn play data on or off any time in <em>Options &rarr; Share Play Data</em>.</li>
+        <li>Ask us which data we hold about you, or ask for it to be deleted, at the contact address above.</li>
+        <li>If you live in the EU or UK, you may also complain to your data protection authority.</li>
+      </ul>
+
+      <h2>Children</h2>
+      <p>Riziko does not knowingly collect personal information from children. Play data is anonymous and only
+      sent after a yes.</p>
+
+      <h2>Changes</h2>
+      <p>If this policy changes, the new version is posted here with a new date.</p>
+
+      <footer>
+        <p><a href="../">Back to Riziko</a></p>
+      </footer>
+    </main>
+  </body>
+</html>
