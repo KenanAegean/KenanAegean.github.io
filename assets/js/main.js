@@ -11,6 +11,7 @@ let footerConfig = null;
 let instagram = null;
 let projectDetails = {};
 let navigation = [];
+let recommendations = [];
 
 let currentSection = 'portfolio';
 let currentFilter = 'highlighted';
@@ -76,7 +77,8 @@ async function loadData() {
             footerData,
             instagramData,
             projectDetailsData,
-            navigationData
+            navigationData,
+            recommendationsData
         ] = await Promise.all([
             fetchJSON('portfolio-items.json', vParam),
             fetchJSON('experience.json', vParam),
@@ -87,7 +89,8 @@ async function loadData() {
             fetchJSON('footer.json', vParam),
             fetchJSON('instagram.json', vParam),
             fetchJSON('project-details.json', vParam),
-            fetchJSON('navigation.json', vParam)
+            fetchJSON('navigation.json', vParam),
+            fetchJSON('recommendations.json', vParam)
         ]);
 
         portfolioItems = (portfolioItemsData || []).filter(item => item.visible !== false);
@@ -99,6 +102,7 @@ async function loadData() {
         footerConfig = footerData || null;
         instagram = instagramData || null;
         projectDetails = projectDetailsData || {};
+        recommendations = (recommendationsData || []).filter(r => r.visible !== false);
         navigation = (navigationData || []).filter(item => item.visible !== false).sort((a, b) => a.order - b.order);
 
         // Theme colors configuration
@@ -853,7 +857,8 @@ function renderShippedTitles() {
 
     let html = '';
     shippedTitles.forEach(title => {
-        const storesHtml = (title.stores || []).map(store => {
+        // Stores without a URL yet (e.g. a Steam page that isn't live) are skipped.
+        const storesHtml = (title.stores || []).filter(store => store.url).map(store => {
             const meta = storeMeta[store.platform] || {
                 cls: 'shipped-btn-default',
                 label: store.label,
@@ -1114,6 +1119,29 @@ function renderExperience() {
     
     // Re-initialize Lucide icons for the newly added elements
     if(window.lucide) lucide.createIcons();
+}
+
+function renderRecommendations() {
+    const wrap = document.getElementById('recommendations');
+    const list = document.getElementById('recommendations-list');
+    if (!wrap || !list) return;
+    if (recommendations.length === 0) { wrap.classList.add('hidden'); return; }
+
+    list.innerHTML = recommendations.map(r => `
+        <figure class="group bg-black/70 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:border-[var(--theme-color)] transition-all duration-300 hover:-translate-y-1 flex flex-col">
+            <i data-lucide="quote" class="w-7 h-7 mb-3 opacity-80" style="color: var(--theme-color)"></i>
+            <blockquote class="text-sm text-gray-300 leading-relaxed italic flex-grow">“${r.quote}”</blockquote>
+            <figcaption class="mt-5 pt-4 border-t border-white/10 flex items-end justify-between gap-3">
+                <div>
+                    <div class="font-bold text-white">${r.name}</div>
+                    <div class="text-xs text-gray-400">${r.title}</div>
+                    ${r.subtitle ? `<div class="text-xs text-gray-500">${r.subtitle}</div>` : ''}
+                </div>
+                ${r.letter ? `<a href="${r.letter}" target="_blank" rel="noopener noreferrer" class="shrink-0 text-xs font-mono flex items-center gap-1 opacity-80 hover:opacity-100 transition-opacity" style="color: var(--theme-color)">Full letter <i data-lucide="external-link" class="w-3 h-3"></i></a>` : ''}
+            </figcaption>
+        </figure>`).join('');
+
+    if (window.lucide) lucide.createIcons();
 }
 
 function renderEducation() {
@@ -1479,6 +1507,7 @@ async function init() {
     renderGames();
     renderPortfolio('highlighted');
     renderExperience();
+    renderRecommendations();
     renderEducation();
     renderMore();
     renderFooter();

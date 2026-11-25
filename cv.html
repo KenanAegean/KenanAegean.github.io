@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kenan Ege - CV</title>
+    <link rel="icon" type="image/gif" href="./assets/images/logo.ico">
+    <style>
+        html, body { margin: 0; height: 100%; background: #0a0a0a; color: #fff; font-family: system-ui, sans-serif; }
+        #bar { display: flex; gap: 8px; align-items: center; justify-content: flex-end; padding: 8px 16px; background: #111; border-bottom: 1px solid #222; }
+        #bar span { margin-right: auto; font-size: 14px; opacity: .8; }
+        #bar button { background: #ffd700; color: #000; border: 0; border-radius: 6px; padding: 8px 14px; font-weight: 700; cursor: pointer; font-size: 13px; }
+        #bar button.ghost { background: transparent; color: #ffd700; border: 1px solid #ffd700; }
+        #viewer { width: 100%; height: calc(100% - 50px); border: 0; display: block; background: #333; }
+        #status { padding: 24px 16px; text-align: center; opacity: .8; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div id="bar">
+        <span>Kenan Ege - CV</span>
+        <button id="open-btn" class="ghost hidden">Open PDF</button>
+        <button id="download-btn" disabled>Download PDF</button>
+    </div>
+    <div id="status">Generating CV...</div>
+    <iframe id="viewer" class="hidden" title="CV preview"></iframe>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/vfs_fonts.min.js"></script>
+    <script src="./assets/js/cv.js"></script>
+</body>
+</html>

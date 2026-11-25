@@ -1,15 +1,15 @@
 {
   "versions": {
     "css": "3.6.10",
-    "js": "3.6.10",
-    "data": "3.6.10"
+    "js": "3.6.12",
+    "data": "3.6.14"
   },
   "personal": {
     "name": "Kenan EGE",
     "nickname": "Kaegean",
     "avatar": "./assets/images/avatar4.gif",
     "titles": [
-      "👾 Computer Engineer",
+      "👾 Software Engineer",
       "🎮 Game Developer",
       "🎸 Amateur Musician"
     ],
@@ -17,7 +17,7 @@
     "about": {
       "greeting": "HELLO THERE <span id='hero-accent'>!</span>",
       "backup": "Game<span id='hero-accent'>DEV</span> <br/> KENAN",
-      "description": "I'm a <strong>computer engineer</strong> and <strong>game developer</strong> currently based in <strong>Warsaw</strong>. I have a passion for building strange worlds and the sturdy code that supports them. Whether it's a reliable <strong>backend system</strong> or a game mechanic that lets you play as a destructive cat, I love the process of creation."
+      "description": "I'm a <strong>software engineer</strong> and <strong>game developer</strong> based in <strong>Istanbul</strong>. I have a passion for building strange worlds and the sturdy code that supports them. Whether it's a reliable <strong>backend system</strong> or a game mechanic that lets you play as a destructive cat, I love the process of creation."
     }
   },
   "external": {
@@ -26,8 +26,8 @@
     "githubUsername": "KenanAegean"
   },
   "cv": {
-    "default": "/assets/pdf/KenanEGE_CV.pdf",
-    "turkey": "/assets/pdf/KenanEGE_CV.pdf"
+    "default": "/cv.html",
+    "turkey": "/cv.html"
   },
   "overview_buttons": [
     {

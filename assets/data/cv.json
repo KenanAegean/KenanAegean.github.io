@@ -1,0 +1,289 @@
+{
+  "_help": "Inline formatting works in every text field: **bold** and [link text](https://url). Sections render in the order listed; section types: text, skills, experience, projects, education, list. Remove or reorder sections freely. Any item can be hidden with \"visible\": false.",
+  "meta": {
+    "fileName": "KenanEGE_CV.pdf",
+    "title": "Kenan Ege - CV",
+    "author": "Kenan Ege",
+    "fontSize": 10.5,
+    "maxPages": 2,
+    "accentColor": "#1f3a5f",
+    "siteUrl": "https://kenanege.com"
+  },
+  "header": {
+    "name": "Kenan Ege",
+    "title": "Software Engineer  |  Game Programmer",
+    "contactLine": [
+      "Istanbul, Türkiye",
+      "+90 541 302 54 64",
+      "[kenanegee@gmail.com](mailto:kenanegee@gmail.com)"
+    ],
+    "linksLine": [
+      "**Portfolio:** [kenanege.com](https://kenanege.com)",
+      "**GitHub:** [github.com/KenanAegean](https://github.com/KenanAegean)",
+      "**LinkedIn:** [linkedin.com/in/kenanege](https://linkedin.com/in/kenanege)"
+    ]
+  },
+  "sections": [
+    {
+      "type": "text",
+      "heading": "Professional Summary",
+      "text": "Software engineer with a **B.S. in Computer Engineering** and professional experience in both enterprise software and game development. At **Orion Innovation** I fixed critical bugs in **Java** applications and automated **CI/CD** with **Docker** and **Jenkins**. At **Lobah** I built **multiplayer gameplay systems** in **C++** with the **Gameplay Ability System** for SAMLA, a hero battle royale on Unreal Engine 5. Shipped 5+ team games, two of them nominated at the Futuregames Awards 2025."
+    },
+    {
+      "type": "skills",
+      "heading": "Technical Skills",
+      "items": [
+        {
+          "label": "Languages",
+          "value": "C++, C#, Java, Python, JavaScript, PHP, SQL"
+        },
+        {
+          "label": "Backend & Web",
+          "value": "Django, Spring Boot, HTML/CSS, Bootstrap, MySQL, SQLite"
+        },
+        {
+          "label": "DevOps",
+          "value": "Docker, Jenkins, GitHub Actions, CI/CD Pipelines"
+        },
+        {
+          "label": "Unreal Engine 5",
+          "value": "C++, Blueprint, Gameplay Ability System, Lyra, Game Feature Plugins, Replication, Chaos, Niagara, State Trees, Wwise"
+        },
+        {
+          "label": "Unity",
+          "value": "C#, Physics, AI (State Machines, Behavior Trees, A* Pathfinding), Shaders, Mobile & WebGL builds"
+        },
+        {
+          "label": "Tools",
+          "value": "Git, Perforce, Jira, Visual Studio, Rider, Android Studio, Agile, Code Review"
+        },
+        {
+          "label": "Spoken Languages",
+          "value": "English (Fluent), Turkish (Native)"
+        }
+      ]
+    },
+    {
+      "type": "experience",
+      "heading": "Professional Experience",
+      "items": [
+        {
+          "company": "Lobah Game Studio",
+          "location": "Remote",
+          "positions": [
+            {
+              "role": "Technical Game Designer",
+              "dates": "Oct 2026",
+              "bullets": [
+                "**Owned the Account Level-up Rewards epic** and wrote its **GDD**, coordinating the Online, UI and Art teams through implementation",
+                "Acted as the bridge between design specs and engineering on progression features"
+              ]
+            },
+            {
+              "role": "Gameplay Programmer",
+              "dates": "Mar 2026 - Sep 2026",
+              "bullets": [
+                "Worked on [SAMLA](https://store.steampowered.com/app/3988870/SAMLA/), a 36-player hero battle royale on **UE5.6** using **Lyra**, **GAS** and **Game Feature Plugins**",
+                "Implemented a **full hero kit end to end** (primary fire, two actives, ultimate, passive) in **C++** with GAS, tuned through data-driven curve tables and developer settings",
+                "Built shared **combat-feel systems**: hit flash, an **enemy health bar system** with crosshair reveal, and a weapon hit slow",
+                "Created a **destructible loot container system** with GAS health and Chaos multi-stage fracture, and fixed its **replication and client prediction** issues",
+                "**Owned the Loot Gathering epic from research to shipping**: competitor analysis, proposal doc, world-anchored loot tooltip and crosshair-focus pickup",
+                "Worked on the convoy dynamic objective (damage states, **Wwise** audio hooks) and fixed cross-system bugs in the **damage and targeting pipeline** through **Perforce** code reviews"
+              ]
+            }
+          ]
+        },
+        {
+          "company": "Orion Innovation",
+          "location": "Istanbul, Türkiye",
+          "positions": [
+            {
+              "role": "Software Engineer",
+              "dates": "Mar 2023 - Sep 2024",
+              "bullets": [
+                "Identified and fixed **critical bugs in Java applications**, testing and debugging releases with cross-functional teams in **Jira**",
+                "Designed and deployed **Docker** containers and automated deployment with **Jenkins CI/CD pipelines**",
+                "Built an **AI-based NBA match prediction app** at the company hackathon with **Django**, **Python** and **machine learning**: [github.com/KenanAegean/AIST-Hackathon](https://github.com/KenanAegean/AIST-Hackathon)"
+              ]
+            },
+            {
+              "role": "Software Engineer Intern",
+              "dates": "Aug 2022 - Oct 2022",
+              "bullets": [
+                "Built a **Java Spring Boot** web app that lets employees reserve test environments; worked with the Traffic Test Team on performance bottlenecks in an **Agile** team"
+              ]
+            }
+          ]
+        },
+        {
+          "company": "BDH - NETAŞ",
+          "location": "Istanbul, Türkiye",
+          "positions": [
+            {
+              "role": "Software Engineer Intern (Salesforce, Apex)",
+              "dates": "Aug 2021 - Sep 2021",
+              "bullets": []
+            }
+          ]
+        },
+        {
+          "company": "Biltek Design and Software",
+          "location": "Istanbul, Türkiye",
+          "positions": [
+            {
+              "role": "Volunteer Intern (Web Development, PHP, MySQL)",
+              "dates": "Sep 2018 - Nov 2019",
+              "bullets": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "projects",
+      "heading": "Game Projects",
+      "items": [
+        {
+          "name": "Riziko",
+          "tech": "Unity, C#",
+          "context": "Solo Project, coming to Steam",
+          "date": "In Development",
+          "link": "[kenanege.com/projects/riziko](https://kenanege.com/projects/riziko/)",
+          "bullets": [
+            "Roguelike card game mixing Okey 101 and Rummy tile-matching with deck-building, playable in the browser",
+            "Designed and built the **hand-scoring rules**, 35+ **Joker** powers across six rarities, the **in-run economy**, and an **AI Boss** that plays optimal moves"
+          ]
+        },
+        {
+          "name": "Echoes Of Stella",
+          "tech": "Unreal Engine 5, C++, Blueprint",
+          "context": "7-Week Project, Team of 14",
+          "award": "Futuregames Awards 2025 Nominee: Best Animation",
+          "date": "June 2025",
+          "link": "[Steam demo](https://store.steampowered.com/app/4573570/Echoes_of_Stella/)",
+          "bullets": [
+            "Horror game where you use sound to see, with a demo now on Steam. Built the **echolocation mechanic** with custom shader effects, **player controls**, and **optimized rendering**"
+          ]
+        },
+        {
+          "name": "Killwats League",
+          "tech": "Unreal Engine 5, C++, Blueprint",
+          "context": "4-Week Project, Team of 9",
+          "award": "Futuregames Awards 2025 Nominee: Best Multiplayer",
+          "date": "Sep 2025",
+          "link": "[kenanege.itch.io/killwats-league](https://kenanege.itch.io/killwats-league)",
+          "bullets": [
+            "Fast-paced 1v1 arcade sports game. Built the **dynamic camera system**, **ball physics** with charging, **AI opponents**, and **local multiplayer** for keyboard + 2 gamepads"
+          ]
+        },
+        {
+          "name": "Arcade Vehicle Physics System",
+          "tech": "Unreal Engine 5, C++",
+          "context": "Solo Project",
+          "date": "",
+          "link": "[github.com/KenanAegean/Arcade-Vehicle-Physics-System](https://github.com/KenanAegean/Arcade-Vehicle-Physics-System)",
+          "bullets": [
+            "Hybrid arcade vehicle physics on top of **Chaos Vehicles**, with custom C++ drift/grip, downforce, nitro, air control and a dynamic camera"
+          ]
+        },
+        {
+          "name": "Dark Descent",
+          "tech": "Unity, C#",
+          "context": "4-Week Project, Team of 15",
+          "date": "Feb 2025",
+          "link": "[kenanege.itch.io/dark-descent](https://kenanege.itch.io/dark-descent)",
+          "bullets": [
+            "Action roguelite with spell-based combat. Built **dash movement**, the **mobile port**, and **AI** for 5+ enemy types"
+          ]
+        },
+        {
+          "name": "In A Bad Mewd",
+          "tech": "Unity, C#",
+          "context": "4-Week Project, Team of 14",
+          "date": "Nov 2024",
+          "link": "[kenanege.itch.io/in-a-bad-mewd-webgltest](https://kenanege.itch.io/in-a-bad-mewd-webgltest)",
+          "bullets": [
+            "Destruction platformer about a cat. Built a physics-based **destructible environment system** and a **combo scoring system**"
+          ],
+          "visible": false
+        }
+      ]
+    },
+    {
+      "type": "projects",
+      "heading": "Software Projects",
+      "items": [
+        {
+          "name": "GamerLog - Graduation Project",
+          "tech": "Python, Django, SQLite, Bootstrap",
+          "context": "Solo Project",
+          "date": "2023",
+          "link": "[gamerlog.up.railway.app](https://gamerlog.up.railway.app)",
+          "bullets": [
+            "Django platform for building a game library, rating and reviewing titles, with **personalized recommendations** from collaborative filtering (Surprise library). Deployed live"
+          ]
+        },
+        {
+          "name": "kenanege.com - Portfolio Website",
+          "tech": "JavaScript, HTML/CSS, GitHub Actions",
+          "context": "Solo Project",
+          "date": "2022 - Present",
+          "link": "[github.com/KenanAegean/KenanAegean.github.io](https://github.com/KenanAegean/KenanAegean.github.io)",
+          "bullets": [
+            "Data-driven vanilla JavaScript site with a **GitHub Actions** deploy pipeline; this CV is generated in the browser as a **PDF** from a JSON file"
+          ]
+        },
+        {
+          "name": "MTG Deck Helper",
+          "tech": "JavaScript, HTML/CSS",
+          "context": "Solo Project",
+          "date": "",
+          "link": "[github.com/KenanAegean/MTG-Deck-Helper](https://github.com/KenanAegean/MTG-Deck-Helper)",
+          "bullets": [
+            "Web tool that calculates draw probabilities and simulates Magic: The Gathering opening hands"
+          ],
+          "visible": false
+        }
+      ]
+    },
+    {
+      "type": "education",
+      "heading": "Education",
+      "items": [
+        {
+          "school": "Futuregames X CD Projekt Red",
+          "dates": "Sep 2024 - Dec 2026",
+          "degree": "Game Programming Specialization",
+          "location": "Warsaw, Poland"
+        },
+        {
+          "school": "Doğuş University",
+          "dates": "Sep 2018 - Jul 2023",
+          "degree": "B.S. Computer Engineering | Software Engineering Minor",
+          "location": "Istanbul, Türkiye"
+        },
+        {
+          "school": "University of Łódź (Erasmus)",
+          "dates": "Feb 2022 - Jul 2022",
+          "degree": "Faculty of Mathematics and Computer Science",
+          "location": "Łódź, Poland"
+        }
+      ]
+    },
+    {
+      "type": "recommendations",
+      "heading": "References",
+      "source": "recommendations.json",
+      "_note": "Names link to each letter. Set \"style\": \"quotes\" to show the cvQuote text from recommendations.json instead.",
+      "note": "Full recommendation letters: [kenanege.com](https://kenanege.com/#experience)"
+    },
+    {
+      "type": "list",
+      "heading": "Interests",
+      "items": [
+        "**Music Production:** Amateur musician with released tracks on [Spotify](https://open.spotify.com/artist/2CMjhwFMDeusyTCoKcTNL8)"
+      ]
+    }
+  ],
+  "footer": "I consent to the processing of my personal data for the purpose of recruitment for the position I am applying for."
+}

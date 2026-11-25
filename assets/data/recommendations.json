@@ -1,0 +1,35 @@
+[
+  {
+    "id": "budnik",
+    "name": "Paweł Budnik",
+    "title": "Former Lead Game Designer, Lobah",
+    "subtitle": "Founder & Game Director, balteq",
+    "date": "Oct 2026",
+    "quote": "His strength was bringing design ideas into the game. He understood both the design and the code behind it, so we could rely on him even when the implementation was difficult or we were still figuring out how something should work. I could count on him, and I would happily have him on my team again.",
+    "cvQuote": "He understood both the design and the code behind it, so we could rely on him even when the implementation was difficult. I would happily have him on my team again.",
+    "letter": "/assets/pdf/recommendations/Budnik_Lobah.pdf",
+    "visible": true
+  },
+  {
+    "id": "gaida",
+    "name": "Karol Gaida",
+    "title": "Unreal Engine Technical Lead, The Knights of U",
+    "subtitle": "Gameplay Team Lead on SAMLA",
+    "date": "2026",
+    "quote": "He demonstrated solid skills in Unreal Engine C++, the Gameplay Ability System (GAS), and extending the Lyra architecture. He effectively translated Design Team requirements into gameplay systems and collaborated well across teams.",
+    "cvQuote": "He demonstrated solid skills in Unreal Engine C++, GAS, and extending the Lyra architecture. I recommend him as a capable Gameplay Programmer.",
+    "letter": "/assets/pdf/recommendations/Gaida_KnightsOfU.pdf",
+    "visible": true
+  },
+  {
+    "id": "sokolski",
+    "name": "Mateusz Sokólski",
+    "title": "Lead Game Designer, Lobah",
+    "subtitle": "SAMLA Project",
+    "date": "2026",
+    "quote": "He demonstrated strong technical aptitude, initiative, and a valuable ability to bridge technical implementation with game design. His ability to connect design requirements, technical execution, and production workflows made him a valuable member of the team.",
+    "cvQuote": "Strong technical aptitude, initiative, and a valuable ability to bridge technical implementation with game design.",
+    "letter": "/assets/pdf/recommendations/Sokolski_Lobah.pdf",
+    "visible": true
+  }
+]
