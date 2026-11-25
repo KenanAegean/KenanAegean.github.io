@@ -32,7 +32,10 @@ GitHub Pages deploys automatically from the same branch.
 ## Architecture
 
 ### Data-Driven Content
-All content lives in `assets/data/*.json`. Content changes should be made there, not hardcoded in HTML/JS. Version numbers in `assets/data/site-config.json` are used as cache-busting query parameters — bump `versions.css`, `versions.js`, or `versions.data` when deploying changes to those asset types.
+All content lives in `assets/data/*.json`. Content changes should be made there, not hardcoded in HTML/JS. Cache busting: kenanege.com caches JS/CSS for 7 days, so every changed asset needs a new `?v=` number.
+- **Data:** `versions.data` in `assets/data/site-config.json` is appended to every JSON fetch by `main.js` — bump it when any data file changes. (`site-config.json` itself and the CV page's JSON are fetched uncached.)
+- **JS/CSS:** the `?v=` numbers are hardcoded in the HTML tags — `index.html` (`styles.css`, `main.js`), `cv.html` (`cv.js`), and `projects/*.html` (`styles.css`). Bump the tag(s) by hand.
+- **Convention:** all version numbers share one value. On any deploy, bump `versions.css`, `versions.js` and `versions.data` in `site-config.json` together, plus every `?v=` tag listed above and the README badge, to the same new number.
 
 ### Single Entry Point
 `index.html` → `assets/js/main.js` (1,200+ lines, no modules). The JS fetches all JSON on load, then renders everything dynamically. There is no bundler or transpiler — use ES6+ syntax that browsers support natively.
