@@ -243,6 +243,68 @@
         });
     }
 
+    // ---------- mobile preview (pdf.js) ----------
+    const PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
+
+    function loadScript(src) {
+        return new Promise((resolve, reject) => {
+            const s = document.createElement('script');
+            s.src = src;
+            s.onload = resolve;
+            s.onerror = () => reject(new Error('Failed to load ' + src));
+            document.head.appendChild(s);
+        });
+    }
+
+    async function renderPages(blob, container) {
+        if (!window.pdfjsLib) await loadScript(PDFJS + 'pdf.min.js');
+        pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS + 'pdf.worker.min.js';
+        const doc = await pdfjsLib.getDocument({ data: await blob.arrayBuffer() }).promise;
+        const dpr = Math.min(window.devicePixelRatio || 1, 3);
+
+        container.innerHTML = '';
+        container.classList.remove('hidden');
+        const cs = getComputedStyle(container);
+        const width = container.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+
+        for (let n = 1; n <= doc.numPages; n++) {
+            const page = await doc.getPage(n);
+            const base = page.getViewport({ scale: 1 });
+            const viewport = page.getViewport({ scale: width / base.width });
+
+            const wrap = document.createElement('div');
+            wrap.className = 'page';
+            wrap.style.width = viewport.width + 'px';
+            wrap.style.height = viewport.height + 'px';
+
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.floor(viewport.width * dpr);
+            canvas.height = Math.floor(viewport.height * dpr);
+            canvas.style.width = viewport.width + 'px';
+            canvas.style.height = viewport.height + 'px';
+            wrap.appendChild(canvas);
+            container.appendChild(wrap);
+
+            await page.render({
+                canvasContext: canvas.getContext('2d'),
+                viewport,
+                transform: dpr !== 1 ? [dpr, 0, 0, dpr, 0, 0] : null
+            }).promise;
+
+            // Keep links tappable: overlay an <a> on each link annotation.
+            const annotations = await page.getAnnotations();
+            annotations.filter(a => a.subtype === 'Link' && a.url).forEach(a => {
+                const [x1, y1, x2, y2] = viewport.convertToViewportRectangle(a.rect);
+                const link = document.createElement('a');
+                link.href = a.url;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                link.style.cssText = `left:${Math.min(x1, x2)}px;top:${Math.min(y1, y2)}px;width:${Math.abs(x2 - x1)}px;height:${Math.abs(y2 - y1)}px`;
+                wrap.appendChild(link);
+            });
+        }
+    }
+
     async function init() {
         const status = document.getElementById('status');
         try {
@@ -258,14 +320,35 @@
             const fileName = cv.meta.fileName || 'CV.pdf';
             const dl = document.getElementById('download-btn');
             dl.disabled = false;
-            dl.onclick = () => pdf.download(fileName);
+            // Save the exact bytes already shown in the preview. Calling pdf.download()
+            // would re-render from a doc definition pdfmake already mutated, which
+            // breaks the layout (big gaps, extra pages).
+            const blobUrl = URL.createObjectURL(blob);
+            dl.onclick = () => {
+                const a = document.createElement('a');
+                a.href = blobUrl;
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            };
 
-            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+            // Mobile browsers can't show a PDF inside an iframe (Android shows nothing,
+            // iOS only page 1), so on phones/tablets the pages are drawn with pdf.js.
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+                (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
             if (isMobile) {
                 const open = document.getElementById('open-btn');
                 open.classList.remove('hidden');
-                open.onclick = () => window.open(URL.createObjectURL(blob), '_blank');
-                status.textContent = 'Your CV is ready. Use the buttons above to open or download it.';
+                open.onclick = () => window.open(blobUrl, '_blank');
+                status.textContent = 'Loading preview...';
+                try {
+                    await renderPages(blob, document.getElementById('pages'));
+                    status.classList.add('hidden');
+                } catch (e) {
+                    console.error(e);
+                    status.textContent = 'Your CV is ready. Use the buttons above to open or download it.';
+                }
             } else {
                 const viewer = document.getElementById('viewer');
                 viewer.src = URL.createObjectURL(blob);
